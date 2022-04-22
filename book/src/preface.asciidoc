@@ -36,63 +36,63 @@ Những khái niệm mới sẽ được giới thiệu dần và các chủ đ�
 
 Think Julia có thể dùng làm khóa học một kì cho các trường trung học hoặc cao đẳng, đại học giai đoạn đại cương.
 
-=== Conventions Used in This Book
+=== Quy ước dùng cho sách
 
-The following typographical conventions are used in this book:
+Những quy ước kiểu chữ sau được dùng trong cuốn sách này:
 
-_Italic_:: Indicates new terms, URLs, email addresses, filenames, and file extensions.
+_Chữ nghiêng_:: Dùng để chỉ các thuật ngữ mới, các đường dẫn URL, địa chỉ email, tên file, và phần mở rộng file.
 
-+Constant width+:: Used for program listings, as well as within paragraphs to refer to program elements such as variable or function names, databases, data types, environment variables, statements, and keywords.
++Chữ đánh máy+:: Dùng cho mã lệnh toàn chương trình hoặc các đoạn mã, kể cả các thành phần gồm có các tên biến, tên hàm, cơ sở dữ liệu, kiểu dữ liệu, các biến môi trường, câu lệnh, và từ khoá.
 
-**`Constant width bold`**:: Shows commands or other text that should be typed literally by the user.
+**`Chữ đánh máy đậm`**:: Cho thấy những câu lệnh hoặc dòng chữ khác mà người dùng phải gõ vào y nguyên.
 
-_++Constant width italic++_:: Shows text that should be replaced with user-supplied values or by values determined by context.
+_++Chữ đánh máy nghiêng++_:: ho thấy những dòng chữ cần được thay thế bởi nội dung người dùng nhập vào hoặc bởi những giá trị quyết định bởi ngữ cảnh.
 
 
 [TIP]
 ====
-This element signifies a tip or suggestion.
+Hộp này truyền đạt một mẹo nhỏ hoặc gợi ý.
 ====
 
 [NOTE]
 ====
-This element signifies a general note.
+Hộp này truyền đạt một nhận xét chung.
 ====
 
 [WARNING]
 ====
-This element indicates a warning or caution.
+Hộp này truyền đạt một lời cảnh báo, yêu cầu sự cẩn thận.
 ====
 
 === Sử dụng các mã lệnh ví dụ
 
-All code used in this book is available from a Git repository on GitHub: https://github.com/BenLauwens/ThinkJulia.jl. If you are not familiar with Git, it is a version control system that allows you to keep track of the files that make up a project. A collection of files under Git's control is called a “repository”. GitHub is a hosting service that provides storage for Git repositories and a convenient web interface.
+Tất cả mã lệnh dùng trong sách này đều sẵn có từ kho mã lệnh Git trên GitHub: https://github.com/BenLauwens/ThinkJulia.jl. Nếu bạn chưa quen Git, thì đó là một hệ thống kiểm soát phiên bản; hệ thống này cho phép bạn theo dõi các file cấu thành một dự án. Tập hợp của các file được Git kiểm soát được gọi là một “kho mã lệnh”. GitHub là một dịch vụ tổ chức cung cấp chỗ chứa cho các kho mã Git cùng với một giao diện web tiện dụng.
 
-A convenience package is provided that can be directly added to Julia. Just type *+pass:[add https://github.com/BenLauwens/ThinkJulia.jl]+* in the REPL in Pkg mode.
+Một gói phần mềm thuận tiện được cung cấp để bạn bổ sung trực tiếp vào Julia. Chỉ cần gõ *+pass:[add https://github.com/BenLauwens/ThinkJulia.jl]+* vào dấu nhắc lệnh (REPL) ở chế độ Pkg.
 
-The easiest way to run Julia code is going to https://juliabox.com and start a free session. Both the REPL and a notebook interface are available. If you want to have Julia locally installed on you computer, JuliaPro from Julia Computing can be downloaded freely from https://juliacomputing.com/products/juliapro.html. It consists of a recent Julia version, the Juno IDE based on Atom and a number of preinstalled Julia packages. If you are more adventurous, you can download Julia from https://julialang.org, install the editor you like, e.g. Atom or Visual Studio Code, and activate the plugins for Julia integration. To a local install, you can also add the +IJulia+ package and run a Jupyter notebook on your computer.
+Cách dễ nhất để chạy mã lệnh Julia là đến https://juliabox.com và khởi động một phiên làm việc miễn phí. Cả dấu nhắc REPL và giao diện sổ notebook đều có sẵn ở đó. Nếu bạn muốn cài đặt Julia máy tính cá nhân, thì có thể tải về miễn phí JuliaPro của Julia Computing từ https://juliacomputing.com/products/juliapro.html. Nó bao gồm một phiên bản Julia gần đây, môi trường phát triển tích hợp Juno IDE dựa trên Atom và một số gói Julia đã cài sẵn. Nếu bạn mạo hiểm hơn thì có thể tải về Julia từ https://julialang.org, tự cài đặt trình biên tập bạn thích như Atom hay Visual Studio Code, rồi kích hoạt các trình cắm (plugin) cho phép tích hợp Julia. Trong trường hợp cài lên máy cá nhân, bạn cũng có thể tải về gói +IJulia+ và chạy một sổ Jupyter notebook trên máy tính của mình.
 
-This book is here to help you get your job done. In general, you may use example code in your programs and documentation. You do not need to contact us for permission unless you’re reproducing a significant portion of the code. For example, writing a program that uses several chunks of code from this book does not require permission. Selling or distributing a CD-ROM of examples from O’Reilly books does require permission. Answering a question by citing this book and quoting example code does not require permission. Incorporating a significant amount of example code from this book into your product’s documentation does require permission.
+Quyển sách này mở ra để giúp bạn hoàn thành nhiệm vụ của mình. Nói chung, bạn có thể dùng mã lệnh ví dụ trong các chương trình và tài liệu mà bạn viết. Bạn không cần phải liên lạc chúng tôi để xin phép, trừ phi bạn tái sử dụng một phần đáng kể mã lệnh này. Chẳng hạn, viết một chương trình có dùng vài ba đoạn mã từ quyển sách này thì không cần xin phép. Rao bán hoặc phân bối một đĩa CD-ROM có chứa các ví dụ lấy từ sách của nhà xuất bản O’Reilly thì cần xin phép. Trả lời một câu hỏi bằng cách dẫn nguồn cuốn sách này và trích dẫn mã lệnh ví dụ thì không cần xin phép. Nhưng việc đem một lượng lớn mã lệnh từ cuốn sách này để đưa vào tài liệu hướng dẫn cho sản phẩm của bạn thì cần xin phép.
 
-We appreciate, but do not require, attribution. An attribution usually includes the title, author, publisher, and ISBN. For example: “Think Julia by Ben Lauwens and Allen B; Downey (O’Reilly). Copyright 2019 Allen Downey, Ben Lauwens, 978-1-492-04503-8.”
+Chúng tôi trân trọng, song không không yêu cầu sự ghi công. Việc ghi công thường chỉ kèm tiêu đề sách, tác giả, nhà xuất bản, và mã ISBN. Chẳng hạn: “Cuốn Think Julia, tác giả Ben Lauwens và Allen B; Downey (O’Reilly). Bản quyền 2019 Allen Downey, Ben Lauwens, 978-1-492-04503-8.”
 
-If you feel your use of code examples falls outside fair use or the permission given above, feel free to contact us at pass:[<a class="email" href="mailto:permissions@oreilly.com"><em>permissions@oreilly.com</em></a>].
+Nếu bạn cảm thấy việc dùng các ví dụ mã lệnh lọt ra ngoài phạm vi "sử dụng vừa phải" hoặc cần xin phép như trên, hãy liên hệ với chúng tôi tại pass:[<a class="email" href="mailto:permissions@oreilly.com"><em>permissions@oreilly.com</em></a>].
 
 === O'Reilly Safari
 
 [role = "safarienabled"]
 [NOTE]
 ====
-pass:[<a href="http://oreilly.com/safari" class="orm:hideurl"><em class="hyperlink">Safari</em></a>] (formerly Safari Books Online) is a membership-based training and reference platform for enterprise, government, educators, and individuals.
+pass:[<a href="http://oreilly.com/safari" class="orm:hideurl"><em class="hyperlink">Safari</em></a>] (tên trước đây Safari Books Online) là một nền tảng hướng dẫn và tham khảo cho các thành viên đăng kí cho các tổ chức thương mại, chính phủ, giáo dục cũng như cá nhân.
 ====
 
-Members have access to thousands of books, training videos, Learning Paths, interactive tutorials, and curated playlists from over 250 publishers, including O’Reilly Media, Harvard Business Review, Prentice Hall Professional, Addison-Wesley Professional, Microsoft Press, Sams, Que, Peachpit Press, Adobe, Focal Press, Cisco Press, John Wiley & Sons, Syngress, Morgan Kaufmann, IBM Redbooks, Packt, Adobe Press, FT Press, Apress, Manning, New Riders, McGraw-Hill, Jones & Bartlett, and Course Technology, among others.
+Các thành viên có thể truy cập được hàng ngàn cuốn sách, video hướng dẫn, các chủ đề luyện lập trình, bài hướng dẫn tương tác và bài phát được sưu tập từ hơn 250 nhà xuất bản, bao gồm O’Reilly Media, Harvard Business Review, Prentice Hall Professional, Addison-Wesley Professional, Microsoft Press, Sams, Que, Peachpit Press, Adobe, Focal Press, Cisco Press, John Wiley & Sons, Syngress, Morgan Kaufmann, IBM Redbooks, Packt, Adobe Press, FT Press, Apress, Manning, New Riders, McGraw-Hill, Jones & Bartlett, Course Technology, v.v.
 
-For more information, please visit pass:[<a href="http://oreilly.com/safari" class="orm:hideurl"><em>http://oreilly.com/safari</em></a>]. 
+Để biết thêm thông tin, hãy thăm trang pass:[<a href="http://oreilly.com/safari" class="orm:hideurl"><em>http://oreilly.com/safari</em></a>]. 
 
 === Cách liên lạc với chúng tôi
 
-Hãy dể lại những ý kiến góp ý và đặt câu hỏi liên quan đến nội dung sách cho nhà xuất bản:
+Hãy để lại những ý kiến góp ý và đặt câu hỏi liên quan đến nội dung sách cho nhà xuất bản:
 
 ++++
 <ul class="simplelist">
@@ -111,15 +111,15 @@ Chúng tôi có một trang web cho cuốn sách này, trong đó có các đín
 <!--Đừng quên cập nhật đường link trên.-->
 ++++
 
-Để bình luận hoặc đặt những câu hỏi hỏi kĩ thuật, hãy gửi email tới:[<a class="email" href="mailto:bookquestions@oreilly.com"><em>bookquestions@oreilly.com</em></a>].
+Để bình luận hoặc đặt những câu hỏi hỏi kĩ thuật, hãy gửi email tới: pass:[<a class="email" href="mailto:bookquestions@oreilly.com"><em>bookquestions@oreilly.com</em></a>].
 
-Để biết thêm thông tin về những cuốn sách, khóa học, hội thảo và tin tức, hãy xem website của chúng tôi tại đường link:$$http://www.oreilly.com$$[].
+Để biết thêm thông tin về những cuốn sách, khóa học, hội thảo và tin tức, hãy xem website của chúng tôi tại đường link: $$http://www.oreilly.com$$[].
 
-Tìm chúng tôi trên Facebook: link:$$http://facebook.com/oreilly$$[]
+Tìm chúng tôi trên Facebook: link: $$http://facebook.com/oreilly$$[]
 
-Theo dõi chúng tôi trên Twitter: link:$$http://twitter.com/oreillymedia$$[]
+Theo dõi chúng tôi trên Twitter: link: $$http://twitter.com/oreillymedia$$[]
 
-Xem chúng tôi trên YouTube: link:$$http://www.youtube.com/oreillymedia$$[]
+Xem chúng tôi trên YouTube: link: $$http://www.youtube.com/oreillymedia$$[]
 
 === Lời cảm tạ
 
