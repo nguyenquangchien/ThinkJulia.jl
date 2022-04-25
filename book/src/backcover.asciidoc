@@ -1,19 +1,19 @@
-If you’re just learning how to program, Julia is an excellent JIT-compiled, dynamically-typed language with a clean syntax. This hands-on guide uses Julia (version 1.0) to learn to program one step at a time, beginning with basic programming concepts before moving on to more advanced capabilities, such as creating new types and multiple dispatch.
+Nếu bạn vừa mới học lập trình thì Julia là một ngôn ngữ xuất sắc với định kiểu động, biên dịch JIT cùng một cú pháp gọn gàng. Cuốn sách thực hành này sử dụng Julia (phiên bản 1.0) để học lập trình từng bước một, bắt đầu từ những khái niệm lập trình cơ bản trước khi chuyển qua những khả năng nâng cao như tạo ra những kiểu dữ liệu mới và đa phương thức.
 
-Designed from the beginning for high performance, Julia is a general-purpose language not only ideal for numerical analysis and computational science, but also for web programming or scripting. Through exercises in each chapter, you’ll try out programming concepts as you learn them.
+Được thiết kế ngay từ đầu để hướng đến hiệu năng cao, Julia là một ngôn ngữ mục tiêu tổng hợp không chỉ lí tưởng cho phân tích số và tính toán khoa học, mà còn cho lập trình web hay viết các văn lệnh (scripting). Qua các bài tập từng chương, bạn sẽ thử ngay những khái niệm lập trình khi vừa tìm hiểu chúng.
 
-Think Julia is ideal for students at the high school or college level, as well as self-learners, home-schooled students, and professionals who need to learn programming basics.
+Think Julia là tài liệu lý tưởng cho các học sinh trung học, sinh viên đại học cũng như người tự học, học sinh được dạy ở nhà, cũng như người đi làm muốn trang bị những kiến thức cơ bản về lập trình.
 
-* Start with the basics, including language syntax and semantics
+* Bắt đầu đi từ cơ bản, gồm những cú pháp và ngữ nghĩa của ngôn ngữ
 
-* Get a clear definition of each programming concept
+* Nắm được định nghĩa rõ ràng cho từng khái niệm lập trình
 
-* Learn values, variables, statements, functions, and data structures in a logical progression
+* Học lần lượt giá trị, biến, câu lệnh, hàm và cấu trúc dữ liệu theo trình tự logic
 
-* Discover how to work with files and databases
+* Khám phá cách làm việc với các file và cơ sở dữ liệu
 
-* Understand types, methods, and multiple dispatch
+* Hiểu được kiểu dữ liệu, phương thức, và đa phương thức
 
-* Use debugging techniques to fix syntax, runtime, and semantic errors
+* Dùng các kĩ thuật gỡ lỗi để sửa những lỗi cú pháp, lỗi lúc chạy và lỗi ngữ nghĩa
 
-* Explore interface design and data structures through case studies
+* Khám phá thiết kế giao diện và cấu trúc dữ liệu qua những nghiên cứu cụ thể.
