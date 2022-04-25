@@ -2,24 +2,24 @@
 [[juliabox]]
 == JuliaBox
 
-JuliaBox allows you to run Julia in your browser. Enter the url https://www.juliabox.com, login and start using the Jupyter environment.
+JuliaBox cho phép bạn chạy Julia trong trình duyệt của mình. Hãy gõ vào đường dẫn url https://www.juliabox.com, đăng nhập và bắt đầu sử dụng môi trường Jupyter.
 
-The initial screen is shown in <<figb-1>>. The new button allows the creation of a Julia notebook, a text file, a folder or a terminal session.
+Màn hình ban đầu có dạng như <<figb-1>>. Nút New cho phép bạn khởi tạo một tập Julia notebook, một file text, một thư mục hay một phiên làm việc với dòng lệnh (terminal).
 
-In a terminal session, the command *+julia+* starts the REPL as shown in <<figb-2>>.
+Với phiên terminal, lệnh *+julia+* sẽ khởi động REPL như ở hình <<figb-2>>.
 
-The notebook interface allows to mix text in Markdown markup and highlighted code with associated output. <<figb-3>> shows an example.
+Giao diện sổ notebook cho phép bạn kết hợp cả văn bản định dạng Markdown và mã lệnh được tô màu cùng với kết quả tính ra. <<figb-3>> cho thấy một ví dụ.
 
-Further documentation can be found on the website of Jupyter: http://jupyter.org/documentation.
+Để biết thêm thông tin, hãy tìm trên website của Jupyter: http://jupyter.org/documentation.
 
 [[figb-1]]
-.Initial screen
+.Màn hình ban đầu
 image::images/screenshot0.png[]
 
 [[figb-2]]
-.Terminal session
+.Phiên dòng lệnh
 image::images/screenshot1.png[]
 
 [[figb-3]]
-.Notebook
+.Sổ notebook
 image::images/screenshot2.png[]
