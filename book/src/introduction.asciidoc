@@ -1,106 +1,154 @@
 [preface]
-== Preface
+== Lời nói đầu
 
-In January 2018 I started the preparation of a programming course targeting students without programming experience. I wanted to use Julia, but I found that there existed no book with the purpose of learning to program with Julia as the first programming language. There are wonderful tutorials that explain Julia's key concepts, but none of them pay sufficient attention to learning how to think like a programmer.
+Tháng 1/2018 tôi đã bắt đầu chuẩn bị một khóa học lập trình hướng đến nhóm sinh viên chưa có kinh nghiệm gì về lập trình. Tôi muốn dùng ngôn ngữ Julia song phát hiện thấy chưa có sách nào với mục đích học lập trình với Julia như ngôn ngữ đầu tiên. Có những bài hướng dẫn tuyệt vời giúp giải thích những khái niệm mấu chốt của Julia nhưng không có bài hướng dẫn nào nhấn mạnh đủ vào cách suy nghĩ như một lập trình viên.
 
-I knew the book http://shop.oreilly.com/product/0636920045267.do[_Think Python_] by Allen Downey, which contains all the key ingredients to learn to program properly. However, this book was based on the Python programming language. My first draft of the course notes was a melting pot of all kinds of reference works, but the longer I worked on it, the more the content started to resemble the chapters of _Think Python_. Soon, the idea of developing my course notes as a port of that book to Julia came to fruition.
+Tôi biết rằng cuốn sách Think Python của Allen Downey đã chứa tất cả những nguyên liệu quan trọng để học lập trình một cách bài bản. Tuy nhiên, cuốn sách này dựa trên ngôn ngữ lập trình Python. Bản nháp đầu tiên của tập bài giảng là một nồi lẩu thập cẩm tất cả các kiểu tài liệu tham khảo. Nhưng càng soạn thêm bài giảng, càng nhiều phần trở nên giống với các chương của cuốn Think Python. Ý tưởng phát triển tập bài giảng của tôi như một phiên bản chuyển từ Think Python sang Julia đã đơm hoa kết trái.
 
-All the material was available as Jupyter notebooks in a GitHub repository. After I posted a message on the Julia Discourse site about the progress of my course, the feedback was overwhelming. A book about basic programming concepts with Julia as the first programming language was apparently a missing link in the Julia universe. I contacted Allen to ask if I could start an official port of _Think Python_ to Julia, and his answer was immediate: “Go for it!” He put me in touch with his editor at O'Reilly Media, and a year later I was putting the finishing touches on this book.
+Tất cả những tư liệu đều có được dưới dạng các sổ tính Jupyter (notebooks) trong kho phần mềm GitHub. Sau khi tôi đăng một lời nhắn lên mục Julia của diễn đàn Discourse về tiến trình của khóa học này, những phản hồi thật vượt ngoài tưởng tượng. Một cuốn sách về những khái niệm lập trình cơ bản bằng Julia dường như là mắt xích bị thiếu trong môi trường Julia. Tôi đã liên hệ với Allen để xem liệu mình có thể bắt đầu viết một bản chuyển thể từ Think Python sang Julia không, và ông đã lập tức trả lời: “thực hiện thôi!” Ông đã giới thiệu thôi với biên tập viên của O'Reilly Media và bây giờ, sau một năm, tôi đang hoàn tất cuốn sách này.
 
-It ((("Julia", "version of")))was a bumpy ride. In August 2018 Julia v1.0 was released, and like all my fellow Julia programmers I had to do a migration of the code. All the examples in the book were tested during the conversion of the source files to O'Reilly-compatible AsciiDoc files. Both the toolchain and the example code had to be made Julia v1.0–compliant. Luckily, there are no lectures to give in August....
+Một chuyến đi bão táp. Tháng 8/2018 khi Julia phiên bản 1.0 được phát hành, cũng như tất cả đồng nghiệp lập trình viên Julia, tôi phải chuyển mã lệnh. Tất cả những ví dụ trong sách này đều được kiểm tra trong quá trình chuyển đổi các file mã nguồn sang dịnh dạng ASCIIDoc của nhà xuất bản. Cả chuỗi công cụ lẫn mã lệnh ví dụ, bản thân chúng phải được làm tương thích với Julia v1.0. Thật may là tôi không có lớp giảng đợt tháng 8 ... 
 
-I hope you enjoy working with this book, and that it helps you learn to program and think like a computer scientist, at least a little bit.
+Hi vọng rằng bạn thích đọc cuốn này, và cũng hi vọng rằng nó giúp bạn lập trình và suy nghĩ như một nhà khoa học máy tính, hay ít nhất là được một phần như vậy.
 
-[role="byline"]
-Ben Lauwens
+_Ben Lauwens_
 
-=== Why Julia?
+=== Tại sao lại là Julia?
 
-Julia ((("Julia", "about")))was originally released in 2012 by Alan Edelman, Stefan Karpinski, Jeff Bezanson, and Viral Shah. It is a free and open source programming language.
+Julia được phát hành lần dầu vào năm 2012 do nhóm tác giả Alan Edelman, Stefan Karpinski, Jeff Bezanson, và Viral Shah. Julia là ngôn ngữ lập trình miễn phí và có mã nguồn mở.
 
-Choosing a programming language is always subjective. For me, the following characteristics of Julia are decisive:
+Việc chọn một ngôn ngữ lập trình không thể tránh khỏi ý kiến chủ quan. Theo tôi, những đặc điểm sau của Julia đã dẫn tới lựa chọn quyết định:
 
-- Julia is developed as a high-performance programming language.
-- Julia uses multiple dispatch, which allows the programmer to choose from different programming patterns adapted to the application.
-- Julia is a dynamically typed language that can easily be used interactively.
-- Julia has a nice high-level syntax that is easy to learn.
-- Julia is an optionally typed programming language whose (user-defined) data types make the code clearer and more robust.
-- Julia has an extended standard library and numerous third-party packages are available.
+- Julia được phát triển như một ngôn ngữ lập trình hiệu năng cao.
+- Julia sử dụng đa phương thức (multiple dispatch), bằng cách này cho phép lập trình viên chọn những dạng mẫu lập trình khác nhau phù hợp với ứng dụng.
+- Julia là một ngôn ngữ định kiểu động mà ta dùng được bằng cách tương tác.
+- Julia có một cú pháp cấp cao rất đẹp và dễ học.
+- Julia là ngôn ngữ lập trình có tùy chọn định kiểu, theo đó những kiểu dữ liệu (người dùng định nghĩa) sẽ làm mã lệnh rõ ràng và mạnh hơn.
+- Julia có một thư viện chuẩn rộng rãi và cũng có nhiều gói chương trình do bên thứ ba phát triển.
 
-Julia is a unique programming language because it solves the so-called "two languages problem." No other programming language is needed to write high-performance code. This does not mean it happens automatically. It is the responsibility of the programmer to optimize the code that forms a bottleneck, but this can be done in Julia itself.
+Julia là một ngôn ngữ lập trình duy nhất vì nó giải quyết vấn đề được gọi là "hai ngôn ngữ". Không cần ngôn ngữ lập trình nào khác để viết mã lệnh hiệu năng cao. Điều này không có nghĩa là tự nó có được. Lập trình viên phải chịu trách nhiệm tối ưu hóa mã lệnh tại đoạn nút thắt cổ chai, song công đoạn này lại có thể thực hiện bằng Julia.
 
-=== Who Is This Book For?
+=== Cuốn sách này dành cho ai?
 
-This book is for anyone who wants to learn to program. No formal prior knowledge is required.
+Cuốn sách này được dành cho mọi người muốn học lập trình. Không cần biết trước bất cứ kiến thức bài bản nào.
 
-New concepts are introduced gradually and more advanced topics are described in later chapters.
+Những khái niệm mới sẽ được giới thiệu dần và các chủ đề nâng cao sẽ được trình bày ở những chương sau.
 
-_Think Julia_ can be used for a one-semester course at the high school or college level.
+Think Julia có thể dùng làm khóa học một kì cho các trường trung học hoặc cao đẳng, đại học giai đoạn đại cương.
 
-=== Conventions Used in This Book
+=== Quy ước dùng cho sách
 
-The ((("conventions used in this book")))((("typographical conventions in this book")))following typographical conventions are used in this book:
+Những quy ước kiểu chữ sau được dùng trong cuốn sách này:
 
-_Italic_:: Indicates new terms, URLs, email addresses, filenames, and file extensions.
+_Chữ nghiêng_:: Dùng để chỉ các thuật ngữ mới, các đường dẫn URL, địa chỉ email, tên file, và phần mở rộng file.
 
-+Constant width+:: Used for program listings, as well as within paragraphs to refer to program elements such as variable or function names, databases, data types, environment variables, statements, and keywords.
++Chữ đánh máy+:: Dùng cho mã lệnh toàn chương trình hoặc các đoạn mã, kể cả các thành phần gồm có các tên biến, tên hàm, cơ sở dữ liệu, kiểu dữ liệu, các biến môi trường, câu lệnh, và từ khoá.
 
-**`Constant width bold`**:: Shows commands or other text that should be typed literally by the user.
+**`Chữ đánh máy đậm`**:: Cho thấy những câu lệnh hoặc dòng chữ khác mà người dùng phải gõ vào y nguyên.
 
-_++Constant width italic++_:: Shows text that should be replaced with user-supplied values or by values determined by context.
+_++Chữ đánh máy nghiêng++_:: ho thấy những dòng chữ cần được thay thế bởi nội dung người dùng nhập vào hoặc bởi những giá trị quyết định bởi ngữ cảnh.
 
 
 [TIP]
 ====
-This ((("icons used in this book")))element signifies a tip or suggestion.
+Hộp này truyền đạt một mẹo nhỏ hoặc gợi ý.
 ====
 
 [NOTE]
 ====
-This element signifies a general note.
+Hộp này truyền đạt một nhận xét chung.
 ====
 
 [WARNING]
 ====
-This element indicates a warning or caution.
+Hộp này truyền đạt một lời cảnh báo, yêu cầu sự cẩn thận.
 ====
 
-=== Using Code Examples
+=== Sử dụng các mã lệnh ví dụ
 
-All ((("code examples in this book")))((("Git")))((("GitHub")))((("repository")))((("online resources", "Julia")))code used in this book is available from a Git repository on GitHub: https://github.com/BenLauwens/ThinkJulia.jl. If you are not familiar with Git, it is a version control system that allows you to keep track of the files that make up a project. A collection of files under Git's control is called a “repository.” GitHub is a hosting service that provides storage for Git repositories and a convenient web interface.
+Tất cả mã lệnh dùng trong sách này đều sẵn có từ kho mã lệnh Git trên GitHub: https://github.com/BenLauwens/ThinkJulia.jl. Nếu bạn chưa quen Git, thì đó là một hệ thống kiểm soát phiên bản; hệ thống này cho phép bạn theo dõi các file cấu thành một dự án. Tập hợp của các file được Git kiểm soát được gọi là một “kho mã lệnh”. GitHub là một dịch vụ tổ chức cung cấp chỗ chứa cho các kho mã Git cùng với một giao diện web tiện dụng.
 
-A ((("packages", "installing")))((("add command, in REPL")))convenience package is provided that can be directly added to Julia. Just type pass:[<code>add <a href="https://github.com/BenLauwens/ThinkJulia.jl">https://github.com/BenLauwens/ThinkJulia.jl</a></code>] in the REPL in Pkg mode, see <<turtles>>.
+Một gói phần mềm thuận tiện được cung cấp để bạn bổ sung trực tiếp vào Julia. Chỉ cần gõ *+pass:[add https://github.com/BenLauwens/ThinkJulia.jl]+* vào dấu nhắc lệnh (REPL) ở chế độ Pkg.
 
-The ((("Julia", "running")))easiest way to run Julia code is by going to https://juliabox.com and starting a free session. Both the REPL and a notebook interface are available. If ((("Julia", "installing")))you want to have Julia locally installed on your computer, you can download https://juliacomputing.com/products/juliapro.html[JuliaPro] for free from Julia Computing. It consists of a recent Julia version, the Juno interactive development environment based on Atom, and a number of preinstalled Julia packages. If you are more adventurous, you can download Julia from https://julialang.org, install the editor you like (e.g., Atom or Visual Studio Code), and activate the plug-ins for Julia integration. To ((("IJulia package")))a local install, you can also add the +IJulia+ package and run a Jupyter notebook on your computer.
+Cách dễ nhất để chạy mã lệnh Julia là đến https://juliabox.com và khởi động một phiên làm việc miễn phí. Cả dấu nhắc REPL và giao diện sổ notebook đều có sẵn ở đó. Nếu bạn muốn cài đặt Julia máy tính cá nhân, thì có thể tải về miễn phí JuliaPro của Julia Computing từ https://juliacomputing.com/products/juliapro.html. Nó bao gồm một phiên bản Julia gần đây, môi trường phát triển tích hợp Juno IDE dựa trên Atom và một số gói Julia đã cài sẵn. Nếu bạn mạo hiểm hơn thì có thể tải về Julia từ https://julialang.org, tự cài đặt trình biên tập bạn thích như Atom hay Visual Studio Code, rồi kích hoạt các trình cắm (plugin) cho phép tích hợp Julia. Trong trường hợp cài lên máy cá nhân, bạn cũng có thể tải về gói +IJulia+ và chạy một sổ Jupyter notebook trên máy tính của mình.
 
-=== Acknowledgments
+Quyển sách này mở ra để giúp bạn hoàn thành nhiệm vụ của mình. Nói chung, bạn có thể dùng mã lệnh ví dụ trong các chương trình và tài liệu mà bạn viết. Bạn không cần phải liên lạc chúng tôi để xin phép, trừ phi bạn tái sử dụng một phần đáng kể mã lệnh này. Chẳng hạn, viết một chương trình có dùng vài ba đoạn mã từ quyển sách này thì không cần xin phép. Rao bán hoặc phân bối một đĩa CD-ROM có chứa các ví dụ lấy từ sách của nhà xuất bản O’Reilly thì cần xin phép. Trả lời một câu hỏi bằng cách dẫn nguồn cuốn sách này và trích dẫn mã lệnh ví dụ thì không cần xin phép. Nhưng việc đem một lượng lớn mã lệnh từ cuốn sách này để đưa vào tài liệu hướng dẫn cho sản phẩm của bạn thì cần xin phép.
 
-I really want to thank Allen for writing _Think Python_ and allowing me to port his book to Julia. Your enthusiasm is contagious!
+Chúng tôi trân trọng, song không không yêu cầu sự ghi công. Việc ghi công thường chỉ kèm tiêu đề sách, tác giả, nhà xuất bản, và mã ISBN. Chẳng hạn: “Cuốn Think Julia, tác giả Ben Lauwens và Allen B; Downey (O’Reilly). Bản quyền 2019 Allen Downey, Ben Lauwens, 978-1-492-04503-8.”
 
-I would also like to thank the technical reviewers for this book, who made many helpful suggestions: Tim Besard, Bart Janssens, and David P. Sanders.
+Nếu bạn cảm thấy việc dùng các ví dụ mã lệnh lọt ra ngoài phạm vi "sử dụng vừa phải" hoặc cần xin phép như trên, hãy liên hệ với chúng tôi tại pass:[<a class="email" href="mailto:permissions@oreilly.com"><em>permissions@oreilly.com</em></a>].
 
-Thanks to Melissa Potter from O'Reilly Media, who made this a better book. You forced me to do things right and make this book as original as possible.
+=== O'Reilly Safari
 
-Thanks to Matt Hacker from O'Reilly Media, who helped me out with the Atlas toolchain and some syntax highlighting issues.
+[role = "safarienabled"]
+[NOTE]
+====
+pass:[<a href="http://oreilly.com/safari" class="orm:hideurl"><em class="hyperlink">Safari</em></a>] (tên trước đây Safari Books Online) là một nền tảng hướng dẫn và tham khảo cho các thành viên đăng kí cho các tổ chức thương mại, chính phủ, giáo dục cũng như cá nhân.
+====
 
-Thanks to all the students who worked with an early version of this book and all the contributors (listed below) who sent in corrections and suggestions.
+Các thành viên có thể truy cập được hàng ngàn cuốn sách, video hướng dẫn, các chủ đề luyện lập trình, bài hướng dẫn tương tác và bài phát được sưu tập từ hơn 250 nhà xuất bản, bao gồm O’Reilly Media, Harvard Business Review, Prentice Hall Professional, Addison-Wesley Professional, Microsoft Press, Sams, Que, Peachpit Press, Adobe, Focal Press, Cisco Press, John Wiley & Sons, Syngress, Morgan Kaufmann, IBM Redbooks, Packt, Adobe Press, FT Press, Apress, Manning, New Riders, McGraw-Hill, Jones & Bartlett, Course Technology, v.v.
 
-=== Contributor List
+Để biết thêm thông tin, hãy thăm trang pass:[<a href="http://oreilly.com/safari" class="orm:hideurl"><em>http://oreilly.com/safari</em></a>]. 
 
-If you have a suggestion or correction, please send email to ben.lauwens@gmail.com or open an issue on https://github.com/BenLauwens/ThinkJulia.jl[GitHub]. If I make a change based on your feedback, I will add you to the contributor list (unless you ask to be omitted).
+=== Cách liên lạc với chúng tôi
 
-Let me know what version of the book you are working with, and what format. If you include at least part of the sentence the error appears in, that will make it easy for me to search. Page and section numbers are fine, too, but not quite as easy to work with. Thanks!
+Hãy để lại những ý kiến góp ý và đặt câu hỏi liên quan đến nội dung sách cho nhà xuất bản:
+
+++++
+<ul class="simplelist">
+  <li>O’Reilly Media, Inc.</li>
+  <li>1005 Gravenstein Highway North</li>
+  <li>Sebastopol, CA 95472</li>
+  <li>800-998-9938 (ở Hoa Kỳ hoặc Canada)</li>
+  <li>707-829-0515 (quốc tế hoặc nội địa)</li>
+  <li>707-829-0104 (fax)</li>
+</ul>
+++++
+
+Chúng tôi có một trang web cho cuốn sách này, trong đó có các đính chính, ví dụ và thông tin thêm. Bạn có thể truy cập trang đó theo đường link:$$http://oreilly.com/catalog/0636920215707$$[].
+
+++++
+<!--Đừng quên cập nhật đường link trên.-->
+++++
+
+Để bình luận hoặc đặt những câu hỏi hỏi kĩ thuật, hãy gửi email tới: pass:[<a class="email" href="mailto:bookquestions@oreilly.com"><em>bookquestions@oreilly.com</em></a>].
+
+Để biết thêm thông tin về những cuốn sách, khóa học, hội thảo và tin tức, hãy xem website của chúng tôi tại đường link: $$http://www.oreilly.com$$[].
+
+Tìm chúng tôi trên Facebook: link: $$http://facebook.com/oreilly$$[]
+
+Theo dõi chúng tôi trên Twitter: link: $$http://twitter.com/oreillymedia$$[]
+
+Xem chúng tôi trên YouTube: link: $$http://www.youtube.com/oreillymedia$$[]
+
+=== Lời cảm tạ
+
+Thực lòng tôi muốn cám ơn Allen đã viết sách Think Python và cho phép tôi chuyển Think Python sang Julia. Sự tận tâm của ông thật có sức lan tỏa!
+
+Tôi cũng muốn cám ơn những người hiệu đính kĩ thuật cho cuốn sách này, họ đã đóng góp nhiều ý kiến quý báu: Tim Besard, Bart Janssens và David P. Sanders.
+
+Cám ơn Melissa Potter ở O'Reilly Media đã giúp cho cuốn sách này hay hơn. Cô đã buộc tôi phải soạn thảo đúng chuẩn và làm cuốn sách này giống nguyên bản ở mức sát nhất có thể.
+
+Cám ơn Matt Hacker ở O'Reilly Media đã giúp tôi dùng chuỗi công cụ Atlas toolchain và một số vấn đề tô màu cú pháp.
+
+Cám ơn toàn thể sinh viên đã đọc duyệt qua phiên bản đầu cuốn sách này cùng tất cả những người đóng góp (danh sách dưới đây) đã gửi những đính chính và gợi ý.
+
+=== Danh sách những cá nhân đóng góp
+
+Nếu bạn có một gợi ý hoặc đính chính, hãy gửi email tới ben.lauwens@gmail.com hoặc mở một issue trên GitHub. Nếu tôi thực hiện thay đổi theo phản hồi của bạn, tôi sẽ ghi tên bạn vào danh sách đóng góp (trừ khi bạn không muốn).
+
+Hãy cho tôi biết phiên bản cuốn sách mà bạn muốn đề cập tới, và định dạng (PDF, web v.v.) Nếu bạn ghi cả một phần đoạn câu chứa lỗi thì sẽ tiện hơn nhiều để tôi tìm ra câu lỗi đó. Nếu ghi trang sách và số đề mục thì cũng được nhưng không tiện bằng. Cám ơn bạn!
 
 [small]
 --
-- Scott Jones pointed out the name change of +Void+ to +Nothing+, and this started the migration to Julia v1.0.
-- Robin Deits found some typos in <<chap02>>.
-- Mark Schmitz suggested turning on syntax highlighting.
-- Zigu Zhao caught some bugs in <<chap08>>.
-- Oleg Soloviev caught an error in the URL to add the +ThinkJulia+ package.
-- Aaron Ang found some rendering and naming issues.
-- Sergey Volkov caught a broken link in <<chap07>>.
-- Sean McAllister suggested mentioning the excellent package +BenchmarkTools+.
-- Carlos Bolech sent a long list of corrections and suggestions.
-- Krishna Kumar corrected the Markov example in <<chap18>>.
+- Scott Jones phát hiện thay đổi tên từ +Void+ thành +Nothing+ và điều này bắt đầu bước chuyển sang Julia v1.0.
+- Robin Deits tìm thấy vài lỗi typo ở Chương 2.
+- Mark Schmitz gợi ý cần bật tô màu cú pháp lên.
+- Zigu Zhao phát hiện một số lỗi ở Chương 8.
+- Oleg Soloviev phát hiện lỗi ở địa chỉ url để bổ sung gói +ThinkJulia+.
+- Aaron Ang phát hiện vài vấn đề về đặt tên và vẽ hình (render).
+- Sergey Volkov phát hiện một đường link sai trong Chương 7.
+- Sean McAllister đề nghị nhắc tới một gói rất tốt là +BenchmarkTools+.
+- Carlos Bolech gửi một danh sách dài các đính chính và gợi ý.
+- Krishna Kumar sửa lại ví dụ Markov ở Chương 18.
 --
