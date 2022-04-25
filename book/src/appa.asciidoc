@@ -1,12 +1,12 @@
 [appendix]
-== Unicode Input
+== Nhập kí tự Unicode
 
-The following table lists a few Unicode characters out of many that can be entered via tab completion of LaTeX-like abbreviations in the Julia REPL (and in various other editing environments).
-(((Unicode character)))(((LaTeX-like abbreviations)))(((REPL)))
+Bảng dưới đây liệt kê một vài trong số rất nhiều những kí tự Unicode mà ta có thể nhập bằng cách dùng phím tab dể điền nốt các chữ viết tắt kiểu như LaTeX từ dấu nhắc REPL của Julia (và trong những môi trường biên tập khác).
+(((kí tự Unicode)))(((viết tắt kiểu LaTeX)))(((REPL)))
 
 [options="header"]
 |====
-|Character|Tab completion sequence|ASCII representation
+|Kí tự|Chuôi điền bằng phím Tab|Biểu diễn ASCII
 |+²+|*+\^2+*| 
 |+₁+|*+\_1+*| 
 |+₂+|*+\_2+*|
