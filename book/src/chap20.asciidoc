@@ -1,23 +1,23 @@
 [[chap20]]
-== The Goodies: Base and Standard Library
+== Những mặt tốt: module Base và thư viện chuẩn
 
-Julia comes with batteries included. The +Base+ module contains the most useful functions, types and macros. These are directly available in Julia.
+Julia đi kèm theo các phụ kiện. Module +Base+ chứa các hàm, kiểu dữ liệu và macro hữu dụng nhất. Chúng đều sẵn có trực tiếp trong Julia.
 (((Base)))
 
-Julia provides also a large number of specialized modules in its Standard Library (Dates, Distributed Computing, Linear Algebra, Profiling, Random Numbers, ...). Functions, types and macros defined in the Standard Library have to be imported before they can be used:
+Julia cũng cung cấp nhiều module chuyên dụng trong thư viện chuẩn (Standard Library) của nó: Dates (ngày tháng), Distributed Computing (tính toán phân bố), Linear Algebra (đại số tuyến tính), Profiling (đo hiệu năng), Random Numbers (số ngẫu nhiên), ... Các hàm, kiểu dữ liệu và macros đã định nghĩa trong thư viện chuẩn thì phải được nhập trước khi sử dụng:
 
 * +import _Module_+ imports the module, and +_Module.fn_(x)+ calls the function +_fn_+
 (((import)))((("keyword", "import", see="import")))
 * +using _Module_+ imports all exported +_Module_+ functions, types and macros.
 (((using)))
 
-Additional functionality can be added from a growing collection of packages (https://juliaobserver.com).
+Có thể bổ sung các tính năng phụ thêm từ tập hợp những gói phần mềm đang không ngừng gia tăng (https://juliaobserver.com).
 
-This chapter is not a replacement of the official Julia documentation. I give merely some examples to illustrate what is possible without being exhaustive.  Functions already introduced elsewhere are not included. A complete overview can be found in https://docs.julialang.org.
+Chương này không nhằm thay thế tài liệu chính thức của Julia. Tôi chỉ đưa ra vài ví dụ để minh họa những gì là có thể, song không cách nào trình bày hết. Các hàm đã được đề cập trước đây thì sẽ không được nhắc tới nữa. Bạn có thể tìm thấy giới thiệu tổng quan hoàn chỉnh ở https://docs.julialang.org.
 
-=== Measuring Performance
+=== Đo đạc hiệu năng
 
-We have seen that some algorithms perform better than others. +fibonnaci+ in <<memos>> is a lot faster than +fib+ in <<one_more_example>>. The +@time+ macro allows to quantify the difference:
+Ta đã thấy rằng có những thuật toán thể hiện tốt hơn các thuật toán khác. +fibonnaci+ trong <<memos>> thì nhanh hơn nhiều so với +fib+ trong <<one_more_example>>. Macro +@time+ cho phép ta đo lường sự khác biệt này:
 (((@time)))((("macro", "Base", "@time", see="@time")))
 
 [source,jlcon]
@@ -34,25 +34,25 @@ julia> @time fibonacci(40)
 102334155
 ----
 
-+@time+ prints the time the function took to execute, the number of allocations and the allocated memory before returning the result. The memoized version is effectively a lot faster but needs more memory. 
++@time+ in ra thời gian để hàm thực thi, lượng bộ nhớ cần huy động và số lần huy động trước khi trả lại kết quả. Phiên bản mã có dùng ghi nhớ thực ra là nhanh hơn nhiều nhưng cần nhiều bộ nhớ hơn.
 
 [quote]
 ____
-There ain't no such thing as a free lunch!
+Không có ai cho không bạn thứ gì cả!
 ____
 
 [TIP]
 ====
-A function in Julia is compiled the first time it is executed. So to compare two algorithms, they have to be implemented as functions to get compiled and the first time they are called has to be excluded from the performance measure, otherwise the compilation time is measured as well.
+Trong Julia, một hàm sẽ được biên dịch lần đầu trước khi thực thi. Vì vậy, để so sánh hai thuật toán, chúng cần được viết thành các hàm để được biên dịch và lần đầu tiên gọi đến chúng sẽ không được tính khi ta đo hiệu năng, vì nếu không ta sẽ đo cả thời gian biên dịch nữa.
 
-The package +BenchmarkTools+ (https://github.com/JuliaCI/BenchmarkTools.jl) provides the macro +@btime+ that does benchmarking the right way. So just use it!
+Gói +BenchmarkTools+ (https://github.com/JuliaCI/BenchmarkTools.jl) cung cấp macro +@btime+ giúp ta đối chuẩn (benchmark) đúng cách. Hãy dùng nó!
 ====
 
 
 [[collections_and_data_structures]]
-=== Collections and Data Structures
+=== Các tập hợp và cấu trúc dữ liệu
 
-In <<dictionary_subtraction>> we used dictionaries to find the words that appear in a document but not in a word array. The function we wrote takes +d1+, which contains the words from the document as keys, and +d2+, which contains the array of words. It returns a dictionary that contains the keys from +d1+ that are not in +d2+.
+Ở <<dictionary_subtraction>> ta đã dùng từ điển để tìm ra những từ xuất hiện trong văn bản nhưng không có trong một mảng các từ riêng. Ta đã viết hàm nhận vào +d1+, vốn lấy các từ trong văm bản làm khóa, và +d2+, vốn chứa mảng các từ. Hàm này trả lại một từ điển mà các khóa của nó lấy từ +d1+ nhưng không có trong +d2+.
 (((subtract)))
 
 [source,@julia-setup]
@@ -68,12 +68,12 @@ function subtract(d1, d2)
 end
 ----
 
-In all of these dictionaries, the values are +nothing+ because we never use them. As a result, we waste some storage space.
+Trong tất cả những từ điển này, các giá trị đều là +nothing+ vì ta không bao giờ dùng đến chúng. Hệ quả là, ta đã lãng phí chút dung lượng lưu trữ.
 
-Julia provides another built-in type, called a set, that behaves like a collection of dictionary keys with no values. Adding elements to a set is fast; so is checking membership. And sets provide functions and operators to compute common set operations.
+Julia cung cấp một kiểu dữ liệu dựng sẵn khác: tập hợp, nó hoạt động như một nhóm các khóa của từ điển mà không có giá trị. Việc thêm các phần tử vào một tập hợp thì rất nhanh; và kiểm tra xem phần tử có thuộc tập hợp không. Và tập hợp còn cung cấp các hàm và toán tử để phục vụ phép tính thông dụng nữa.
 (((Set)))((("type", "Base", "Set", see="Set")))
 
-For example, set subtraction is available as a function called +setdiff+. So we can rewrite +subtract+ like this:
+Chẳng hạn, phép trừ tập hợp có ngay ở hàm tên là +setdiff+. Vì vậy ta có thể viết lại +subtract+ như sau:
 (((setdiff)))((("function", "Base", "setdiff", see="setdiff")))
 
 [source,@julia-setup]
@@ -83,9 +83,9 @@ function subtract(d1, d2)
 end
 ----
 
-The result is a set instead of a dictionary.
+Kết quả là một tập hợp thay vì một từ điển.
 
-Some of the exercises in this book can be done concisely and efficiently with sets. For example, here is a solution to +hasduplicates+, from <<ex10-7>>, that uses a dictionary:
+Có những ví dụ trong sách này giải được một cách gọn gàng, hiệu quả hơn nhờ tập hợp. Chẳng hạn, có một lời giải bài +hasduplicates+, từ <<ex10-7>>, mà dùng đên từ điển:
 (((hasduplicates)))
 
 [source,@julia-setup]
@@ -102,9 +102,9 @@ function hasduplicates(t)
 end
 ----
 
-When an element appears for the first time, it is added to the dictionary. If the same element appears again, the function returns +true+.
+Khi một phần tử xuất hiện lần đầu tiên, ta thêm nó vào từ điển. Nếu vẫn phần tử đó xuất hiện lần nữa, hàm này trả lại +true+.
 
-Using sets, we can write the same function like this:
+Với tập hợp ta có thể viết lại hàm đó như sau:
 
 [source,@julia-setup]
 ----
@@ -113,9 +113,9 @@ function hasduplicates(t)
 end
 ----
 
-An element can only appear in a set once, so if an element in +t+ appears more than once, the set will be smaller than +t+. If there are no duplicates, the set will be the same size as +t+.
+Một phần tử chỉ có thể xuất hiện một lần trong tập hợp, bởi vậy nếu phần tử trong +t+ xuất hiện nhiều hơn một lần, tập hợp sẽ nhỏ hơn +t+. Nếu không có gì trùng lặp, tập hợp sẽ có kích thước giống như +t+.
 
-We can also use sets to do some of the exercises in <<chap09>>. For example, here’s a version of +usesonly+ with a loop:
+Ta cũng có thể dùng tập hợp để làm một số bài tập trong <<chap09>>. Chẳng hạn, dưới đây là một phiên bản của +usesonly+ có dùng vòng lặp:
 (((usesonly)))
 
 [source,@julia-setup]
@@ -130,7 +130,7 @@ function usesonly(word, available)
 end
 ----
 
-+usesonly+ checks whether all letters in +word+ are in +available+. We can rewrite it like this:
++usesonly+ kiểm tra xem liệu tất cả chữ cái trong +word+ có trong +available+ không. Ta có thể viết lại như sau:
 
 [source,@julia-setup]
 ----
@@ -139,21 +139,21 @@ function usesonly(word, available)
 end
 ----
 
-The +⊆+ (*+\subseteq TAB+*) operator checks whether one set is a subset or another, including the possibility that they are equal, which is true if all the letters in +word+ appear in +available+. 
+Toán tử +⊆+ (*+\subseteq TAB+*) kiểm tra xem liệu một tập hợp này có phải là tập con của tập hợp khác không, bao gồm cả khả năng hai tập hợp bằng nhau. Kết quả sẽ là true nếu tất cả các chữ trong +word+ có xuất hiện trong +available+. 
 (((⊆)))((("operator", "Base", "⊆", see="⊆")))
 
-===== Exercise 20-1
+===== Bài tập 20-1
 
-Rewrite +avoids+ using sets.
+Hãy viết lại +avoids+ dùng đến tập hợp.
 (((avoids)))
 
 
-=== Mathematics
+=== Toán học
 
-Complex numbers are also supported in Julia. The global constant +im+ is bound to the complex number latexmath:[$\mathrm{i}$], representing the principal square root of latexmath:[$-1$].
+Julia cũng hỗ trợ các số phức. Hằng số toàn cục +im+ được gắn với số phức latexmath:[$\mathrm{i}$], biểu diễn cho căn bậc hai chính của latexmath:[$-1$].
 (((complex numbers)))(((im)))
 
-We can now verify Euler's identity,
+Bây giờ ta có thể kiểm tra đẳng thức Euler,
 (((Euler's identity)))
 
 [source,@julia-repl-test]
@@ -162,10 +162,10 @@ julia> ℯ^(im*π)+1
 0.0 + 1.2246467991473532e-16im
 ----
 
-The symbol +ℯ+ (*+\euler TAB+*) is the base of natural logarithms.
+Dấu +ℯ+ (*+\euler TAB+*) là cơ số của logarit tự nhiên.
 (((ℯ))) 
 
-Let's illustrate the complex nature of trigonometric functions:
+Ta hãy minh họa bản chất số phức của các hàm lượng giác:
 
 [latexmath]
 ++++
@@ -174,7 +174,7 @@ Let's illustrate the complex nature of trigonometric functions:
 \end{equation}
 ++++
 
-We can test this formula for different values of latexmath:[\(x\)].
+Ta có thể kiểm tra công thức này cho các giá trị khác nhau của latexmath:[\(x\)].
 
 [source,@julia-repl-test]
 ----
@@ -184,14 +184,14 @@ julia> cos.(x) == 0.5*(ℯ.^(im*x)+ℯ.^(-im*x))
 true
 ----
 
-Here, another example of the dot operator is shown. Julia also allows numeric literals to be juxtaposed with identifiers as coefficients as in +2π+.
+Trên đây cũng cho thấy một ví dụ khác về toán tử chấm. Julia còn cho phép các số nguyên văn được đặt cạnh những tên hiệu (biến, hằng), với vai trò làm hệ số như trường hợp +2π+.
 
-=== Strings
+=== Chuỗi
 
-In <<chap08>> and <<chap09>>, we did some elementary searches in string objects. Julia can handle however Perl-compatible regular expressions (_regexes_), which eases the task of finding complex patterns in string objets.
+Ở <<chap08>> và <<chap09>>, ta đã tìm kiếm một cách đơn giản trong các đối tượng chuỗi. Tuy nhiên, Julia có thể xử lý các biểu thức thường quy (_regexes_) tương thích với Perl, điều này giúp việc tìm kiếm các dạng mẫu phức tạp trong các đối tượng chuỗi một cách dễ dàng.
 (((regex)))
 
-The +usesonly+ function can be implemented as a regex:
+Hàm +usesonly+ cũng có thể viết được bằng một regex:
 (((usesonly)))(((Regex)))((("type", "Base", "Regex", see="Regex")))(((occursin)))((("function", "Base", "occursin", see="occursin")))
 
 [source,@julia-setup chap20]
@@ -202,7 +202,7 @@ function usesonly(word, available)
 end
 ----
 
-The regex looks for a character that is not in the +available+ string and +occursin+ returns +true+ if the pattern is found in +word+.
+Biểu thức regex tìm một kí tự không có trong chuỗi +available+, còn +occursin+ trả lại +true+ nếu dạng mẫu được tìm thấy trong +word+.
 
 [source,@julia-repl-test chap20]
 ----
@@ -212,7 +212,7 @@ julia> usesonly("bananas", "abn")
 false
 ----
 
-Regexes can also be constructed as non-standard string literals prefixed with +r+:
+Các biểu thức regex cũng có thể được lập nên từ các nguyên mẫu chuỗi không theo chuẩn với chữ +r+ đứng trước:
 (((string)))(((match)))((("function", "Base", "match", see="match")))
 
 [source,@julia-repl-test chap20]
@@ -223,15 +223,15 @@ julia> m = match(r"[^abn]", "bananas")
 RegexMatch("s")
 ----
 
-String interpolation is not allowed in this case. The +match+ function returns nothing if the pattern (a command) is not found and return a regexmatch object otherwise.
+Trường hợp này thì không cho phép nội suy chuỗi. Hàm +match+ trả lại nothing nếu dạng mẫu (một câu lệnh) không tìm thấy, trái lại thì sẽ trả lại một đối tượng regexmatch.
 (((string interpolation)))(((RegexMatch)))((("type", "Base", "RegexMatch", see="RegexMatch")))
 
-We can extract the following info from a regexmatch object:
+Ta có thể kết xuất thông tin sau từ một đối tượng regexmatch:
 
-* the entire substring matched: +m.match+
-* the captured substrings as an array of strings: +m.captures+
-* the offset at which the whole match begins: +m.offset+
-* the offsets of the captured substrings as an array: +m.offsets+
+* toàn bộ chuỗi con đã khớp được: +m.match+
+* các chuỗi con bắt được thu vào một mảng: +m.captures+
+* vị trí bắt đầu chỗ khớp: +m.offset+
+* các vị trí của các chuỗi con được bắt vào mảng: +m.offsets+
 
 [source,@julia-repl-test chap20]
 ----
@@ -241,13 +241,13 @@ julia> m.offset
 7
 ----
 
-Regexes are extremely powerful and the PERL manpage http://perldoc.perl.org/perlre.html provides all the details to construct the most exotic searches.
+Các regex rất mạnh và trang hướng dẫn PERL http://perldoc.perl.org/perlre.html cung cấp mọi chi tiết để bạn lập nên những tìm kiếm đặc biệt.
 
-=== Arrays
+=== Mảng
 
-In <<chap10>> we used an array object as a one-dimensional container with an index to address its elements. In Julia however, arrays are multi-dimensional collections.
+Ở <<chap10>> ta đã dùng một đối tượng mảng để làm vật đựng có 1 chiều với một chỉ số để điểm danh các phần tử của nó. Tuy vậy trong Julia, các mảng là những tập hợp (collection) nhiều chiều.
 
-Let's create a 2-by-3 zero _matrix_:
+Ta hãy tạo ra một _ma trận_ không kích thước 2×3:
 (((zeros)))((("function", "Base", "zeros", see="zeros")))(((matrix)))
 
 [source,@julia-repl-test chap20]
@@ -260,10 +260,10 @@ julia> typeof(z)
 Array{Float64,2}
 ----
 
-The type of this matrix is an array holding floating points and having 2 dimensions.
+Kiểu của ma trận này là một mảng 2 chiều chứa các số phẩy động. 
 (((dimension)))
 
-The +size+ function returns a tuple with as elements the number of elements in each dimension:
+Hàm +size+ trả lại một bộ (tuple) với các phần tử là kích thước của mỗi chiều:
 (((size)))((("function", "Base", "size", see="size")))
 
 [source,@julia-repl-test chap20]
@@ -272,7 +272,7 @@ julia> size(z)
 (2, 3)
 ----
 
-The function +ones+ constructs a matrix with unit value elements:
+Hàm +ones+ lập nên một ma trận với các phần tử với giá trị unit:
 (((ones)))((("function", "Base", "ones", see="ones")))
 
 [source,@julia-repl-test chap20]
@@ -282,11 +282,11 @@ julia> s = ones(String, 1, 3)
  ""  ""  ""
 ----
 
-The string unit element is an empty string.
+Chuỗi phần tử unit là một chuỗi rỗng.
 
 [WARNING]
 ====
-+s+ is not a one-dimensional array:
++s+ không phải là một mảng 1 chiều:
 
 [source,@julia-repl-test chap20]
 ----
@@ -294,10 +294,10 @@ julia> s ==  ["", "", ""]
 false
 ----
 
-+s+ is a row matrix and +["", "", ""]+ is a column matrix.
++s+ là một ma trận hàng còn +["", "", ""]+ là một ma trận cột.
 ====
 
-A matrix can be entered directly using a space to separate elements in a row and a semicolon +;+ to separate rows:
+Một ma trận có thể được trực tiếp nhập vào bằng cách dùng dấu cách để tách các phần tử cùng một hàng và dấu chấm phẩy +;+ để tách các cột:
 (((;)))
 
 [source,@julia-repl-test chap20]
@@ -308,7 +308,7 @@ julia> a = [1 2 3; 4 5 6]
  4  5  6
 ----
 
-You can use square brackets to address individual elements:
+Bạn có thể dùng các ngoặc vuông để chỉ tới các phần tử riêng biệt:
 (((square brackets)))
 
 [source,@julia-repl-test chap20]
@@ -323,7 +323,7 @@ julia> z
  0.0  0.0  1.0
 ----
 
-Slices can be used for each dimension to select a subgroup of elements:
+Ta có thể dùng những lát cắt trên mỗi chiều để lựa chọn một nhóm con gồm các phần tử:
 (((slice)))
 
 [source,@julia-repl-test chap20]
@@ -334,7 +334,7 @@ julia> u = z[:,2:end]
  0.0  1.0
 ----
 
-The +.+ operator broadcasts to all dimensions:
+Toán tử +.+ phát tán giá trị ra tất cả các chiều trong mảng:
 (((.)))
 
 [source,@julia-repl-test chap20]
@@ -345,19 +345,19 @@ julia> ℯ.^(im*u)
       1.0+0.0im       0.540302+0.841471im
 ----
 
-=== Interfaces
+=== Giao diện
 
-Julia specifies some informal interfaces to define behaviors, i.e. methods with a specific goal. When you extend such a method for a type, objects of that type can be used to build upon these behaviors.
+Julia chỉ định vài giao diện không chính thống để định nghĩa các động thái, nghĩa là các phương thức có mục tiêu cụ thể. Khi bạn mở rộng một phương thức cho một kiểu dữ liệu thì ta có thể dùng các đối tượng thuộc kiểu đó để thiết lập dựa trên những động thái đã nêu.
 (((interface)))
 
 [quote]
 ____
-If it looks like a duck, swims like a duck, and quacks like a duck, then it probably _is_ a duck.
+Nếu nó trông như vịt, bơi như con vịt và kêu quàng quạc như con vịt thì có lẽ nó _là_ vịt rồi.
 ____
 
-In <<one_more_example>> we implemented the +fib+ function returning the latexmath:[\(n\)]th element of the Fibonnaci sequence.
+Ở <<one_more_example>> ta đã viết hàm +fib+ trả lại phần thử thứ latexmath:[\(n\)] thuộc dãy Fibonnaci.
 
-Looping over the values of a collection, called iteration, is such an interface. Let's make an iterator that returns lazily the Fibonacci sequence:
+Phép lặp qua các giá trị của một tập collection là một giao diện như vậy. Ta hãy làm một bộ lặp để trả lại dãy Fibonacci theo cách lười biếng:
 (((iterator)))(((Fibonacci)))((("type", "programmer-defined", "Fibonacci", see="Fibonacci")))(((iterate)))((("function", "Base", "iterate", see="iterate")))
 
 [source,@julia-setup chap20]
@@ -369,11 +369,11 @@ Base.iterate(::Fibonacci{T}) where {T<:Real} = (zero(T), (one(T), one(T)))
 Base.iterate(::Fibonacci{T}, state::Tuple{T, T}) where {T<:Real} = (state[1], (state[2], state[1] + state[2]))
 ----
 
-We implemented a parametric type with no fields +Fibonacci+, an outer constructor and two methods +iterate+. The first is called to initialize the iterator and returns a tuple consisting of the first value, 0, and a state. The state in this case is a tuple containing the second and the third value, 1 and 1.
+Ta đã viết một kiểu tham số mà không có trường +Fibonacci+, một constructor bên ngoài và hai phương thức +iterate+. Phương thức thứ nhất được gọi để khởi tạo bộ lặp và trả lại một cặp (tuple) chứa giá trị thứ nhất bằng 0, cùng một trạng thái. Trạng thái này là một cặp chứ các giá trị thứ hai và thứ ba, là 1 à 1.
 
-The second is called to get the next value of the Fibonacci sequence and returns a tuple having as first element the next value and as second element the state which is a tuple with the two following values.
+Phương thức thứ hai được gọi để lấy giá trị tiếp theo của dãy Fibonacci và trả lại một cặp có phần tử thứ nhất là giá trị tiếp theo và phần tử thứ hai là trạng thái vốn là một cặp có hai giá trị tiếp theo.
 
-We can use +Fibonacci+ now in a +for+ loop:
+Giờ thì ta có thể sử dụng +Fibonacci+ trong một vòng lặp +for+:
 (((for statement)))
 
 [source,@julia-repl-test chap20]
@@ -385,7 +385,7 @@ julia> for e in Fibonacci(Int64)
 0 1 1 2 3 5 8 13 21 34 55 89
 ----
 
-It looks like magic has happened but the explanation is simple. A +for+ loop in Julia
+Dường như phép màu đã xảy ra song lời giải thích rất đơn giản. Một vòng lặp +for+ trong Julia
 
 [source,julia]
 ----
@@ -394,7 +394,7 @@ for i in iter
 end
 ----
 
-is translated into:
+được chuyển sang thành:
 
 [source,julia]
 ----
@@ -406,17 +406,17 @@ while next !== nothing
 end
 ----
 
-This is a great example how a well defined interface allows an implementation to use all the functions that are aware of the interface.
+Đây là một ví dụ rõ ràng cho thấy bằng cách nào mà một giao diện định nghĩa rõ ràng cho phép viết mã dùng được mọi hàm biết đến giao diện này.
 
 
-=== Interactive Utilities
+=== Các tiện ích tương tác
 
-We have already met the +InteractiveUtils+ module in <<interactive>>. The +@which+ macro is only the tip of the iceberg.
+Ta đã gặp module +InteractiveUtils+ ở <<interactive>>. Macro +@which+ chỉ là phần nổi của tảng băng mà thôi.
 (((InteractiveUtils)))(((@which)))
 
-Julia code is transformed by the LLVM library to machinecode in multiple steps. We can directly visualize the output of each stage.
+Mã lệnh Julia được thư viện LLVM chuyển đổi qua nhiều bước thành ngôn ngữ máy. Ta có thể trực tiếp trực quan hóa kết quả đầu ra từng bước.
 
-Let's give a simple example:
+Hãy lấy một ví dụ đơn giản:
 (((squaresum)))((("function", "programmer-defined", "squaresum", see="squaresum")))
 
 [source,@julia-setup chap20]
@@ -426,7 +426,7 @@ function squaresum(a::Float64, b::Float64)
 end
 ----
 
-The first step is to look at the lowered code:
+Bước đầu tiên là nhìn vào mã lệnh được hạ xuống:
 (((@code_lowered)))((("macro", "InteractiveUtils", "@code_lowered", see="@code_lowered")))
 
 [source,@julia-repl-test chap20]
@@ -446,10 +446,10 @@ CodeInfo(
 )
 ----
 
-The +@code_lowered+ macro returns an array of an _intermediate representation_ of the code that is used by the compiler to generate optimised code.
-(((intermediate representation)))
+Macro +@code_lowered+ trả lại một mảng _biểu diễn trung gian_ của mã lệnh được trình biên dịch dùng đến để phát sinh mã lệnh tối ưu hóa.
+(((biểu diễn trung gian)))
 
-The next step adds type information:
+Bước tiếp theo thêm vào thông tin:
 (((@code_typed)))((("macro", "InteractiveUtils", "@code_typed", see="@code_typed")))
 
 [source,@julia-repl-test chap20]
@@ -463,9 +463,9 @@ CodeInfo(
 ) => Float64
 ----
 
-We see that the type of the intermediate results and the return value is correctly inferred.
+Ta thấy rằng kiểu dữ liệu của các kết quả trung gian và giá trị trả lại được suy luận đúng.
 
-This representation of the code is transformed into LLVM code:
+Dạng biểu diễn của mã lệnh này được chuyển sang mã LLVM:
 (((LLVM code)))(((@code_llvm)))((("macro", "InteractiveUtils", "@code_llvm", see="@code_llvm")))
 
 [source,@julia-repl chap20]
@@ -473,7 +473,7 @@ This representation of the code is transformed into LLVM code:
 @code_llvm squaresum(3.0, 4.0)
 ----
 
-And finally the _machine code_ is generated:
+Và sau cùng _mã máy_ được phát sinh:
 (((machine code)))(((@code_native)))((("macro", "InteractiveUtils", "@code_native", see="@code_native")))
 
 [source,@julia-repl-test chap20]
@@ -494,9 +494,9 @@ julia> @code_native squaresum(3.0, 4.0)
 ; └
 ----
 
-=== Debugging
+=== Gỡ lỗi
 
-The +Logging+ macros provide an alternative to scaffolding with print statements:
+Các macro +Logging+ cho ta một cách khác thay vì viết các lệnh print để rào đỡ mã lệnh:
 (((@warn)))((("macro", "Base", "@warn", see="@warn")))(((debugging)))
 
 [source,jlcon]
@@ -506,7 +506,7 @@ julia> @warn "Abandon printf debugging, all ye who enter here!"
 └ @ Main REPL[1]:1
 ----
 
-The debug statements don't have to be removed from the source. For example, in contrast to the +@warn+ above
+Không cần phải xóa các câu lệnh gỡ lỗi khỏi mã nguồn. Chẳng hạn, trái với macro +@warn+ ở trên
 (((debug statement)))(((@debug)))((("macro", "Base", "@debug", see="@debug")))
 
 [source,jlcon]
@@ -515,40 +515,40 @@ julia> @debug "The sum of some values $(sum(rand(100)))"
 
 ----
 
-will produce no output by default. In this case +sum(rand(100))+ will never be evaluated unless _debug logging_ is enabled.
+mặc định sẽ không tạo ra kết quả nào. Trong trường hợp này +sum(rand(100))+ sẽ không bao giờ được lượng giá trừ phi ta bật chế độ _debug logging_.
 (((debug logging)))
 
-The level of logging can be selected by an environment variable +JULIA_DEBUG+:
-(((environment variable)))
+Ta có thể chọn mức độ ghi biên bản qua một biến môi trường +JULIA_DEBUG+:
+(((biến môi trường)))
 
 [source]
 ----
-$ JULIA_DEBUG=all julia -e '@debug "The sum of some values $(sum(rand(100)))"'
-┌ Debug: The sum of some values 47.116520814555024
+$ JULIA_DEBUG=all julia -e '@debug "Tổng của một số giá trị $(sum(rand(100)))"'
+┌ Debug: Tổng của một số giá trị 47.116520814555024
 └ @ Main none:1
 ----
 
-Here, we have used +all+ to get all debug information, but you can also choose to generate only output for a specific file or module.
+Ở đây, ta đã dùng +all+ để thu mọi thông tin gỡ lỗi, song bạn cũng có thể chọn để phát sinh ra kết quả đầu ra cho một file hoặc module cụ thể thôi.
 
 
-=== Glossary
+=== Thuật ngữ
 
 regex::
-Regular expression, a sequence of characters that define a search pattern.
+Biểu thức thường quy, một dãy các kí tự để định nghĩa cho dạng mẫu tìm kiếm.
 (((regex)))
 
-matrix::
-Two-dimensional array.
-(((matrix)))
+ma trận::
+(matrix) Một mảng 2 chiều.
+(((ma trận)))
 
-intermediate representation::
-Data structure used internally by a compiler to represent source code.
-(((intermediate representation)))
+biểu diễn trung gian::
+(intermediate representation) Cấu trúc dữ liệu được dùng bên trong một trình biên dịch để biểu diễn cho mã lệnh.
+(((biểu diễn trung gian)))
 
-machine code::
-Language instructions that can be executed directly by a computer's central processing unit.
-(((machine code)))
+mã máy::
+(machine code) Các chỉ dẫn ngôn ngữ có thể thực thi trực tiếp bởi bộ xử lý trung tâm của máy tính.
+(((mã máy)))
 
-debug logging::
-Storing debug messages in a log.
+ghi biên bản gỡ lỗi::
+(debug logging) Việc lưu lại các thông điệp gỡ lỗi vào một biên bản.
 (((debug logging)))
