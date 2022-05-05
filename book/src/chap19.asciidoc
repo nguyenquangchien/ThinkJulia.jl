@@ -1,21 +1,21 @@
 [[chap19]]
-== The Goodies: Syntax
+== Những mặt tốt: cú pháp
 
-One of my goals for this book has been to teach you as little Julia as possible. When there were two ways to do something, I picked one and avoided mentioning the other. Or sometimes I put the second one into an exercise.
+Một trong những mục tiêu của tôi khi viết sách này là dạy bạn ít Julia nhất khi có thể. Khi phải đứng trước hai lựa chọn giải quyết vấn đề, tôi chọn một cách và tránh đề cập đến cách kia. Hoặc đôi khi tôi đưa cách thứ hai vào một bài tập.
 
-Now I want to go back for some of the good bits that got left behind. Julia provides a number of features that are not really necessary—you can write good code without them—but with them you can sometimes write code that’s more concise, readable or efficient, and sometimes all three.
+Bây giờ tôi muốn trở lại vài đặc điểm hay mà tôi đã bỏ qua trước đây. Julia cung cấp nhiều tính năng mà thực ra chưa cần thiết —không có chúng bạn vẫn có thể viết mã lệnh đẹp—nhưng dùng chúng thì đôi khi có thể viết được mã lệnh ngắn gọn, dễ đọc hoặc hiệu quả hơn, và đôi khi được cả ba điều này.
 
-This chapter and the next discuss the things I have left out in the previous chapters: 
+Ở chương này và chương tới, ta thảo luận những vấn đề tôi đã bỏ qua trong các chương trước:
 
-* syntax supplements
-* functions, types and macros directly available in +Base+
+* bổ sung cú pháp
+* các hàm, kiểu dữ liệu và macro có ngay trong +Base+
 (((Base)))
-* functions, types and macros in the Standard Library
+* các hàm, kiểu dữ liệu và macro có trong
 (((Standard Library)))
 
-=== Named Tuples
+=== Các cặp được đặt tên 
 
-You can name the components of a tuple, creating a named tuple:
+Bạn có thể đặt tên các thành phần của một cặp, bằng cách này tạo một cặp được đặt tên:
 
 [source,@julia-repl-test]
 ----
@@ -25,13 +25,13 @@ julia> x.a
 1
 ----
 
-With named tuples, fields can be accessed by name using dot syntax +(x.a)+.
-(((named tuple)))(((dot syntax)))
+Với cặp được đặt tên, các trường có thể truy cập theo tên bằng cú pháp dấu chấm +(x.a)+.
+(((cặp được đặt tên)))(((cú pháp dấu chấm)))
 
 
-=== Functions
+=== Hàm
 
-Function in Julia can be defined by a compact syntax.
+Trong Julia, hàm có thể được định nghĩa bằng cú pháp ngắn gọn.
 
 [source,@julia-repl-test]
 ----
@@ -40,9 +40,9 @@ f (generic function with 1 method)
 ----
 
 [[anonymous_functions]]
-==== Anonymous Functions
+==== Hàm khuyết danh
 
-We can define a function without specifying a name:
+Ta có thể định nghĩa một hàm mà không quy định tên cho nó:
 
 [source,@julia-repl-test]
 ----
@@ -54,7 +54,7 @@ julia> function (x)
 #3 (generic function with 1 method)
 ----
 
-These are example of _anonymous functions_. Anonymous functions are often used as an argument to another function:
+Đây là những ví dụ _hàm khuyết danh_. Ta thường dùng hàm khuyết danh làm đối số cho một hàm khác:
 (((anonymous function)))(((Plots)))((("module", "Plots", see="Plots")))(((plot)))((("function", "Plots", "plot", see="plot")))
 
 [source,jlcon]
@@ -65,15 +65,15 @@ julia> plot(x -> x^2 + 2x - 1, 0, 10, xlabel="x", ylabel="y")
 
 ----
 
-<<fig19-1>> shows the output of the plotting command.
+<<fig19-1>> cho thấy kết quả của lệnh vẽ biểu đồ.
 
 [[fig19-1]]
 .Plot
 image::images/fig191.svg[pdfwidth="10cm"]
 
-==== Keyword Arguments
+==== Đối số từ khóa
 
-Function arguments can also be named:
+Cũng có thể đặt tên các đối số của hàm:
 
 [source,@julia-repl-test]
 ----
@@ -88,9 +88,9 @@ julia> myplot(0:10, 0:10, style="dotted", color="blue")
 _Keyword arguments_ in a function are specified after a semicolon in the signature but can be called with a comma.
 (((;)))(((keyword arguments)))
 
-==== Closures
+==== Bao đóng (closure)
 
-A _closure_ is a technique allowing a function to capture a variable defined outside the calling scope of the function.
+_Bao đóng_ (closure) là kĩ thuật cho phép một hàm nắm bắt được một biến đã định nghĩa bên ngoài phạm vi gọi của hàm đó.
 
 [source,@julia-repl-test]
 ----
@@ -104,15 +104,15 @@ julia> bar()
 1
 ----
 
-In this example, the function +foo+ returns an anonymous function that has access to the +x+ argument of the function +foo+. +bar+ points to the anonymous function and returns the value of the argument of +foo+.
+Ở ví dụ này, hàm +foo+ trả lại một hàm khuyết danh truy cập tới đối số +x+ của hàm +foo+. +bar+ chỉ đến hàm khuyết danh và trả lại giá trị đối số của +foo+.
 
 
-=== Blocks
+=== Khối lệnh
 
-A _block_ is a way to group a number of statements. A block starts with the keyword +begin+ and ends with +end+.
+_Khối lệnh_ là một cách để nhóm nhiều câu lệnh với nhau. Khối bắt đầu bằng từ khóa +begin+ và kết thúc với +end+.
 (((begin)))((("keyword", "begin", see="begin")))(((end)))(((block)))
 
-In <<chap04>> the +@svg+ macro was introduced:
+Ở <<chap04>> ta đã giới thiệu macro +@svg+:
 
 [source,julia]
 ----
@@ -124,11 +124,11 @@ In <<chap04>> the +@svg+ macro was introduced:
 end
 ----
 
-In this example, the macro +@svg+ has a single argument, i.e. a block grouping 3 function calls.
+Ở ví dụ này, macro +@svg+ chỉ có một đối số, tức là một khối nhóm 3 lời gọi hàm lại.
 
-==== +let+ Blocks
+==== Khối +let+
 
-A +let+ block is useful to create new bindings, i.e. locations that can refer to values.
+Một khối +let+ rất hứu ích khi ta muốn tạo ra "binding", nghĩa là những vị trí có thể tham chiếu tới các giá trị.
 
 [source,@julia-repl-test]
 ----
@@ -146,27 +146,27 @@ y = -1
 z = -1
 ----
 
-In the example, the first +@show+ macro, shows the local +x+, the global +y+ and the undefined local +z+. The global variables are untouched.
+Ở ví dụ này, macro +@show+ thứ nhất đã cho thấy biến địa phương +x+, biến toàn cục +y+ và biến địa phương chưa định nghĩa +z+. Các biến toàn cục đều không hề bị động đến.
 
 
-==== +do+ Blocks
+==== Khối +do+
 
-In <<reading_and_writing>> we had to close the file after when where done writing. This can be done automatically using a _do block_:
+Trong <<reading_and_writing>> ta đã phải đóng file lại sau khi ghi xong. Có thể thực hiện điều này một cách tự động bằng cách dùng _khối do_:
 (((do)))((("keyword", "do", see="do")))
 
 [source,@julia-repl-test chap19]
 ----
-julia> data = "This here's the wattle,\nthe emblem of our land.\n"
-"This here's the wattle,\nthe emblem of our land.\n"
+julia> data = "Đây là hàng phên dậu,\nbiểu tượng vùng đất của ta.\n"
+"Đây là hàng phên dậu,\nbiểu tượng vùng đất của ta.\n"
 julia> open("output.txt", "w") do fout
            write(fout, data)
        end
 48
 ----
 
-In this example +fout+ is the file stream used for output.
+Ở ví dụ này, +fout+ là dòng file dùng làm đầu ra.
 
-This is functionally equivalent to
+Cách viết trên có tính năng tương đương với
 
 [source,@julia-repl-test chap19]
 ----
@@ -178,7 +178,7 @@ julia> open(f, "output.txt", "w")
 48
 ----
 
-The anonymous function is used as the first argument of the function +open+:
+Hàm khuyết danh được dùng làm đối số thứ nhất của hàm +open+:
 (((open)))
 
 [source,julia]
@@ -193,14 +193,14 @@ function open(f::Function, args...)
 end
 ----
 
-A +do+ block can “capture” variables from its enclosing scope. For example, the variable +data+ in the above example of +open pass:[...] do+ is captured from the outer scope.
+Khối +do+ có thể “nắm” được các biến từ phạm vi bao trùm nó. Chẳng hạn, ở ví dụ trên ta đã nắm được biến +data+ của +open pass:[...] do+ từ phạm vi bên ngoài.
 
 
-=== Control Flow
+=== Luồng điều khiển
 
-==== Ternary Operator
+==== Toán tử ba ngôi
 
-The _ternary operator_, +?:+, is an alternative to an +if-elseif+ statement used when you need to make a choice between single expression values. 
+_Toán tử ba ngôi_, +?:+, là một dạng khác của câu lệnh +if-elseif+ được dùng khi bạn cần lựa chọn giữa các giá trị biểu thức đơn.
 (((?:)))((("operator", "Base", "?:", see="?:")))((("ternary operator", see="?:")))
 
 [source,@julia-repl-test]
@@ -211,31 +211,31 @@ julia> a % 2 == 0 ? println("even") : println("odd")
 even
 ----
 
-The expression before the +?+ is a condition expression. If the condition is +true+, the expression before the +:+ is evaluated, otherwise, the expression after the +:+ is evaluated.
+Biểu thức trước dấu +?+ là một biểu thức điều kiện. Nếu điều kiện này là +true+, thì ta sẽ ước lượng biểu thức trước dấu +:+, còn không thì sẽ ước lượng biểu thức sau dấu +:+.
 
-==== Short-Circuit Evaluation
+==== Ước lượng đoản mạch
 
-The operators +&&+ and +||+ do a _short-circuit evaluation_: a next argument is only evaluated when it is needed to determine the final value.
-(((&&)))(((||)))(((short-circuit evaluation)))
+Các toán tử +&&+ and +||+ đều thực hiện _ước lượng đoản mạch_: một đối số tiếp theo chỉ được ước lượng khi ta cần phải xác định giá trị cuối cùng.
+(((&&)))(((||)))(((ước lượng đoản mạch)))
 
-For example, a recursive factorial routine could be defined like this:
+Chẳng hạn, một hàm tính giai thừa theo cách đệ quy có thể được định nghĩa như sau:
 (((fact)))
 
 [source,@julia-setup]
 ----
 function fact(n::Integer)
-    n >= 0 || error("n must be non-negative")
+    n >= 0 || error("n phải là số không âm")
     n == 0 && return 1
     n * fact(n-1)
 end
 ----
 
-==== Tasks (aka Coroutines)
+==== Tác vụ (hay coroutine)
 
-A _task_ is a control structure that can pass cooperatively control without returning. In Julia, a task can be implemented as a function having as first argument a +Channel+ object. A channel is used to pass values from the function to the callee.
+_Tác vụ_ là một cấu trúc điều khiển có thể hợp tác truyền sự điều khiển mà không phải trả lại. Trong Julia, ta có thể thực hiện tác vụ như một hàm với đối số thứ nhất là một đối tượng +Channel+. Một channel ("kênh") được dùng để truyền giá trị từ hàm đến mã lệnh gọi nó.
 
-The Fibonnaci sequence can be generated using a task.
-(((task)))(((Channel)))((("type", "Base", "Channel", see="Channel")))(((put!)))((("function", "Base", "put!", see="put!")))
+Bằng một tác vụ, ta có thể phát sinh dãy Fibonnaci.
+(((tác vụ)))(((Channel)))((("type", "Base", "Channel", see="Channel")))(((put!)))((("function", "Base", "put!", see="put!")))
 
 [source,@julia-setup chap19]
 ----
@@ -250,7 +250,7 @@ function fib(c::Channel)
 end
 ----
 
-+put!+ stores values in a channel object and +take!+ reads values from it:
++put!+ lưu các giá trị trong một đối tượng kênh còn +take!+ đọc các giá trị từ nó:
 (((take!)))((("function", "Base", "take!", see="take!")))
 
 [source,@julia-repl-test chap19]
@@ -269,9 +269,9 @@ julia> take!(fib_gen)
 3
 ----
 
-The constructor +Channel+ creates the task. The function +fib+ is suspended after each call to +put!+ and resumed after +take!+. For performance reasons, several values of the sequence are buffered in the channel object during a resume/suspend cycle.
+Phương thức dựng (constructor) +Channel+ tạo nên tác vụ. Hàm +fib+ bị treo lại mỗi lần gọi đến +put!+ và sẽ hồi phục sau +take!+. Để đạt hiệu năng tốt, ta nhồi vào đối tượng kênh vài giá trị của dãy trong từng chu kì treo/hồi phục.
 
-A channel object can also be used as an iterator:
+Ta cũng có thể dùng một đối tượng kênh làm bộ lặp:
 
 [source,@julia-repl-test chap19]
 ----
@@ -283,12 +283,12 @@ julia> for val in Channel(fib)
 ----
 
 
-=== Types
+=== Kiểu dữ liệu
 
-==== Primitive Types
+==== Các kiểu sơ cấp
 
-A concrete type consisting of plain old bits is called a _primitive type_. Unlike most languages, with Julia you can declare your own primitive types. The standard primitive types are defined in the same way:
-(((primitive type)))((("keyword", "primitive type", see="primitive type")))
+Ta gọi kiểu dữ liệu cụ thể chứa những bit bộ nhớ máy tính là _kiểu sơ cấp_. Không như nhiều ngôn ngữ khác, trong Julia bạn có thể tự định nghĩa ra kiểu sơ cấp. Các kiểu sơ cấp chuẩn cũng được định nghĩa theo cách này:
+(((kiểu sơ cấp)))((("từ khóa", "kiểu sơ cấp", see="kiểu sơ cấp")))
 
 [source,julia]
 ----
@@ -298,9 +298,9 @@ primitive type Char <: AbstractChar 32 end
 primitive type Int64 <: Signed 64 end
 ----
 
-The number in the statements specifies how many bits are required.
+Số ghi trong các câu lệnh sẽ quy định xem cần bao nhiêu bit.
 
-The following example creates a primitive type +Byte+ and a constructor:
+Ví dụ tiếp theo tạo nên một kiểu sơ cấp +Byte+ cùng một phương thức dựng constructor:
 (((Byte)))((("type", "programmer-defined", "Byte", see="Byte")))
 
 [source,@julia-repl-test]
@@ -313,15 +313,15 @@ julia> b = Byte(0x01)
 Byte(0x01)
 ----
 
-The function +reinterpret+ is used to store the bits of an unsigned integer with 8 bits (+UInt8+) into the byte.
+Hàm +reinterpret+ được dùng để lưu giữ các bit của một số nguyên không dấu với 8 bit (+UInt8+) vào trong kiểu byte.
 (((reinterpret)))((("function", "Base", "reinterpret", see="reinterpret")))(((UInt8)))((("type", "Base", "UInt8", see="UInt8")))
 
-==== Parametric Types
+==== Kiểu tham số
 
-Julia's type system is _parametric_, meaning that types can have parameters.
+Hệ thống kiểu Julia có tính _tham số_, nghĩa là các kiểu cũng có thể có tham số.
 
-Type parameters are introduced after the name of the type, surrounded by curly braces:
-(((curly braces)))
+Các tham số kiểu sẽ được giới thiệu sau tên kiểu, trong cặp ngoặc nhọn:
+(((ngoặc nhọn)))
 
 [source,@julia-setup chap19]
 ----
@@ -331,7 +331,7 @@ struct Point{T<:Real}
 end
 ----
 
-This defines a new parametric type, +Point{T<:Real}+, holding two "coordinates" of type +T+, which can be any type having +Real+ as supertype.
+Mã lệnh trên định nghĩa một kiểu tham số, +Point{T<:Real}+, trong đó chứa hai "tọa độ" kiểu +T+, vốn có thể nhận bất kì kiểu nào miễn là thuộc kiểu số +Real+.
 
 [source,@julia-repl-test chap19]
 ----
@@ -339,17 +339,17 @@ julia> Point(0.0, 0.0)
 Point{Float64}(0.0, 0.0)
 ----
 
-In addition to composite types, abstract types and primitive types can also have a type parameter.
+Ngoài các kiểu phức hợp, các kiểu trừu tượng và kiểu sơ cấp cũng có thể chứa tham số kiểu.
 
 [TIP]
 ====
-Having concrete types for struct fields is absolutely recommended for performance reasons, so this is a good way to make +Point+ both fast and flexible.
+Để đạt hiệu năng tính toán, rất cần áp dụng kiểu sơ cấp cho các trường của một cấu trúc (struct). Vì vậy, kiểu +Point+ làm theo cách này sẽ rất nhanh và linh hoạt.
 ====
 
-==== Type Unions
+==== Hợp kiểu
 
-A _type union_ is an abstract parametric type that can act as any of its argument types:
-(((type union)))(((Union)))((("type", "Base", "Union", see="Union")))
+_Hợp kiểu_ là một kiểu tham số trừu tượng có thể đóng vai trò bất kì kiểu tham số nào của nó:
+(((hợp kiểu)))(((Union)))((("type", "Base", "Union", see="Union")))
 
 [source,@julia-repl-test]
 ----
@@ -361,7 +361,7 @@ julia> "Julia" :: IntOrString
 "Julia"
 ----
 
-A type union is in most computer language an internal construct for reasoning about types. Julia however exposes this feature to its users because efficient code can be generated when the type union has a small number of types. This feature gives the Julia programmer a tremendous flexibility for controlling dispatch.
+Hợp kiểu có ở bên trong hầu hết các ngôn ngữ máy tính để giúp suy luận kiểu. Tuy nhiên, Julia lại phơi lộ tính năng này cho người dùng vì khi hợp kiểu chỉ có rất ít kiểu thì có thể tạo mã lệnh rất hiệu quả. Tính năn này giúp lập trình viên Julia có được sự linh hoạt lớn để kiểm soát đa phương thức.
 
 === Methods
 
