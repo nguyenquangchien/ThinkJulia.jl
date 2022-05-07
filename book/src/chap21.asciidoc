@@ -1,255 +1,254 @@
 [[chap21]]
-== Debugging
+== Gỡ lỗi
 
-When you are debugging, you should distinguish among different kinds of errors in order to track them down more quickly:
+Khi gỡ lỗi, bạn cần phân biệt được các loại lỗi để giúp phát hiện được chúng nhanh hơn:
 
-* Syntax errors are discovered by the interpreter when it is translating the source code into byte code. They indicate that there is something wrong with the structure of the program. Example: Omitting the +end+ keyword at the end of a function block generates the somewhat redundant message +ERROR: LoadError: syntax: incomplete: function requires end+.
-(((syntax error)))
+* Các lỗi cú pháp thường được trình thông dịch báo khi nó dịch từ mã nguồn sang mã byte. Các lỗi loại này thường để chỉ rằng có điều gì đó không ổn trong cú pháp của chương trình. Chẳng hạn: Quên mất từ khóa +end+ ở cuối một khối hàm sẽ làm hiện ra thông báo lỗi mà trông có vẻ thừa thãi +ERROR: LoadError: syntax: incomplete: function requires end+.
+(((lỗi cú pháp)))
 
-* Runtime errors are produced by the interpreter if something goes wrong while the program is running. Most runtime error messages include information about where the error occurred and what functions were executing. Example: An infinite recursion eventually causes the runtime error +ERROR: StackOverflowError+.
-(((runtime error)))
+* Các lỗi thực thi được trình thông dịch báo nếu có điều không ổn khi chương trình đang chạy. Hầu hết các thông báo lỗi thực thi đều kèm theo thông tin về vị trí lỗi xảy ra và những hàm nào đã được thực hiện. Ví dụ: Một phép đệ quy vô hạn cuối cùng sẽ gây ra lỗi thực thi +ERROR: StackOverflowError+.
+(((lỗi thực thi)))
 
-* Semantic errors are problems with a program that runs without producing error messages but doesn’t do the right thing. Example: An expression may not be evaluated in the order you expect, yielding an incorrect result.
-(((semantic error)))
+* Các lỗi ngữ nghĩa là những vấn đề với chương trình được chạy mà không phát sinh thông báo lỗi nhưng không làm đúng công việc như đã định. Chẳng hạn: Một biểu thức không được tính theo thứ tự mà bạn trông đợi và cho kết quả không chính xác.
+(((lỗi ngữ nghĩa)))
 
-The first step in debugging is to figure out which kind of error you are dealing with. Although the following sections are organized by error type, some techniques are applicable in more than one situation.
-
-
-=== Syntax Errors
-
-Syntax errors are usually easy to fix once you figure out what they are. Unfortunately, the error messages are often not helpful. The most common messages are +ERROR: LoadError: syntax: incomplete: premature end of input+ and +ERROR: LoadError: syntax: unexpected "="+, neither of which is very informative.
-
-On the other hand, the message does tell you where in the program the problem occurred. Actually, it tells you where Julia noticed a problem, which is not necessarily where the error is. Sometimes the error is prior to the location of the error message, often on the preceding line.
-
-If you are building the program incrementally, you should have a good idea about where the error is. It will be in the last line you added.
-
-If you are copying code from a book, start by comparing your code to the book’s code very carefully. Check every character. At the same time, remember that the book might be wrong, so if you see something that looks like a syntax error, it might be.
-
-Here are some ways to avoid the most common syntax errors:
-
-. Make sure you are not using a Julia keyword for a variable name.
-
-. Check that you have the +end+ keyword at the end of every compound statement, including +for+, +while+, +if+, and +function+ blocks.
-
-. Make sure that any strings in the code have matching quotation marks. Make sure that all quotation marks are “straight quotes”, not “curly quotes”.
-
-. If you have multiline strings with triple quotes , make sure you have terminated the string properly. An unterminated string may cause an invalid token error at the end of your program, or it may treat the following part of the program as a string until it comes to the next string. In the second case, it might not produce an error message at all!
-
-. An unclosed opening operator—+(+, +{+, or +[+—makes Julia continue with the next line as part of the current statement. Generally, an error occurs almost immediately in the next line.
-
-. Check for the classic +=+ instead of +==+ inside a conditional.
-
-. If you have non-ASCII characters in the code (including strings and comments), that might cause a problem, although Julia usually handles non-ASCII characters. Be careful if you paste in text from a web page or other source.
-
-If nothing works, move on to the next section...
-
-==== I keep making changes and it makes no difference
-
-If the REPL says there is an error and you don’t see it, that might be because you and the REPL are not looking at the same code. Check your programming environment to make sure that the program you are editing is the one Julia is trying to run.
-
-If you are not sure, try putting an obvious and deliberate syntax error at the beginning of the program. Now run it again. If the REPL doesn’t find the new error, you are not running the new code.
-
-There are a few likely culprits:
-
-* You edited the file and forgot to save the changes before running it again. Some programming environments do this for you, but some don’t.
-
-* You changed the name of the file, but you are still running the old name.
-
-* Something in your development environment is configured incorrectly.
-
-* If you are writing a module and using +using+, make sure you don’t give your module the same name as one of the standard Julia modules.
-
-* If you are using +using+ to import a module, remember that you have to restart the REPL when you modify the code in the module. If you import the module again, it doesn’t do anything.
-
-If you get stuck and you can’t figure out what is going on, one approach is to start again with a new program like “Hello, World!”, and make sure you can get a known program to run. Then gradually add the pieces of the original program to the new one.
+Bước đầu trong quá trình gỡ lỗi là hình dung ra loại lỗi nào mà bạn cần giải quyết. Mặc dù các mục tiếp sau đây được tổ chức theo loại lỗi, song những kĩ thuật có thể được dùng để giải quyết nhiều trường hợp.
 
 
-=== Runtime Errors
+=== Lỗi cú pháp
 
-Once your program is syntactically correct, Julia can read it and at least start running it. What could possibly go wrong?
+Các lỗi cú pháp thường dễ sửa một khi bạn đã hình dung ra chúng. Không may là những thông báo lỗi thường không giúp ích nhiều. Những dòn thông báo thường gặp nhất là +ERROR: LoadError: syntax: incomplete: premature end of input+ và +ERROR: LoadError: syntax: unexpected "="+, cả hai đều không cung cấp nhiều thông tin.
 
-==== My program does absolutely nothing
+Tuy nhiên dòng thông báo cũng cho bạn biết rắc rối xảy ra ở đâu trong chương trình. Thực ra, nó cho bán biết nơi mà Julia phát hiện ra vấn đề, vốn không nhất thiết chính là nơi lỗi xảy ra. Đôi khi lỗi xuất hiện trước vị trí của thông báo lỗi, thường là ngay ở dòng trước.
 
-This problem is most common when your file consists of functions and classes but does not actually invoke a function to start execution. This may be intentional if you only plan to import this module to supply classes and functions.
+Nếu bạn xây dựng chương trình dần từng bước, bạn hẳn đã phán đoán hợp lí vị trí xảy ra lỗi. Nó sẽ ở dòng lệnh bạn vừa thêm vào.
 
-If it is not intentional, make sure there is a function call in the program, and make sure the flow of execution reaches it (see <<flow_of_execution>>).
+Nếu bạn sao chép mã lệnh từ một quyển sách, hãy bắt đầu bằng việc so sánh cẩn thận mã lệnh của bạn với mã lệnh trong cuốn sách. Kiểm tra từng kí tự một. Đồng thời nhớ rằng sách cũng có thể sai, vì vậy nếu bạn thấy có chỗ giống như lỗi, thì hoàn toàn có thể vậy.
+
+Sau đây là một số cách tránh các lỗi cú pháp thông dụng nhất:
+
+. Hãy chắc rằng bạn không dùng một từ khoá Julia làm tên biến.
+
+. Kiểm tra xem bạn có viết từ khóa +end+ ở cuối các lệnh phức hợp (gồm các khối +for+, +while+, +if+, và +function+ chưa).
+
+. Hãy chắc rằng các chuỗi trong mã lệnh đều có đủ cặp nháy kép. Chắc rằng tất cả dấu nháy là "nháy thẳng", chứ không phải “nháy cong”.
+
+. Nếu bạn có chuỗi rải trên nhiều dòng với cặp ba dấu nháy, hãy chắc rằng bạn có kết thúc chuỗi một cách đúng đắn. Một chuỗi bỏ lửng có thể gây ra lỗi invalid token ở điểm cuối chương trình, hoặc coi phần còn lại của chương trình như một chuỗi đến khi nó bắt gặp chuỗi tiếp theo. Trong trường hợp thứ hai, nó thậm chí còn không báo lỗi gì!
+
+. Một toán tử mở ngoặc—+(+, +{+, hoặc +[+—mà quên được đóng sẽ làm cho Julia chạy tiếp lấy dòng bên dưới làm một phần của câu lệnh hiện hành. Thường thì lỗi sẽ xuất hiện ngay ở dòng kế tiếp.
+
+. Kiểm tra lỗi kinh điển xảy ra khi dùng +=+ thay vì +==+ trong câu lệnh điều kiện.
+
+. Nếu bạn có những kí tự không phải ASCII trong mã lệnh (bao gồm các chuỗi và lời chú thích), điều này có thể gây trục trặc, dù rằng bình thường Julia xử lí tốt các kí tự không phải ASCII. Hãy cẩn thận khi bạn dán nội dung chữ từ các rang web hoặc nguồn khác.
+
+Nếu các biện pháp trên đều không có tác dụng, hãy đọc mục tiếp theo...
+
+==== Tôi vẫn tiếp tục sửa đổi mà chẳng thấy gì khác
+
+Nếu trình thông dịch báo rằng có lỗi và bạn không nhìn ra thì có thể vì bạn và dấu nhắc REPL không nhìn vào cùng một đoạn mã. Hãy kiểm tra lại môi trường lập trình của bạn để chắc rằng chương trình mà bạn đang soạn thảo cũng chính được chạy bởi Julia.
+
+Nếu bạn không chắc chắn, hãy thử cố ý đưa vào một lỗi cú pháp hiển nhiên vào ngay đầu chương trình. Bây giờ chạy lại chương trình. Nếu dấu nhắc REPL không tìm thấy lỗi mới thì rõ ràng là bạn không chạy đoạn mã lệnh mới.
+
+Sau đây là một số trường hợp có thể xảy ra:
+
+* Bạn đã soạn thảo file mà lại quên lưu vào trước khi chạy lại. Một số môi trường lập trinh giúp bạn làm điều này, nhưng số khác thì không.
+
+* Bạn đổi tên file, nhưng vẫn chạy chương trình có tên cũ.
+
+* Một chi tiết trong môi trường phát triển bị thiết lập sai.
+
+* Nếu bạn đang viết một module và dùng lệnh +using+, hãy chắc rằng bạn đã đặt tên module khác những module tiêu chuẩn của Julia.
+
+* Nếu bạn đang dùng +using+ để nhập một module, hãy nhớ khởi động lại dấu nhắc REPL khi bạn thay đổi mã lệnh trong module. Nếu bạn nhập lại module lần nữa thì nó sẽ khong làm gì. again, it doesn’t do anything.
+
+Nếu bạn bị bí và không thể hình dung được chuyện gì đang xảy ra, một cách là bắt đầu lại từ đầu với một chương trình kiểu như “Hello, World!”, và chắc rằng bạn biết cách chạy một chương trình có sẵn. Sau đó dần thêm từng phần của chương trình cần chạy vào chương trình mới này.
+
+=== Lỗi thực thi
+
+Một khi chương trình của bạn đã đúng về mặt cú pháp, Julia có thể biên dịch nó và ít nhất là bắt đầu chạy nó. Điều gì có thể trục trặc nữa?
+
+==== Chương trình của tôi hoàn toàn không làm gì
+
+Vấn đề này thường gặp nhất khi file của bạn có chứa các hàm và lớp nhưng không thực sự kích hoạt gì để bắt đầu thực hiện tính toán. Có thể điều này được chủ ý nếu bạn chỉ nhập module này để cung cấp các lớp và hàm.
+
+Nhưng nếu không phải chủ ý của bạn, thì hãy chắc rằng trong chương trình bạn đã gọi đến hàm, vào đảm bảo rằng luồng thực thi chạy đến nó (xem <<flow_of_execution>>).
 (((flow of execution)))
 
-==== My program hangs
+==== Chương trình bị treo
 
-If a program stops and seems to be doing nothing, it is “hanging”. Often that means that it is caught in an infinite loop or infinite recursion.
+Nếu một chương trình dừng lại và hình như không làm gì, nó đã bị “treo”. Thường thì điều này nghĩa là nó mắc phải một vòng lặp vô hạn hoặc đệ quy vô hạn.
 
-* If there is a particular loop that you suspect is the problem, add a print statement immediately before the loop that says “entering the loop” and another immediately after that says “exiting the loop”.
+* Nếu có một vòng lặp cụ thể mà bạn nghi ngờ có vấn đề, hãy thêm một lệnh print ngay trước vòng lặp, để in ra “tiến vào vòng lặp” và một lệnh khác ngay sau vòng lặp, in ra “thoát khỏi vòng lặp”. 
 +
-Run the program. If you get the first message and not the second, you’ve got an infinite loop. Go to <<infinite_loop>> below.
-(((infinite loop)))
+Chạy chương trình. Nếu bạn thấy được thông điệp thứ nhất mà không thấy cái thứ hai thì đã có một vòng lặp vô hạn. Xem tiếp mục <<infinite_loop>> dưới đây.
+(((vòng lặp vô hạn)))
 
-* Most of the time, an infinite recursion will cause the program to run for a while and then produce a +ERROR: LoadError: StackOverflowError+ error. If that happens, go to <<infinite_recursion>> below.
+* Ở hầu hết trường hợp, đệ quy vô hạn sẽ làm cho chương trình chạy một lúc và sau đo hiện ra lỗi +ERROR: LoadError: StackOverflowError+. Nếu điều này xảy ra, hãy xem tiếp mục <<infinite_recursion>> sau đây.
 +
-If you are not getting this error but you suspect there is a problem with a recursive method or function, you can still use the techniques in <<infinite_recursion>>.
-(((infinite recursion)))
+Nếu bạn không gặp phải lỗi này nhưng nghi ngờ rằng có vấn đề xảy ra với một phương thức hoặc hàm đệ quy, bạn vẫn có thể sử dụng các kĩ thuật trong mục <<infinite_recursion>>.
+(((đệ quy vô hạn)))
 
-* If neither of those steps works, start testing other loops and other recursive functions and methods.
+* Nếu không cách nào trong số trên có tác dụng, hãy thử những vòng lặp khác hoặc các hàm và phương thức đệ quy.
 
-* If that doesn’t work, then it is possible that you don’t understand the flow of execution in your program. Go to <<flow_of_execution>> below.
+* Nếu cách này cũng không có tác dụng thì có thể là bạn chưa hiểu luồng thực thi của chương trình. Hãy đọc tiếp mục <<flow_of_execution>> bên dưới.
 
 [[infinite_loop]]
-===== Infinite Loop
+===== Vòng lặp vô hạn
 
-If you think you have an infinite loop and you think you know what loop is causing the problem, add a print statement at the end of the loop that prints the values of the variables in the condition and the value of the condition.
+Nếu bạn nghĩ rằng bạn có một vòng lặp vô hạn và cho rằng mình đã biết được vòng lặp nào gây ra vấn đề, thì hãy thêm một lệnh print tại điểm cuối vòng lặp và in ra giá trị các biến trong điều kiện cùng với giá trị của điều kiện.
 
-For example:
+Chẳng hạn:
 
 [source,julia]
 ----
 while x > 0 && y < 0
-    # do something to x
-    # do something to y
-    @debug "variables" x y
-    @debug "condition" x > 0 && y < 0
+    # thao tác với x
+    # thao tác với y
+    @debug "các biến" x y
+    @debug "điều kiện" x > 0 && y < 0
 end
 ----
 
-Now when you run the program in debug mode, you will see the value of the variables and the condition for each time through the loop. The last time through the loop, the condition should be +false+. If the loop keeps going, you will be able to see the values of +x+ and +y+, and you might figure out why they are not being updated correctly.
+Bây giờ khi chạy chương trình trong chế độ gỡ lỗi, bạn sẽ thấy giá trị các biến và điều kiện qua từng vòng lặp. Lần cuối cùng chạy qua vòng lặp điều kiện sẽ phải là +false+. Nếu vòng lặp tiếp tục chạy, bạn sẽ nhìn được các giá trị của +x+ và +y+, và có thể hình dung được tại sao chúng không được cập nhật đúng.
 
 [[infinite_recursion]]
-===== Infinite Recursion
+===== Đệ quy vô hạn
 
-Most of the time, infinite recursion causes the program to run for a while and then produce a +ERROR: LoadError: StackOverflowError+ error.
+Hầu hết các trường hợp, một vòng lặp đệ quy sẽ khiến chương trình chạy một lúc và sau đó báo lỗi +ERROR: LoadError: StackOverflowError+ error.
 (((StackOverflowError)))
 
-If you suspect that a function is causing an infinite recursion, make sure that there is a base case. There should be some condition that causes the function to return without making a recursive invocation. If not, you need to rethink the algorithm and identify a base case.
+Nếu bạn nghi ngờ rằng một hàm hoặc phương thức nào đó gây ra đệ quy vô hạn, hãy bắt đầu kiểm tra để chắc rằng có một trường hợp cơ sở. Nói cách khác, cần phải có điều kiện nào đó để khiến cho hàm hoặc phương thức trả về mà không gọi đệ quy nữa. Nếu không, bạn cần phải nghĩ lại thuật toán và tìm ra một trường hợp cơ sở.
 
-If there is a base case but the program doesn’t seem to be reaching it, add a print statement at the beginning of the function that prints the parameters. Now when you run the program, you will see a few lines of output every time the function is invoked, and you will see the parameter values. If the parameters are not moving toward the base case, you will get some ideas about why not.
+Nếu có một trường hợp cơ sở nhưng chương trình dường như không đạt đến đó, thì hãy thêm câu lệnh print vào điểm đầu của hàm hoặc phương thức để in ra các tham số. Bây giờ khi chạy chương trình, bạn sẽ thấy một ít dòng kết quả mỗi lần hàm hoặc phương thức được gọi đến, và sẽ thấy các tham số. Nếu tham số không thay đổi với xu hướng về trường hợp cơ sở, bạn sẽ có được nhận định về nguyên nhân tại sao.
 
 [[flow_of_execution]]
-===== Flow of Execution
+===== Luồng thực thi
 
-If you are not sure how the flow of execution is moving through your program, add print statements to the beginning of each function with a message like “entering function foo”, where foo is the name of the function.
+Nếu bạn không chắc chắn về luồng thực hiện trong chương trình, hãy thêm các câu lệnh print vào điểm đầu của mỗi hàm với thông báo kiểu như “bắt đầu hàm foo”, trong đó foo là tên hàm.
 
-Now when you run the program, it will print a trace of each function as it is invoked.
+Bây giờ khi chạy chương trình, nó sẽ in ra một dấu vết của mỗi hàm khi được kích hoạt.
 
-==== When I run the program I get an exception
+==== Khi chạy chương trình tôi nhận được một biệt lệ
 
-If something goes wrong during runtime, Julia prints a message that includes the name of the exception, the line of the program where the problem occurred, and a stacktrace.
+Nếu trong quá trình chạy có trục trặc xảy ra, Python sẽ in một thông báo trong đó có tên của biệt lệ, dòng lệnh có vấn đề, và một dò ngược.
 
-The stacktrace identifies the function that is currently running, and then the function that called it, and then the function that called that, and so on. In other words, it traces the sequence of function calls that got you to where you are, including the line number in your file where each call occurred.
+Thông báo dò ngược nhằm chỉ định hàm đang được chạy, và hàm gọi nó, rồi hàm gọi hàm đó, và cứ như vậy. Nói cách khác, nó dò theo một dãy các lời gọi hàm để đến nơi có trục trặc. Nó cũng có chứa số thứ tự dòng trong file nơi mà những lời gọi hàm này diễn ra.
 
-The first step is to examine the place in the program where the error occurred and see if you can figure out what happened. These are some of the most common runtime errors:
+Bước đầu tiên là kiểm tra vị trí trong chương trình nơi mà lỗi xuất hiện đòng thời thử hình dung điều gì đã xảy ra. Sau đây là một số lỗi thực thi thường gặp nhất:
 
 ArgumentError:: 
-One of the arguments to a function call is not in the expected state.
+Một trong các đối số cấp cho lời gọi hàm không ở trạng thái như mong đợi.
 (((ArgumentError)))
 
 BoundsError:: 
-An indexing operation into an array tried to access an out-of-bounds element.
+Một phép truy chỉ số của ma trận đã cố gắng truy cập tới phần tử vượt ngoài phạm vi cho phép.
 (((BoundsError)))
 
 DomainError::
-The argument to a function or constructor is outside the valid domain.
+Đối số cấp vào hàm hoặc phương thức đã vượt ngoài miền hợp lệ.
 (((DomainError)))((("error", "Core", "DomainError", see="DomainError")))
 
 DivideError:: 
-Integer division was attempted with a denominator value of 0.
+Phép chia số nguyên cố gắng thực hiện khi mẫu số bằng 0.
 (((DivideError)))((("error", "Core", "DivideError", see="DivideError")))
 
 EOFError:: 
-No more data was available to read from a file or stream.
+Không có thêm dữ liệu để đọc từ một file hoặc dòng (stream).
 (((EOFError)))((("error", "Base", "EOFError", see="EOFError")))
 
 InexactError::
-Cannot exactly convert to a type.
+Không thể quy đổi kiểu dữ liệu một cách chính xác được.
 (((InexactError)))((("error", "Core", "InexactError", see="InexactError")))
 
 KeyError:: 
-An indexing operation into an +AbstractDict+ (+Dict+) or +Set+ like object tried to access or delete a non-existent element.
+Một phép truy chỉ số của đối tượng kiểu +AbstractDict+ (+Dict+) hay +Set+ đã cố gắng truy cập hoặc xóa một phần tử không tồn tại.
 (((KeyError)))
 
 MethodError:: 
-A method with the required type signature does not exist in the given generic function. Alternatively, there is no unique most-specific method.
+Một phương thức với dấu ấn kieru yêu cầu không tồn tại trong hàm tổng quát đã cho. Hoặc không có phương thức cụ thể duy nhất.
 (((MethodError)))
 
 OutOfMemoryError:: 
-An operation allocated too much memory for either the system or the garbage collector to handle properly.
+Một phép tính đã huy động quá nhiều bộ nhớ khiến hệ thống hoặc bộ gom rác không thể xử lý nổi.
 (((OutOfMemoryError)))((("error", "Core", "OutOfMemoryError", see="OutOfMemoryError")))
 
 OverflowError:: 
-The result of an expression is too large for the specified type and will cause a wraparound.
+Kết quả một biểu thức quá lớn đối với kiểu hiện có và sẽ gây tràn - ghi vòng ngược lại (wraparound).
 (((OverflowError)))((("error", "Core", "OverflowError", see="OverflowError")))
 
 StackOverflowError:: 
-The function call grew beyond the size of the call stack. This usually happens when a call recurses infinitely.
+Lời gọi hàm lớn lên vượt kích thước ngăn xếp gọi hàm (call stack). Điều này thường xảy ra khi lời gọi đệ quy vô hạn.
 (((StackOverflowError)))
 
 StringIndexError::
-An error occurred when trying to access a string at an index that is not valid.
+Lỗi xảy ra khi cố gắng truy cập một chuỗi tại chỉ số không hợp lệ.
 (((StringIndexError)))
 
 SystemError::
-A system call failed with an error code.
+Một lời gọi hệ thống thất bại với mã lỗi.
 (((SystemError)))
 
 TypeError::
-A type assertion failure, or calling an intrinsic function with an incorrect argument type.
+Xác nhận kiểu thất bại, hoặc khi gọi một hàm dựng sẵn với kiểu đối số sai.
 (((TypeError)))
 
 UndefVarError:: 
-A symbol in the current scope is not defined.
+Chưa định nghĩa kí hiệu này trong phạm vi hiện tại.
 (((UndefVarError)))
 
-==== I added so many print statements I get inundated with output
+==== Tôi thêm vào quá nhiều lệnh print đến nỗi bây giờ tràn ngập kết quả đầu ra
 
-One of the problems with using print statements for debugging is that you can end up buried in output. There are two ways to proceed: simplify the output or simplify the program.
+Một trong những vấn đề khi dùng lệnh print để gỡ lỗi là việc bạn có thể bị chìm trong kết quả ra. Có hai cách tiếp tục: đơn giản hóa đầu ra hoặc đơn giản hóa chương trình.
 
-To simplify the output, you can remove or comment out print statements that aren’t helping, or combine them, or format the output so it is easier to understand.
+Để giản hóa đầu ra, bạn cần xóa bỏ hoặc đưa vào chú thích những dòng lệnh print vốn không có tác dụng, hoặc kết hợp chúng lại, hoặc sửa định dạng đầu ra để dễ hiểu hơn.
 
-To simplify the program, there are several things you can do. First, scale down the problem the program is working on. For example, if you are searching a list, search a small list. If the program takes input from the user, give it the simplest input that causes the problem.
+Để giản hóa chương trình, có vài cách làm được. Trước hết, hãy giảm quy mô của bài toán xuống. Chẳng hạn, nếu bạn cần tìm kiếm trong danh sách, hãy làm với danh sách nhỏ. Nếu chương trình nhận đầu vào từ phía người dùng, hãy cho những dữ liệu vào đơn giản nhất mà gây ra lỗi.
 
-Second, clean up the program. Remove dead code and reorganize the program to make it as easy to read as possible. For example, if you suspect that the problem is in a deeply nested part of the program, try rewriting that part with simpler structure. If you suspect a large function, try splitting it into smaller functions and testing them separately.
+Thứ hai là dọn dẹp chương trình. Hãy bỏ những đoạn mã chết và tổ chức lại chương trình để nó càng dễ đọc càng tốt. Chẳng hạn, nếu bạn nghi rằng vấn đề nằm ở một đoạn nằm sâu trong chương trình, hãy thử viết lại nó với cấu trúc đơn giản hơn. Nếu bạn nghi ngờ rằng có một hàm lớn, hãy thử chẻ nhỏ thành những hàm con và kiểm tra riêng chúng.
 (((dead code)))
 
-Often the process of finding the minimal test case leads you to the bug. If you find that a program works in one situation but not in another, that gives you a clue about what is going on.
+Thông thường quá trình tìm ra trường hợp thử đơn giản nhất sẽ dẫn bạn đến điểm gây lỗi. Nếu bạn thấy được chương trình chạy được trong một trường hợp nhưng không được trong trường hợp khác, điều đó sẽ là dấu vết cho thấy điều gì đang diễn ra.
 
-Similarly, rewriting a piece of code can help you find subtle bugs. If you make a change that you think shouldn’t affect the program, and it does, that can tip you off.
+Tương tự như vậy, việc viết lại một đoạn mã có thể giúp bạn phát hiện những lỗi nhỏ. Nếu bạn thực hiện sửa đổi mà nghĩ rằng nó không ảnh hưởng gì đến chương trình, và lúc có ảnh hưởng thì đó sẽ là bài học cho bạn.
 
 
-=== Semantic Errors
+=== Lỗi ngữ nghĩa
 
-In some ways, semantic errors are the hardest to debug, because the interpreter provides no information about what is wrong. Only you know what the program is supposed to do.
+Về mặt nào đó, lỗi ngữ nghĩa là thứ khó gỡ nhất, vì trình thông dịch không cung cấp thông tin gì về sự trục trặc. Chỉ có bạn mới biết rằng chương trinh cần phải thực hiện điều gì.
 
-The first step is to make a connection between the program text and the behavior you are seeing. You need a hypothesis about what the program is actually doing. One of the things that makes that hard is that computers run so fast.
+Bước đầu tiên là tạo lập một kết nối giữa nội dung chương trình và biểu hiện mà bạn quan sát được. Bạn cần giả thiết về điều thật sự mà chương trình đang thực hiện. Một trong những yếu tố làm việc này trở nên khó khăn là máy tính chạy quá nhanh.
 
-You will often wish that you could slow the program down to human speed. Inserting a few well-placed print statements is often quicker than setting up a debugger, inserting and removing breakpoints, and “stepping” the program to where the error is occurring.
+Bạn sẽ thường muốn làm chậm chương trình lại ngang bằng tốc độ của người, và dùng một số bộ gỡ lỗi nếu có thể. Nhưng thời gian càn thiết để chèn thêm một vài lệnh print đúng chỗ thường ngắn hơn so với việc thiết lập bộ gỡ lỗi, chèn thêm và gỡ bỏ các điểm dừng, và “lần bước” tới điểm xảy ra lỗi trong chương trình.
 
-==== My program doesn’t work
+==== Chương trình tôi viết không hoạt động
 
-You should ask yourself these questions:
+Bạn cần tự hỏi mình những điều sau:
 
-* Is there something the program was supposed to do but which doesn’t seem to be happening? Find the section of the code that performs that function and make sure it is executing when you think it should.
+* Có điều gì mà chương trình cần phải làm nhưng dường như nó không làm hay không? Hãy tìm ra đoạn mã lệnh thực hiện tính năng đó và chắc rằng nó được thực thi khi bạn nghĩ rằng lẽ ra nó phải chạy.
 
-* Is something happening that shouldn’t? Find code in your program that performs that function and see if it is executing when it shouldn’t.
+* Có điều gì đang diễn ra mà lẽ ra không nên có nó? Hãy tìm đoạn mã trong chương trình mà thực hiện tính năng đó rồi xem liệu nó có được thực khi trong khi đáng lẽ thì không.
 
-* Is a section of code producing an effect that is not what you expected? Make sure that you understand the code in question, especially if it involves functions or methods in other Julia modules. Read the documentation for the functions you call. Try them out by writing simple test cases and checking the results.
+* Có đoạn mã nào tạo ra một hiệu ứng mà không như bạn mong đợi không? Hãy chắc rằng bạn hiểu được đoạn mã nghi vấn, đặc biệt khi nó liên quan đến lời gọi các hàm hoặc phương thức trong module Julia khác. Hãy đọc các tài liệu về hàm mà bạn đã gọi. Thử dùng chúng bằng cách viết các trường hợp kiểm tra đơn giản và xem xét kết quả.
 
-In order to program, you need a mental model of how programs work. If you write a program that doesn’t do what you expect, often the problem is not in the program; it’s in your mental model.
-(((mental model)))
+Để lập trình, bạn phải có một mô hình tư duy về cách thức hoạt động của chương trình. Nếu bạn viết một chương trình mà không thực hiện đúng việc bạn mong đợi, thì thường là vấn đề không nằm ở chương trình; nó nằm ở mô hình tư duy của bạn.
+(((mô hình tư duy)))
 
-The best way to correct your mental model is to break the program into its components (usually the functions and methods) and test each component independently. Once you find the discrepancy between your model and reality, you can solve the problem.
+Cách tốt nhất để sửa mô hình tưởng tượng cho đúng là chia chương trình thành những bộ phận (thường là các hàm và phương thức) rồi kiểm tra chạy thử từng bộ phận một cách độc lập. Một khi thấy sự khác biệt giữa mô hình và thực tế, bạn sẽ có thể giải quyết vấn đề.
 
-Of course, you should be building and testing components as you develop the program. If you encounter a problem, there should be only a small amount of new code that is not known to be correct.
+Tất nhiên, bạn cần phải xây dựng và chạy thử các bộ phận song song với việc phát triển chương trình. Nếu bạn gặp vướng mắc, hẳn chỉ có một phần rất nhỏ những mã lệnh mới đưa vào mà bạn không chắc rằng nó đúng.
 
-==== I’ve got a big hairy expression and it doesn’t do what I expect
+====  Tôi có một biểu thức lớn và gai góc mà chẳng hoạt động như mong đợi
 
-Writing complex expressions is fine as long as they are readable, but they can be hard to debug. It is often a good idea to break a complex expression into a series of assignments to temporary variables.
+Viết ra những biểu thức phức tạp cũng tốt miễn là chúng dễ đọc, nhưng chúng có thể làm việc gỡ lỗi gặp khó khăn. Thông thường nên chẻ nhỏ một biểu thức thành một loạt các lệnh gán cho những biến tạm thời.
 
-For example:
+Chẳng hạn:
 
 [source,julia]
 ----
 addcard(game.hands[i], popcard(game.hands[findneighbor(game, i)]))
 ----
 
-This can be rewritten as:
+Đoạn này có thể được viết lại thành:
 
 [source,julia]
 ----
@@ -258,37 +257,37 @@ pickedcard = popcard(game.hands[neighbor])
 addcard(game.hands[i], pickedcard)
 ----
 
-The explicit version is easier to read because the variable names provide additional documentation, and it is easier to debug because you can check the types of the intermediate variables and display their values.
+Dạng mã lệnh chi tiết thì dễ đọc hơn vì tên biến cho ta bản thân đã giúp giải thích rõ thêm, và cũng dễ gỡ lỗi hơn vì bạn có thể kiểm tra kiểu của những biến trung gian cùng việc hiển thị giá trị của chúng.
 
-Another problem that can occur with big expressions is that the order of evaluation may not be what you expect. For example, if you are translating the expression latexmath:[\(\frac{x}{2\pi}\)] into Julia, you might write:
+Một vấn đề khác có thể xảy ra với những biểu thức lớn là thứ tự thực hiện phép tính có thể không như bạn mong muốn. Chẳng hạn, nếu bạn chuyển biểu thức latexmath:[\(\frac{x}{2\pi}\)] sang ngôn ngữ Julia, có thể bạn đã viết:
 
 [source,julia]
 ----
 y = x / 2 * π
 ----
 
-That is not correct because multiplication and division have the same precedence and are evaluated from left to right. So this expression computes latexmath:[\(\frac{x\pi}{2}\)].
+Điều này không đúng vì các phép nhân và chia có cùng thứ tự ưu tiên và được ước lượng từ trái sang phải. Vì vậy biểu thức này sẽ tính latexmath:[\(\frac{x\pi}{2}\)].
 
-A good way to debug expressions is to add parentheses to make the order of evaluation explicit:
+Một cách hay để gỡ lỗi biểu thức là thêm vào những cặp ngoặc đơn để giúp cho thứ tự ước lượng được rõ ràng:
 
 [source,julia]
 ----
 y = x / (2 * π)
 ----
 
-Whenever you are not sure of the order of evaluation, use parentheses. Not only will the program be correct (in the sense of doing what you intended), it will also be more readable for other people who haven’t memorized the order of operations.
+Mỗi khi bạn không nắm vững thứ tự ước lượng, hãy dùng cặp ngoặc tròn. Chúng không chỉ giúp chương trình đúng đắn hơn (theo nghĩa thực hiện công việc bạn mong đợi), mà còn giúp người khác dễ đọc hơn mà không phải ghi nhớ quy luật thứ tự ưu tiên.
 
-==== I’ve got a function that doesn’t return what I expect
+====  Tôi có một hàm không trả về giá trị như mong đợi
 
-If you have a return statement with a complex expression, you don’t have a chance to print the result before returning. Again, you can use a temporary variable. For example, instead of:
-(((temporary variable)))
+Với lệnh return kèm theo một biểu thức phức tạp, bạn không có cơ hội in ra giá trị trước khi được trả về. Một lần nữa, hãy dùng biến tạm thời. Chẳng hạn, thay vì:
+(((biến tạm thời)))
 
 [source,julia]
 ----
 return removematches(game.hands[i])
 ----
 
-you could write:
+bạn đã có thể viết:
 
 [source,julia]
 ----
@@ -296,37 +295,37 @@ count = removematches(game.hands[i])
 return count
 ----
 
-Now you have the opportunity to display the value of +count+ before returning.
+Bây giờ bạn đã có cơ hội hiển thị giá trị của count trước khi trả về.
 
-==== I’m really, really stuck and I need help
+==== Thật sự tôi rất, rất vướng mắc và cần được giúp đỡ
 
-First, try getting away from the computer for a few minutes. Working with a computer can cause these symptoms:
+Trước hết, hãy thử rời khỏi máy tính trong vài phút. Ngồi làm việc với máy tính có thể gây ra các triệu chứng sau:
 
-* Frustration and rage.
+* Cáu giận.
 
-* Superstitious beliefs (“the computer hates me”) and magical thinking (“the program only works when I wear my hat backward”).
+* Tin tưởng vào lực siêu nhiên (“máy tính này ghét tôi”) và những ảo tưởng (“chương trình chỉ chạy khi tôi đội ngược mũ”).
 
-* Random walk programming (the attempt to program by writing every possible program and choosing the one that does the right thing).
+* Lập trình dò dẫm (nỗ lực lập trình bằng cách viết tất cả các trường hợp chương trình có thể có và chọn ra một phiên bản hoạt động đúng).
 
-If you find yourself suffering from any of these symptoms, get up and go for a walk. When you are calm, think about the program. What is it doing? What are some possible causes of that behavior? When was the last time you had a working program, and what did you do next?
+Nếu bạn tự thấy mình mắc phải một trong số các triệu chứng trên, hãy đứng dậy và đi dạo. Khi đã tĩnh tâm hẳn, hãy nghĩ lại chương trình. Nó đang làm điều gì? Đâu là các nguyên nhân gây ra biểu hiện đó? Lần cuối cùng chương trình cọn chạy được là lúc nào, và sau đó bạn thực hiện những điều gì?
 
-Sometimes it just takes time to find a bug. I often find bugs when I am away from the computer and let my mind wander. Some of the best places to find bugs are trains, showers, and in bed, just before you fall asleep.
+Đôi khi phát hiện lỗi chỉ là vấn đề thời gian. Tôi thường tìm thấy lỗi trong lúc rời xa khỏi máy tính và để trí óc khuây khỏa. Một số nơi tốt nhất để thoát khỏi máy gồm có trên tàu, khi đi tắm, và trước khi đi ngủ.
 
-==== No, I really need help
+==== Không, tôi thật sự muốn giúp đỡ
 
-It happens. Even the best programmers occasionally get stuck. Sometimes you work on a program so long that you can’t see the error. You need a fresh pair of eyes.
+Điều đó xảy ra. Ngay cả những lập trình viên giỏi nhất đôi lúc cũng bị bí. Đôi khi bạn làm một chương trình lâu quá đến nỗi không thể phát hiện ra lỗi. Tìm một người có góc nhìn khác chính là điều cần thiết.
 
-Before you bring someone else in, make sure you are prepared. Your program should be as simple as possible, and you should be working on the smallest input that causes the error. You should have print statements in the appropriate places (and the output they produce should be comprehensible). You should understand the problem well enough to describe it concisely.
+Trước khi yêu cầu giúp đỡ, bạn hãy chuẩn bị kĩ. Chương trình phải càng đơn giản càng tốt, và hãy phân tích trên dữ liệu đầu vào nhỏ nhất có thể gây lỗi. Bạn cần có các lệnh print ở những vị trí thích hợp (và kết quả đầu ra phải dễ hiểu). Bạn cần hiểu rõ vấn đề để có thể diễn đạt nó một cách ngắn gọn.
 
-When you bring someone in to help, be sure to give them the information they need:
+Khi đưa người đến giúp, hãy chắc chắn rằng bạn cung cấp đủ thông tin mà họ cần:
 
-* If there is an error message, what is it and what part of the program does it indicate?
+* Nếu có thông báo lỗi, thông báo đó là gì và nó chỉ định phần nào trong chương trình?
 
-* What was the last thing you did before this error occurred? What were the last lines of code that you wrote, or what is the new test case that fails?
+* Việc cuối cùng mà bạn thao tác trước khi lỗi này xảy ra là gì? Những dòng lệnh nào bạn vừa mới viết gần đây nhất, hay trường hợp chạy thử gần đây nhất mới bị thất bại là gì?
 
-* What have you tried so far, and what have you learned?
+* Bạn đã thử những biện pháp gì rồi, và thu hoạch được gì?
 
-When you find the bug, take a second to think about what you could have done to find it faster. Next time you see something similar, you will be able to find the bug more quickly.
+Khi bạn tìm thấy lỗi, hãy dành chút thời gian suy nghĩ xem bằng cách nào có thể giúp bạn tìm ra nó nhanh hơn không. Lần tiếp theo khi bạn thấy điều tương tự, có thể bạn sẽ chóng phát hiện ra lỗi hơn.
 
-Remember, the goal is not just to make the program work. The goal is to learn how to make the program work.
+Nhớ rằng mục tiêu không chỉ có làm cho chương trình chạy được. Mục tiêu là học cách làm cho chương trình chạy được.
 
