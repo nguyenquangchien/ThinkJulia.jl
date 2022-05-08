@@ -1,47 +1,47 @@
 [role="pagenumrestart"]
 [[chap01]]
-== The Way of the Program
+== Cái đạo của chương trình máy tính
 
-The ((("computer scientists, skills of", seealso="programming")))goal of this book is to teach you to think like a computer scientist. This way of thinking combines some of the best features of mathematics, engineering, and natural science. Like mathematicians, computer scientists use formal languages to denote ideas (specifically computations). Like engineers, they design things, assembling components into systems and evaluating trade-offs among alternatives. Like scientists, they observe the behavior of complex systems, form hypotheses, and test predictions.
+((("khoa học máy tính, kĩ năng", seealso="lập trình")))Cuốn sách này nhằm mục đích hướng dẫn bạn suy nghĩ như là một nhà khoa học máy tính. Cách tư duy này kết hợp những ưu điểm của khoa học tự nhiên, trong đó có toán học, với kĩ thuật. Cũng như những nhà toán học, những nhà khoa học máy tính dùng những ngôn ngữ có cấu trúc để diễn đạt ý tưởng (đặc biệt là tính toán). Giống như những kĩ sư, họ cũng làm công việc thiết kế, gắn kết các thành phần tạo nên một hệ thống và đánh giá những ưu khuyết giữa các phương án khác nhau. Giống như những nhà khoa học, họ khảo sát các động thái của hệ thống phức tạp, đề ra các giả thiết, và kiểm định những tính toán.
 
-The ((("problem solving")))single most important skill for a computer scientist is _problem solving_. Problem solving means the ability to formulate problems, think creatively about solutions, and express a solution clearly and accurately. As it turns out, the process of learning to program is an excellent opportunity to practice problem-solving skills. That’s why this chapter is called “The Way of the Program.”
+((("giải quyết vấn đề")))Kĩ năng quan trọng nhất của nhà khoa học máy tính là _giải quyết vấn đề_. Giải quyết vấn đề chính là cách tạo lập vấn đề, suy nghĩ giải pháp một cách sáng tạo, và trình bày giải pháp một cách rõ ràng và chính xác. Như bạn sẽ thấy, việc học lập trình chính là một cơ hội tuyệt vời để bạn luyện tập những kĩ năng giải quyết vấn đề. Đó là lí do tại sao chương này lại có tên là “Cái đạo của chương trình máy tính”.
 
-On one level, you will be learning to program, a useful skill by itself. On another level, you will use programming as a means to an end. As we go along, that end will become clearer.
-
-
-=== What Is a Program?
-
-A _program_ ((("programs")))is a sequence of instructions that specifies how to perform a computation. The computation might be something mathematical, such as solving a system of equations or finding the roots of a polynomial, but it can also be a symbolic computation, such as searching for and replacing text in a document, or something graphical, like processing an image or playing a video.
-
-The ((("instructions", seealso="statements")))details look different in different languages, but a few basic instructions appear in just about every language:
-
-Input::
-Get data from the keyboard, a file, the network, or some other device.
-
-Output::
-Display data on the screen, save it in a file, send it over the network, etc.
-
-Math::
-Perform basic mathematical operations like addition and multiplication.
-
-Conditional execution::
-Check for certain conditions and run the appropriate code.
-
-Repetition::
-Perform ((("repetition", see="iteration")))some action repeatedly, usually with some variation.
-
-Believe it or not, that’s pretty much all there is to it. Every program you’ve ever used, no matter how complicated, is made up of instructions that look pretty much like these. So you can think of programming as the process of breaking a large, complex task into smaller and smaller subtasks until the subtasks are simple enough to be performed with one of these basic instructions.
+Một mặt, bạn sẽ được học cách lập trình, vốn bản thân nó là một kĩ năng hữu dụng. Mặt khác, bạn sẽ dùng lập trình như một phương tiện để giải quyết vấn đề. Điều này bạn sẽ dần dần làm được trong quá trình học.
 
 
-=== Running Julia
+=== Chương trình là gì?
 
-One ((("Julia", "running")))of the challenges of getting started with Julia is that you might have to install it and related software on your computer. If you are familiar with your operating system, and especially if you are comfortable with the command-line interface, you will have no trouble installing Julia. But for beginners, it can be painful to learn about system administration and programming at the same time.
+_Chương trình_ ((("chương trình")))là một danh sách các chỉ dẫn cách thực hiện tính toán. Việc tính toán có thể là thuần tuý toán học, chẳng hạn giải hệ phương trình hoặc tìm nghiệm đa thức, nhưng cũng có thể là những phép tính trên các kí hiệu, chẳng hạn tìm kiếm và thay thế chữ trong một văn bản, hoặc liên quan đến đồ họa, như xử lý một hình ảnh hoặc phát một đoạn video.
 
-To avoid that problem, I recommend that you start out running Julia in a browser. Later, when you are comfortable with Julia, I’ll make suggestions for installing Julia on your computer.
+((("chỉ dẫn", seealso="câu lệnh")))Dù chi tiết có thể khác nhau tuỳ theo từng ngôn ngữ lập trình, nhưng một số chỉ dẫn luôn có trong mọi ngôn ngữ:
 
-In ((("JuliaBox")))((("online resources", "JuliaBox")))the browser, you can run Julia on https://www.juliabox.com[JuliaBox]. No installation is required—just point your browser there, log in, and start computing (see <<juliabox>>).
+Nhập số liệu::
+Là việc lấy số liệu từ bàn phím, file, qua mạng, hoặc một thiết bị khác.
 
-The Julia _REPL_ (Read–Eval–Print Loop) ((("REPL (Read-Eval-Print Loop)")))is a program that reads and executes Julia code. You can start the REPL by opening a terminal on JuliaBox and typing *+julia+* on the command line. When it starts, you should see output like this:
+Xuất kết quả::
+Hiển thị kết quả trên màn hình, lưu kết quả vào file hoặc truyền qua mạng, v.v.
+
+Tính toán::
+Thực hiện các phép toán cơ bản như cộng và nhân.
+
+Thực thi theo điều kiện::
+Kiểm tra một điều kiện cụ thể và thực hiện mã lệnh tương ứng.
+
+Lặp::
+Thực hiện ((("nhắc lại", see="lặp")))lặp lại công việc nhiều lần, thường là với một số thay đổi giữa các lần lặp.
+
+Tin hay không thì tùy bạn, nhưng bất cứ một chương trình nào, dù phức tạp đến đâu, đều được cấu thánh từ những chỉ dẫn đơn giản ở trên. Vì vậy, có thể coi lập trình như việc chia một bài toán lớn, phức tạp thành nhiều bài toán nhỏ hơn cho đến khi từng bài toán nhỏ này đơn giản đến mức có thể được thực hiện theo một trong các chỉ dẫn trên đây.
+
+
+=== Chạy Julia
+
+((("Julia", "chạy")))Một trong những thách thức khi bắt đầu dùng Julia là bạn có thể phải cài đặt nó cùng những phần mềm liên quan lên máy tính của mình. Nếu bạn quen với hệ điều hành máy đó, và đặc biệt là quen với giao diện dòng lệnh thì bạn sẽ cài đặt được Julia mà không gặp trục trặc gì. Nhưng với người mới, có thể phải rất nhọc khi phải cùng lúc học cách quản trị hệ thống lẫn lập trình.
+
+Để tránh điều này, tôi khuyên bạn bắt đầu chạy Julia từ trình duyệt web. Sau này khi đã quen với Julia, tôi sẽ gợi ý cài đặt Julia vào máy.
+
+((("JuliaBox")))((("tài liệu trực tuyến", "JuliaBox")))Trong trình duyệt, bạn có thể chạy Julia từ https://www.juliabox.com[JuliaBox]. Không cần cài đặt gì thêm—chỉ đến trang web đó, đăng nhập, và bắt đầu tính toán (xem <<juliabox>>).
+
+_REPL_ (Read–Eval–Print Loop) của Julia ((("REPL (Read-Eval-Print Loop)")))là một chương trình đọc và thực thi mã lệnh Julia. Bạn có thể khởi động REPL bằng cách mở một cửa sổ terminal trong JuliaBox và gõ *+julia+* từ dòng lệnh. Khi nó khởi động, bạn phải nhìn thấy kết quả như sau:
 
 [source,@julia-eval]
 ----
@@ -51,9 +51,9 @@ banner = String(take!(io))
 println("$(banner)julia>")
 ----
 
-The first lines contain information about the REPL, so it might be different for you. But you should check that the version number is at least +1.0.0+.
+Những dòng đầu tiên có chứa thông tin về REPL, bởi vậy trên máy bạn có thể khác. Nhưng bạn cần kiểm tra và đảm bảo rằng phiên bản nó ít nhất phải là +1.0.0+.
 
-The ((("prompt", "in REPL", secondary-sortas="REPL")))last line is a _prompt_ that indicates that the REPL is ready for you to enter code. If you type a line of code and hit Enter, the REPL displays the result:
+((("dấu nhắc", "trong REPL", secondary-sortas="REPL")))Ở dòng cuối là một _dấu nhắc_ để cho thấy rằng REPL đã sẵn sàng để bạn nhập mã lệnh vào. Nếu bạn gõ một dòng lệnh và ấn Enter thì REPL hiển thị kết quả:
 
 [source,@julia-repl-test]
 ----
@@ -61,14 +61,14 @@ julia> 1 + 1
 2
 ----
 
-Code snippets can be copied and pasted verbatim, including the +julia>+ prompt and any output.
+Ta có thể sao chép và dán đoạn mã lệnh, bao gồm dấu nhắc +julia>+ và mọi kết quả đầu ra.
 
-Now you’re ready to get started. From here on, I assume that you know how to start the Julia REPL and run code.
+Bây giờ bạn đã sẵn sàng bắt đầu. Từ đây, tôi coi như bạn đã biết cách khởi động REPL của Julia và chạy mã lệnh.
 
 
-=== The First Program
+=== Chương trình đầu tiên
 
-Traditionally, the first program you write in a new language is called “Hello, World!” because all it does is display the words “Hello, World!” In Julia, it looks like this:
+Theo thông lệ, chương trình đầu tiên mà bạn viết theo một ngôn ngữ lập trình mới có tên gọi là “Hello, World!” vì tất cả những gì nó thực hiện chỉ là làm hiện ra dòng chữ “Hello, World!” Một chương trình như vậy trong Python được viết như sau:
 
 [source,@julia-repl-test]
 ----
@@ -76,19 +76,19 @@ julia> println("Hello, World!")
 Hello, World!
 ----
 
-This ((("print statement", "println function")))((("output", "print statement")))is an example of a _print statement_, although it doesn’t actually print anything on paper. It displays a result on the screen.
+((("print (lệnh)", "println (hàm)")))((("kết quả đầu ra", "print (lệnh)")))Đây là ví dụ về một _lệnh print_, dù chẳng in gì ra giấy. Nó chỉ hiển thị một giá trị trên màn hình.
 
 
-The quotation marks in the program mark the beginning and end of the text to be displayed; they don’t appear in the result.
+Cặp dấu nháy đơn trong đoạn chương trình có nhiệm vụ đánh dấu các điểm đầu và cuối của đoạn chữ cần hiển thị; chúng sẽ không xuất hiện trong kết quả.
 
-The parentheses indicate that +println+ is a function. We’ll get to functions in <<chap03>>.
+Cặp ngoặc tròn cho thấy rằng +println+ là một hàm. Ta sẽ đề cập tới hàm ở <<chap03>>.
 
 
-=== Arithmetic Operators
+=== Toán tử số học
 
-After((("operators", "arithmetic")))((("arithmetic operators")))((("mathematics", "arithmetic operators"))) “Hello, World!” the next step is arithmetic. Julia ((("operators")))provides _operators_, which are symbols that represent computations like addition and multiplication.
+Tiếp sau((("toán tử", "số học")))((("toán tử số học")))((("toán học", "toán tử số học"))) “Hello, World!” là làm toán. Julia ((("toán tử")))cung cấp các _toán tử_, chúng là các kí hiệu đặc biệt để biểu diễn các phép tính như cộng và nhân.
 
-The ((("$$+$$ (addition operator)", primary-sortas="* addition")))((("addition operator ($$+$$)")))((("$$-$$ (subtraction operator)", primary-sortas="* subtraction")))((("subtraction operator ($$-$$)")))((("$$*$$ (asterisk)", "multiplication operator", primary-sortas="* asterisk")))((("multiplication operator ($$*$$)")))((("asterisk ($$*$$)", "multiplication operator")))operators +pass:[+]+, +-+, and +*+ perform addition, subtraction, and multiplication, as in the following examples:
+((("$$+$$ (toán tử cộng)", primary-sortas="* phép cộng")))((("toán tử cộng ($$+$$)")))((("$$-$$ (toán tử trừ)", primary-sortas="* phép trừ")))((("toán tử trừ ($$-$$)")))((("$$*$$ (dấu sao)", "toán tử nhân", primary-sortas="* dấu sao")))((("toán tử nhân ($$*$$)")))((("dấu sao ($$*$$)", "toán tử nhân")))Các toán tử +pass:[+]+, +-+, and +*+ thực hiện phép cộng, trừ, và nhân như trong ví dụ sau:
 
 [source,@julia-repl-test]
 ----
@@ -100,7 +100,7 @@ julia> 6 * 7
 42
 ----
 
-The ((("$$/$$ (division operator)", primary-sortas="* division")))((("division", "division operator ($$/$$)")))operator +/+ performs division:
+((("$$/$$ (toán tử chia)", primary-sortas="* phép chia")))((("phép chia", "toán tử chia ($$/$$)")))Toán tử +/+ thực hiện phép chia:
 
 [source,@julia-repl-test]
 ----
@@ -108,9 +108,9 @@ julia> 84 / 2
 42.0
 ----
 
-You might wonder why the result is +42.0+ instead of +42+. I’ll explain in the next section.
+Có thể bạn sẽ tự hỏi rằng tại sao kết quả là +42.0+ thay vì +42+. Tôi sẽ giải thích ở mục tiếp sau.
 
-Finally, the ((("$$^$$ (caret)", "exponentiation operator", primary-sortas="* caret")))((("exponentiation operator ($$^$$)")))((("caret ($$^$$)", "exponentiation operator")))operator +^+ performs exponentiation; that is, it raises a number to a power:
+Cuối cùng, ((("$$^$$ (dấu mũ)", "toán tử lũy thừa", primary-sortas="* dấu mũ")))((("toán tử lũy thừa ($$^$$)")))((("dấu mũ ($$^$$)", "toán tử lũy thừa")))toán tử +^+ thực hiện phép lũy thừa; nghĩa là nó nâng một con số lên một số mũ:
 
 [source,@julia-repl-test]
 ----
@@ -118,13 +118,13 @@ julia> 6^2 + 6
 42
 ----
 
-=== Values and Types
+=== Giá trị và kiểu
 
-A _value_ ((("values")))is one of the basic things a program works with, like a letter or a number. Some values we have seen so far are +2+, +42.0+, and +"Hello, World!"+.
+_Giá trị_ ((("giá trị")))là một trong những cái cơ bản mà chương trình cần dùng đến, chẳng hạn như một chữ cái hoặc một con số. Các giá trị mà ta đã thấy đến giờ bao gồm +2+, +42.0+, và +"Hello, World!"+.
 
-These ((("types")))((("data types", see="types")))((("integer type (Int64)")))((("floating-point type (Float64)")))((("strings")))((("types", "Int64", see="integer type")))((("types", "Float64", see="floating-point type")))((("types", "String", see="strings")))values belong to different _types_: +2+ is an _integer_, +42.0+ is a _floating-point number_, and +"Hello, World!"+ is a _string_, so called because the letters it contains are strung together.
+((("kiểu")))((("kiểu dữ liệu", see="kiểu")))((("kiểu số nguyên (Int64)")))((("floating-point type (Float64)")))((("chuỗi")))((("kiểu", "Int64", see="kiểu số nguyên")))((("kiểu", "Float64", see="floating-point type")))((("kiểu", "String", see="chuỗi")))Các giá trị này thuộc về hai _kiểu_ khác nhau: +2+ là một _số nguyên_, +42.0+ là một _số phẩy động_, còn +"Hello, World!"+ là một _chuỗi_, sở dĩ gọi như vậy vì nó là một loạt các kí tự xâu chuỗi với nhau.
 
-If ((("typeof function")))you are not sure what type a value has, the REPL can tell you:
+((("hàm typeof")))Nếu bạn không chắc rằng kiểu của một giá trị là gì, REPL có thể cho bạn biết:
 
 [source,@julia-repl-test]
 ----
@@ -136,9 +136,9 @@ julia> typeof("Hello, World!")
 String
 ----
 
-Integers belong to the type +Int64+, strings belong to +String+, and floating-point numbers belong to +Float64+.
+Các số nguyên thuộc về kiểu +Int64+, các chuỗi thuộc về +String+, còn các số phẩy động thuộc về +Float64+.
 
-What ((("quotation marks (&quot;&#x2026;&quot;)", "enclosing strings")))((("&quot;&#x2026;&quot; (quotation marks)", "enclosing strings", primary-sortas="* quotation marks")))about values like +"2"+ and +"42.0"+? They look like numbers, but they are in quotation marks like strings. These are strings too:
+((("dấu nháy kép (&quot;&#x2026;&quot;)", "bao quanh chuỗi")))((("&quot;&#x2026;&quot; (dấu nháy kép)", "bao quanh chuỗi", primary-sortas="* dấu nháy kép")))Thế còn các giá trị như +"2"+ và +"42.0"+? Trông chúng giống như số, nhưng chúng được đặt trong cặp dấu nháy như các chuỗi. Chúng cũng là các chuỗi:
 
 [source,@julia-repl-test]
 ----
@@ -148,7 +148,7 @@ julia> typeof("42.0")
 String
 ----
 
-When ((("comma ($$,$$)", "not using in integers")))((("$$,$$ (comma)", "not using in integers", primary-sortas="* comma")))you type a large integer, you might be tempted to use commas between groups of digits, as in +1,000,000+. This is not a legal _integer_ in Julia, but it is legal:
+((("dấu phẩy ($$,$$)", "không để viết số nguyên")))((("$$,$$ (dấu phẩy)", "không để viết số nguyên", primary-sortas="* dấu phẩy")))Khi bạn gõ vào những số nguyên lớn, có thể bạn muốn dùng những dấu phẩy để nhóm từng lớp ba chữ số lại với nhau, như +1,000,000+. Đây không phải là một _số nguyên_ hợp lệ trong Julia, nhưng vẫn hợp lệ cú pháp:
 
 [source,@julia-repl-test]
 ----
@@ -156,164 +156,163 @@ julia> 1,000,000
 (1, 0, 0)
 ----
 
-That’s not what we expected at all! Julia parses +1,000,000+ as a comma-separated sequence of integers. We’ll learn more about this kind of sequence later.
+Đó không phải là điều chúng ta mong muốn! Julia phân tách +1,000,000+ như một danh sách các số nguyên được phân cách bởi các dấu phẩy. Sau này, ta sẽ tìm hiểu thêm về các dãy như vậy.
 
-You ((("underscore ($$_$$)", "in integers")))((("$$_$$ (underscore)", "in integers", primary-sortas="* underscore")))can get the expected result using +1_000_000+, however.
-
-
-=== Formal and Natural Languages
-
-_Natural languages_ ((("natural language", id="ch1nat", range="startofrange")))are the languages people speak, such as English, Spanish, and French. They were not designed by people (although people try to impose some order on them); they evolved naturally.
-
-_Formal languages_ ((("formal language", id="ch1nat2", range="startofrange")))are languages that are designed by people for specific applications. For example, the notation that mathematicians use is a formal language that is particularly good at denoting relationships among numbers and symbols. Chemists use a formal language to represent the chemical structure of molecules. And ((("programming language", id="ch1nat3", range="startofrange")))most importantly, programming languages are formal languages that have been designed to express computations.
-
-Formal ((("syntax", id="ch1nat4", range="startofrange")))languages tend to have strict _syntax_ rules that govern the structure of statements. For example, in mathematics the statement latexmath:[\(3 + 3 = 6\)] has correct syntax, but latexmath:[\(3 += 3 \$ 6\)] does not. In chemistry, latexmath:[\(\mathrm{H_2O}\)] is a syntactically correct formula, but latexmath:[\(\mathrm{_2Zz}\)] is not.
-
-Syntax ((("tokens", id="ch1nat5", range="startofrange")))((("structure", id="ch1nat6", range="startofrange")))rules come in two flavors, pertaining to _tokens_ and _structure_. Tokens are the basic elements of the language, such as words, numbers, and chemical elements. One of the problems with latexmath:[\(3 += 3 \$ 6\)] is that latexmath:[\(\$\)] is not a legal token in mathematics (at least as far as I know). Similarly, latexmath:[\(\mathrm{_2Zz}\)] is not legal because there is no element with the abbreviation latexmath:[\(\mathrm{Zz}\)].
-
-The second type of syntax rule pertains to the way tokens are combined. The equation latexmath:[\(3 += 3\)] is illegal because even though latexmath:[\(+\)] and latexmath:[\(=\)] are legal tokens, you can’t have one right after the other. Similarly, in a chemical formula the subscript comes after the element name, not before.
-
-This is @ well-structured Engli$h sentence with invalid t*kens in it. This sentence all valid tokens has, but invalid structure with.
-
-When ((("parsing")))you read a sentence in English or a statement in a formal language, you have to figure out the structure (although in a natural language you do this subconsciously). This process is called _parsing_.
-
-Although formal and natural languages have many features in common—tokens, structure, and syntax—there are some differences:
-
-Ambiguity::
-Natural languages are full of ambiguity, which people deal with by using contextual clues and other information. Formal languages are designed to be nearly or completely unambiguous, which means that any statement has exactly one meaning, regardless of context.
-
-Redundancy::
-In order to make up for ambiguity and reduce misunderstandings, natural languages employ lots of redundancy. As a result, they are often verbose. Formal languages are less redundant and more concise.
-
-Literalness::
-Natural languages are full of idiom and metaphor. If I say, “The penny dropped,” there is probably no penny and nothing dropping (this idiom means that someone understood something after a period of confusion). Formal languages mean exactly what they say.
-
-Because we all grow up speaking natural languages, it is sometimes hard to adjust to formal languages. The difference between formal and natural language is like the difference between poetry and prose, but more so:
-
-Poetry::
-Words are used for their sounds as well as for their meaning, and the whole poem together creates an effect or emotional response. Ambiguity is not only common but often deliberate.
-
-Prose::
-The literal meaning of words is more important, and the structure contributes more meaning. Prose is more amenable to analysis than poetry but still often ambiguous.
-
-Programs::
-The meaning of a computer program is unambiguous and literal, and can be understood entirely by analysis of the tokens and structure.
-
-Formal languages are more dense than natural languages, so it takes longer to read them. Also, the structure is important, so it is not always best to read from top to bottom, left to right. Instead, you'll learn to parse the program in your head, identifying the tokens and interpreting the structure. Finally, the details matter. Small errors in spelling and punctuation, which you can get away with in natural languages, can make a big difference in a formal (((range="endofrange", startref="ch1nat")))(((range="endofrange", startref="ch1nat2")))(((range="endofrange", startref="ch1nat3")))(((range="endofrange", startref="ch1nat4")))(((range="endofrange", startref="ch1nat5")))(((range="endofrange", startref="ch1nat6")))language.
+((("dấu nối chân ($$_$$)", "để viết số nguyên")))((("$$_$$ (dấu nối chân)", "để viết số nguyên", primary-sortas="* dấu nối chân")))Dù vậy, bạn có thể viết con số mong muốn này là +1_000_000+.
 
 
-=== Debugging
+=== Ngôn ngữ hình thức và ngôn ngữ tự nhiên
 
-Programmers ((("errors (bugs)")))((("debugging", "emotions from, dealing with")))make mistakes. For whimsical reasons, programming errors are called _bugs_ and the process of tracking them down is called _debugging_.
+_Ngôn ngữ tự nhiên_ ((("ngôn ngữ tự nhiên", id="ch1nat", range="startofrange")))được mọi người dùng để giao tiếp, ví dụ Tiếng Anh, Tiếng Tây Ban Nha, Tiếng Pháp. Chúng không được con người thiết kế ra (dù người ta đã cố gắng áp dụng những trật tự nhất định); mà tự do phát triển.
 
-Programming, and especially debugging, sometimes brings out strong emotions. If you are struggling with a difficult bug, you might feel angry, despondent, or embarrassed.
+_Ngôn ngữ hình thức_ ((("ngôn ngữ hình thức", id="ch1nat2", range="startofrange")))được con người thiết kế để ứng dụng trong những lĩnh vực riêng. Chẳng hạn, kí hiệu toán học chính là một ngôn ngữ hình thức rất hữu dụng để biểu diễn mối quan hệ giữa những con số và kí hiệu. Trong hoá học, một loại ngôn ngữ hình thức khác được dùng để biểu diễn cấu trúc hoá học của các phân tử. Và quan trọng nhất ((("ngôn ngữ lập trình", id="ch1nat3", range="startofrange")))ngôn ngữ lập trình là những ngôn ngữ hình thức được thiết kế phục vụ mục đích biểu đạt tính toán.
 
-There is evidence that people naturally respond to computers as if they were people. When they work well, we think of them as teammates, and when they are obstinate or rude, we respond to them the same way we respond to rude, obstinate people.footnote:[Reeves, Byron, and Clifford Ivar Nass. 1996. “The Media Equation: How People Treat Computers, Television, and New Media Like Real People and Places.” Chicago, IL: Center for the Study of Language and Information; New York: Cambridge University Press.]
+((("cú pháp", id="ch1nat4", range="startofrange")))Các ngôn ngữ hình thức thường có quy định _cú pháp_ chặt chẽ đặt ra cho cấu trúc các câu lệnh. Chẳng hạn, latexmath:[\(3 + 3 = 6\)] là một biểu thức toán học đúng, nhưng latexmath:[\(3 += 3 \$ 6\)] thì không. latexmath:[\(\mathrm{H_2O}\)] là một công thức hoá học đúng về cú pháp, còn latexmath:[\(\mathrm{_2Zz}\)] thì không.
 
-Preparing for these reactions might help you deal with them. One approach is to think of the computer as an employee with certain strengths, like speed and precision, and particular weaknesses, like lack of empathy and inability to grasp the big picture.
+((("kí hiệu", id="ch1nat5", range="startofrange")))((("structure", id="ch1nat6", range="startofrange")))Các quy tắc cú pháp có hai dạng, gắn với các _kí hiệu_ và _cấu trúc_. Kí hiệu là các thành phần nguyên tố của ngôn ngữ, chẳng hạn, các từ, các con số, và các nguyên tố hoá học. Vấn đề với latexmath:[\(3 += 3 \$ 6\)] là ở chỗ latexmath:[\(\$\)] không phải là một kí hiệu hợp lệ trong toán học (chí ít là như tôi được biết). Tương tự như vậy, latexmath:[\(\mathrm{_2Zz}\)] không hợp lệ vì không có nguyên tố hoá học nào có viết tắt là latexmath:[\(\mathrm{Zz}\)].
 
-Your job is to be a good manager: find ways to take advantage of the strengths and mitigate the weaknesses. And find ways to use your emotions to engage with the problem, without letting your reactions interfere with your ability to work effectively.
+Loại quy tắc cú pháp thứ hai gắn với cách kết hợp các kí hiệu. Phương trình latexmath:[\(3 += 3\)] không hợp lệ là vì mặc dù latexmath:[\(+\)] và latexmath:[\(=\)] đều là các kí hiệu hợp lệ, nhưng chúng không thể đứng liền kề nhau. Tương tự như vậy, trong một công thức hoá học thì chỉ số phải được đặt sau tên nguyên tố chứ không phải đặt trước.
 
-Learning to debug can be frustrating, but it is a valuable skill that is useful for many activities beyond programming. At the end of each chapter there is a section, like this one, with my suggestions for debugging. I hope they help!
+This is @ well-structured Engli$h sentence with invalid t*kens in it. Câu tiếng Anh này có những kí hiệu đều hợp lệ nhưng cấu trúc lại không hợp lệ.
+
+Mỗi khi đọc một câu tiếng Anh ((("phân tách"))) trong ngôn ngữ hình thức, bạn cần hình dung được cấu trúc của câu đó là gì (mặc dù với ngôn ngữ tự nhiên thì việc làm này được thực hiện một cách vô thức). Quá trình này được gọi là _phân tách_.
+
+Mặc dù ngôn ngữ hình thức và ngôn ngữ tự nhiên có nhiều đặc điểm chung—nguyên tố, cấu trúc, cú pháp, và ngữ nghĩa—nhưng chúng có một số khác biệt:
+
+Sự mập mờ::
+Ngôn ngữ tự nhiên chứa đựng sự mập mờ theo nghĩa con người muốn hiểu đúng phải có suy luận tuỳ từng ngữ cảnh. và có thêm các thông tin khác để bổ sung. Các ngôn ngữ hình thức được thiết kế gần như rõ ràng tuyệt đối, tức là mỗi mệnh để chỉ có đúng một nghĩa, bất kể ngữ cảnh như thế nào.
+
+Sự dư thừa::
+Để loại trừ sự mập mờ và tránh gây hiểu nhầm, ngôn ngữ tự nhiên cần dùng đến nhiều nội dung bổ trợ làm dài thêm nội dung. Trái lại, các ngôn ngữ hình thức có nội dung gọn gàng đến mức tối thiểu.
+
+Tính văn phong::
+Các ngôn ngữ tự nhiên có chứa nhiều thành ngữ và ẩn dụ. Khi ai đó nói “Đồng xu rơi”, có thể tại đó không có đồng xu nào và cũng chẳng có gì vừa rơi (thành ngữ này nghĩa là ai đó đã hiểu ra một điều sau một lát bối rối). Còn các ngôn ngữ hình thức luôn luôn có nghĩa đúng theo những gì được viết ra.
+
+Chúng ta dùng ngôn ngữ tự nhiên ngay từ thủa nhỏ, nên thường có một thời gian khó khăn ban đầu khi làm quen với ngôn ngữ hình thức. Về phương diện nào đó, sự khác biệt giữa ngôn ngữ hình thức và ngôn ngữ tự nhiên cung như khác biệt giữa thơ ca và văn xuôi, dù hơn thế nữa.
+
+Thơ ca::
+Các từ được dùng với cả chức năng âm điệu bên cạnh chức năng ý nghĩa, và toàn bộ bài thơ/ca tạo ra hiệu quả cảm xúc. Thường có sự mập mờ, thậm chí còn là chủ định của tác giả.
+
+Văn xuôi::
+Coi trọng ý nghĩa của câu chữ hơn, trong đó phải kể đến vai trò của cấu trúc đối với việc diễn đạt ý nghĩa. Văn xuôi dễ phân tích ngữ nghĩa hơn so với thơ ca nhưng vẫn còn sự mập mờ.
+
+Chương trình::
+Ý nghĩa của một chương trình máy tính là rõ ràng và được diễn đạt hoàn toàn thông qua câu chữ, theo đó ta có thể hiểu được trọn ven bằng cách phân tích các kí hiệu và cấu trúc.
+
+Ngôn ngữ hình thức cô đọng hơn ngôn ngữ tự nhiên, nên phải mất nhiều thời gian để đọc hơn. Mặt khác, cấu trúc cũng rất quan trọng, do đó không nên chỉ đọc qua một lượt từ trên xuống dưới. Bạn cần phải học cách phân tách ngôn ngữ trong trí óc, nhận diện các kí hiệu và diễn giải cấu trúc. Cuối cùng, những chi tiết đóng vai trò quan trọng. Các lỗi dù là nhỏ nhất trong cách viết các từ hoặc dấu câu trong ngôn ngữ hình thức sẽ có thể gây ra khác biệt lớn về ý nghĩa.(((range="endofrange", startref="ch1nat")))(((range="endofrange", startref="ch1nat2")))(((range="endofrange", startref="ch1nat3")))(((range="endofrange", startref="ch1nat4")))(((range="endofrange", startref="ch1nat5")))(((range="endofrange", startref="ch1nat6")))
 
 
-=== Glossary
+=== Gỡ lỗi
 
-problem solving::
-The ((("problem solving")))process of formulating a problem, finding a solution, and expressing it.
+((("lỗi (bug)")))((("gỡ lỗi", "cảm xúc, giải quyết")))Lập trình viên có mắc sai lâm. Thật buồn cười, những lỗi lập trình trong tiếng Anh gọi là _bug_ (con bọ) và quá trình dò tìm phát hiện ra chúng được gọi là gỡ lỗi (_debugging_, "bắt bọ").
 
-program::
-A ((("programs")))sequence of instructions that specifies a computation.
+Đôi khi việc lập trình, và đặc biệt là gỡ lỗi, đem đến những cảm xúc mạnh. Nếu bạn đang đánh vật với một lỗi rất khó, bạn có thể nổi xung, đầu hàng hoặc bối rối.
+
+Đã có những chứng cứ cho thấy con người phản ứng tự nhiên lại với máy tính như thể chúng là những người thực. Khi chúng hoạt động trôi chảy, ta coi chúng như người bạn; và khi chúng rất cứng đầu hoặc thô lỗ, chúng ta phản ứng với chúng như thể với hạng người mang những tính đó.footnote:[Reeves, Byron, and Clifford Ivar Nass. 1996. “The Media Equation: How People Treat Computers, Television, and New Media Like Real People and Places.” Chicago, IL: Center for the Study of Language and Information; New York: Cambridge University Press.]
+
+Chuẩn bị tiếp nhận những phản ứng này có thể giúp bạn biết cách vượt qua chúng. Một cách làm là nghĩ về máy tính như một nhân viên với các ưu điểm năng lực nhất định, như tốc độ và độ chính xác, nhưng kèm theo những nhược điểm riêng, như thiếu sự đồng cảm và thiếu khả năng nắm bắt bức tranh tổng thể.
+
+Còn bạn có vai trò là một người quản lý tốt: hãy tìm cách tận dụng ưu điểm và khắc phục những nhược điểm. Và tìm ra những cách điều khiển cảm xúc khi giải quyết vấn đề, không để cho những phản ứng của bản thân làm ảnh hưởng đến khả năng làm việc hiệu quả.
+
+Học cách gỡ lỗi có thể dễ gây bực bội, nhưng đó lại là kỹ năng rất quý báu và cần thiết cho nhiều hoạt động khác ngoài lập trình. Ở cuối mỗi chương sách đều có một mục gỡ lỗi, như mục này, trong đó tôi muốn chia sẻ những ý kiến bản thân về việc gỡ lỗi. Hi vọng nó sẽ giúp bạn!
+
+=== Thuật ngữ
+
+giải quyết vấn đề::
+((("giải quyết vấn đề")))Quá trình thiết lập bài toán, tìm lời giải, và diễn đạt nó.
+
+chương trình::
+((("chương trình")))Dãy những chỉ dẫn quy định việc tính toán.
 
 REPL::
-A ((("REPL (Read-Eval-Print Loop)")))program that repeatedly reads input, executes it, and outputs results.
+((("REPL (Read-Eval-Print Loop)")))Một chương trình lặp lại việc đọc số liệu đã nhập vào, thực thi nó, rồi đưa ra kết quả.
 
-prompt::
-Characters ((("prompt", "in REPL", secondary-sortas="REPL")))displayed by the REPL to indicate that it is ready to take input from the user.
+dấu nhắc::
+((("dấu nhắc", "trong REPL", secondary-sortas="REPL")))Các kí tự được hiển thị bởi REPL nhằm thể hiện rằng nó đã sẵn sàng nhận đầu vào từ phía người dùng.
 
-print statement::
-An ((("print statement")))((("output", "print statement")))instruction that causes the Julia REPL to display a value on the screen.
+lệnh print::
+((("lệnh print")))((("kết quả đầu ra", "lệnh print")))Chỉ thị để khiến trình REPL Julia hiển thị một giá trị lên màn hình.
 
-operator::
-A ((("operators")))symbol that represents a simple computation like addition, multiplication, or string concatenation.
+toán tử::
+((("toán tử")))Kí hiệu đặc biệt để biểu diễn một phép tính đơn nhất như cộng, nhân, hoặc nối chuỗi.
 
-value::
-One ((("values")))of the basic units of data, like a number or string, that a program manipulates.
+giá trị::
+((("giá trị")))Một trong những đơn vị cơ bản của dữ liệu, cũng như số hoặc chuỗi, mà chương trình thao tác với.
 
-type::
-A ((("types")))category of values. The types we have seen so far are integers (+Int64+), floating-point numbers (+Float64+), and strings (+String+).
+kiểu::
+((("kiểu")))Loại giá trị. Những kiểu mà ta đã gặp bao gồm kiểu số nguyên (+Int64+), số có phần thập phân (+Float64+), và chuỗi (+String+).
 
-integer::
-A ((("integer type (Int64)")))type that represents whole numbers.
+số nguyên::
+((("kiểu số nguyên (Int64)")))Kiểu dùng để biểu diễn các số tròn đơn vị.
 
-floating-point::
-A ((("floating-point type (Float64)")))type that represents numbers with a decimal point.
+số phẩy động::
+((("kiểu và chuỗi (Float64)")))Kiểu dùng để biểu diễn các số có phần thập phân.
 
-string::
-A ((("strings")))type that represents sequences of characters.
+chuỗi::
+((("chuỗi")))Kiểu dùng để biểu diễn một dãy các kí tự.
 
-natural language::
-Any ((("natural language")))one of the languages that people speak that evolved naturally.
+ngôn ngữ tự nhiên::
+((("ngôn ngữ tự nhiên")))Ngôn ngữ bất kì được con người dùng, được trải qua sự tiến hóa tự nhiên.
 
-formal language::
-Any ((("formal language")))one of the languages that people have designed for specific purposes, such as representing mathematical ideas or computer programs. All ((("programming language")))programming languages are formal languages.
+ngôn ngữ hình thức::
+((("ngôn ngữ hình thức")))Ngôn ngữ bất kì được con người thiết kế nhằm mục đích cụ thể, như việc biểu diễn các ý tưởng toán học hoặc các chương trình máy tính; tất cả các ngôn ngữ lập trình đều là ngôn ngữ hình thức.((("ngôn ngữ lập trình")))
 
-syntax::
-The ((("syntax")))rules that govern the structure of a program.
+cú pháp::
+((("cú pháp")))Các quy tắc chi phối cấu trúc của một chương trình.
 
-token::
-One ((("tokens")))of the basic elements of the syntactic structure of a program, analogous to a word in a natural language.
+kí hiệu::
+((("kí hiệu")))Một trong những nguyên tố cơ bản trong cấu trúc cú pháp của một chương trình, tương đương với một từ trong ngôn ngữ tự nhiên.
 
-structure::
-The ((("structure")))way tokens are combined.
+cấu trúc::
+((("cấu trúc")))Cách mà các kí hiệu kết hợp lại.
 
-parse::
-To ((("parsing")))examine a program and analyze the syntactic structure.
+phân tách::
+((("phân tách")))Việc kiểm tra một chương trình và phân tích cấu trúc cú pháp.
 
-bug::
-An ((("errors (bugs)", seealso="debugging")))((("bugs", see="errors")))error in a program.
+lỗi::
+((("lỗi (bug)", seealso="gỡ lỗi")))((("bug", see="lỗi")))Lỗi sai trong chương trình.
 
-debugging::
-The ((("debugging", seealso="errors (bugs); testing")))process of finding and correcting bugs.
+gỡ lỗi::
+((("gỡ lỗi", seealso="errors (bugs); testing")))Quá trình dò tìm và sửa chữa lỗi.
 
 
-=== Exercises
+=== Bài tập
 
 [TIP]
 ====
-It is a good idea to read this book in front of a computer so you can try out the examples as you go.
+Một ý hay là đọc sách này trước máy tính để có thể thử ngay các ví dụ khi bạn lật qua các trang.
 ====
 
 [[ex01-1]]
-===== Exercise 1-1
+===== Bài tập 1-1
 
-Whenever you are experimenting with a new feature, you should try to make mistakes. For example, in the “Hello, World!” program, what happens if you leave out one of the quotation marks? What if you leave out both? What if you spell +println+ wrong?
+Bất kì lúc nào khi bạn thử nghiệm với một tính năng mới, bạn nên cố tạo ra vài lỗi. Chẳng hạn, trong chương trình “Hello, World!”, điều gì sẽ xảy ra nếu bạn bỏ quên một trong hai dấu nháy kép? Nếu bạn bỏ mất cả hai dấu? Nếu bạn gõ sai chữ +println+?
 
-This kind of experiment helps you remember what you read; it also helps when you are programming, because you get to know what the error messages mean. It is better to make mistakes now and on purpose rather than later and accidentally.
+Những thử nghiệm kiểu này giúp cho bạn nhớ những gì đã đọc, và cũng giúp bạn khi lập trình, vì bạn sẽ biết được các lời thông báo lỗi ngụ ý gì. Thà là phạm lỗi có chủ đích ngay bây giờ còn hơn là mắc lỗi tình cờ sau này.
 
-. In a print statement, what happens if you leave out one of the parentheses, or both?
+. Trong một câu lệnh print, điều gì sẽ xảy ra nếu bạn bỏ quên một trong hai ngoặc tròn? Nếu bỏ cả hai?
 
-. If you are trying to print a string, what happens if you leave out one of the quotation marks, or both?
+. Nếu bạn đang thử in một chuỗi, điều gì sẽ xảy ra nếu bạn bỏ quên một trong hai dấu nháy? Nếu bỏ cả hai?
 
-. You can use a minus sign to make a negative number like +-2+. What happens if you put a plus sign before a number? What about +pass:[2++2]+?
+. Bạn có thể dùng dấu trừ để viết một số âm như +-2+. Điều gì sẽ xảy ra nếu bạn viết dấu cộng trước dấu này? Vậy còn +pass:[2++2]+ thi sao?
 
-. In math notation, leading zeros are okay, as in +02+. What happens if you try this in Julia?
+. Theo cách viết toán học, viết những chữ số 0 đứng trước con số cũng được, như +02+. Điều gì sẽ xảy ra nếu bạn thử viết như vậy trong Julia?
 
-. What happens if you have two values with no operator between them?
+. Điều gì sẽ xảy ra nếu bạn viết hai giá trị mà giữa chúng không có dấu toán tử?
 
 
 [[ex01-2]]
-===== Exercise 1-2
+===== Bài tập 1-2
 
-Start the Julia REPL and use it as a calculator.
+Khởi động REPL Julia và dùng nó như chiếc máy tính tay.
 
-. How many seconds are there in 42 minutes 42 seconds?
+. Có bao nhiêu giây trong 42 phút 42 giây?
 
-. How many miles are there in 10 kilometers?
+. Có bao nhiêu dặm trong 10 kilomet?
 +
 [TIP]
 ====
-There are 1.61 kilometers in a mile.
+Một dặm bằng 1.61 km.
 ====
 
-. If you run a 10-kilometer race in 37 minutes 48 seconds, what is your average pace (time per mile in minutes and seconds)? What is your average speed in miles per hour?
+. Nếu bạn chạy thi 10 km trong vòng 43 phút 30 giây thì thời gian trung bình mà để bạn chạy được một dặm là bao nhiêu (tính theo số phút và giây)? Tốc độ trung bình mà bạn chạy là bao nhiêu dặm một giờ?
