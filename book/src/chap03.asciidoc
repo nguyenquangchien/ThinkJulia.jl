@@ -1,13 +1,13 @@
 [[chap03]]
-== Functions
+== Hàm
 
-In the context of programming, a _function_ is a named sequence of statements that performs a computation. When you define a function, you specify the name and the sequence of statements. Later, you can “call” the function by name.
-(((function)))
+Trong lập trình, một _hàm_ là một nhóm được đặt tên gồm các câu lệnh nhằm thực hiện một nhiệm vụ tính toán cụ thể. Khi định nghĩa hàm, bạn chỉ định tên của nó và tiếp theo là loạt các câu lệnh. Sau này, bạn có thể “gọi” hàm theo tên của nó.
+(((hàm)))
 
-=== Function Calls
+=== Lời gọi hàm
 
-We have already seen one example of a function call:
-(((function call)))
+Ta đã thấy một ví dụ của việc gọi hàm:
+(((lời gọi hàm)))
 
 [source,@julia-repl-test]
 ----
@@ -15,14 +15,14 @@ julia> println("Hello, World!")
 Hello, World!
 ----
 
-The name of the function is +println+. The expression in parentheses is called the _argument_ of the function.
-(((argument)))(((parentheses)))
+Tên của hàm này là +println+. Biểu thức ở trong cặp ngoặc tròn được gọi là _đối số_ của hàm.
+(((đối số)))(((ngoặc tròn)))
 
-It is common to say that a function “takes” an argument and “returns” a result. The result is also called the _return value_.
-(((return value)))
+Người ta thường nói một hàm “lấy” một đối số và “trả về” một giá trị. Giá trị này được gọi là _giá trị trả về_.
+(((giá trị trả về)))
 
-Julia provides functions that convert values from one type to another. The +parse+ function takes a string and converts it to any number type, if it can, or complains otherwise:
-(((type conversion)))((("function", "Base", "parse", see="parse")))(((ArgumentError)))((("error", "Core", "ArgumentError", see="ArgumentError")))
+Julia cung cấp các hàm giúp chuyển đổi một giá trị từ kiểu này sang kiểu khác. Hàm +parse+ nhận vào một chuỗi và chuyển nó thành một số kiểu bất kì nếu có thể, còn nếu không được thì thông báo lỗi:
+(((chuyển đổi kiểu)))((("hàm", "Base", "parse", see="parse")))(((ArgumentError)))((("lỗi", "Core", "ArgumentError", see="ArgumentError")))
 
 [source,@julia-repl-test]
 ----
@@ -34,8 +34,8 @@ julia> parse(Int64, "Hello")
 ERROR: ArgumentError: invalid base 10 digit 'H' in "Hello"
 ----
 
-+trunc+ can convert floating-point values to integers, but it doesn’t round off; it chops off the fraction part:
-(((trunc)))((("function", "Base", "trunc", see="trunc")))
++trunc+ có thể chuyển các giá trị phẩy động sang số nguyên, nhưng nó không làm tròn mà chỉ cắt bỏ phần thập phân:
+(((trunc)))((("hàm", "Base", "trunc", see="trunc")))
 
 [source,@julia-repl-test]
 ----
@@ -45,8 +45,8 @@ julia> trunc(Int64, -2.3)
 -2
 ----
 
-+float+ converts integers to floating-point numbers:
-(((float)))((("function", "Base", "float", see="float")))
++float+  chuyển số nguyên và chuỗi sang số phẩy động:
+(((float)))((("hàm", "Base", "float", see="float")))
 
 [source,@julia-repl-test]
 ----
@@ -54,8 +54,8 @@ julia> float(32)
 32.0
 ----
 
-Finally, +string+ converts its argument to a string:
-(((string)))((("function", "Base", "string", see="string")))
+Cuối cùng, +string+ chuyển đối số của nó sang một chuỗi:
+(((string)))((("hàm", "Base", "string", see="string")))
 
 [source,@julia-repl-test]
 ----
@@ -66,10 +66,10 @@ julia> string(3.14159)
 ----
 
 
-=== Math Functions
+=== Các hàm toán học
 
-In Julia, most of the familiar mathematical functions are directly available:
-(((math function)))(((log10)))((("function", "Base", "log10", see="log10")))
+Trong Julia, phần lớn các hàm toán học thông dụng đều đã sẵn có:
+(((hàm toán học)))(((log10)))((("hàm", "Base", "log10", see="log10")))
 
 [source,julia]
 ----
@@ -77,8 +77,8 @@ ratio = signal_power / noise_power
 decibels = 10 * log10(ratio)
 ----
 
-This first example uses +log10+ to compute a signal-to-noise ratio in decibels (assuming that +signal_power+ and +noise_power+ are defined). +log+, which computes natural logarithms, is also provided.
-(((log)))((("function", "Base", "log", see="log")))((("logarithmic function", see="log")))
+Ví dụ thứ nhất sử dụng +log10+ để tính tỉ lệ giữa tín hiệu và nhiễu theo decibel (với giả sử rằng +signal_power+ và +noise_power+ đều đã định nghĩa). +log+, để tính lô-ga tự nhiên, cũng sẵn có.
+(((log)))((("hàm", "Base", "log", see="log")))((("logarithmic function", see="log")))
 
 [source,julia]
 ----
@@ -86,8 +86,8 @@ radians = 0.7
 height = sin(radians)
 ----
 
-This second example finds the sine of +radians+. The name of the variable is a hint that +sin+ and the other trigonometric functions (+cos+, +tan+, etc.) take arguments in radians. To convert from degrees to radians, divide by 180 and multiply by latexmath:[\(\pi\)]:
-(((sin)))((("function", "Base", "sin", see="sin")))(((trigonometric function)))
+Ví dụ thứ hai tìm sin của +radians+. Ở đây tên của biến số gợi ý rằng +sin+ và các hàm lượng giác khác (+cos+, +tan+, etc.) nhận đối số có đơn vị radian. Để đổi từ độ sang radian, hãy chai cho 180 và nhân với latexmath:[\(\pi\)]:
+(((sin)))((("hàm", "Base", "sin", see="sin")))(((hàm lượng giác)))
 
 [source,@julia-repl-test]
 ----
@@ -99,11 +99,11 @@ julia> sin(radians)
 0.7071067811865475
 ----
 
-The value of the variable +π+ is a floating-point approximation of latexmath:[\(\pi\)], accurate to about 16 digits.
+ Giá trị của biến +π+ là một số phẩy động xấp xỉ với số latexmath:[\(\pi\)], với độ chính xác khoảng 16 chữ số.
 (((pi)))
 
-If you know trigonometry, you can check the previous result by comparing it to the square root of two divided by two:
-(((sqrt)))((("function", "Base", "sqrt", see="sqrt")))((("square function", see="sqrt")))
+Nếu bạn nắm vững lượng giác, bạn có thể kiểm tra lại kết quả trước bằng cách so sánh nó với căn bậc hai của hai chia đôi:
+(((sqrt)))((("hàm", "Base", "sqrt", see="sqrt")))((("hàm căn bậc hai", see="sqrt")))
 
 [source,@julia-repl-test]
 ----
@@ -112,28 +112,28 @@ julia> sqrt(2) / 2
 ----
 
 
-=== Composition
+=== Ghép hàm
 
-So far, we have looked at the elements of a program—variables, expressions, and statements—in isolation, without talking about how to combine them.
-(((composition)))
+Cho đến giờ, chúng ta mới xét đến các thành phần tạo nên chương trình —biến, biểu thức, và câu lệnh—một cách riêng lẻ, mà chưa nói đến việc kết hợp chúng như thế nào.
+(((ghép)))
 
-One of the most useful features of programming languages is their ability to take small building blocks and compose them. For example, the argument of a function can be any kind of expression, including arithmetic operators:
+Một trong những đặc điểm hữu ích của các ngôn ngữ lập trình là chúng cho lấy những thành phần nhỏ và ghép chúng lại. Chẳng hạn, đối số của một hàm có thể là bất cứ biểu thức nào, bao gồm cả các toán tử đại số:
 
 [source,julia]
 ----
 x = sin(degrees / 360 * 2 * π)
 ----
 
-And even function calls:
-(((exp)))((("function", "Base", "exp", see="exp")))((("exponential function", see="exp")))
+Và thậm chí cả các lời gọi hàm nữa:
+(((exp)))((("hàm", "Base", "exp", see="exp")))((("hàm mũ", see="exp")))
 
 [source,julia]
 ----
 x = exp(log(x+1))
 ----
 
-Almost anywhere you can put a value, you can put an arbitrary expression, with one exception: the left side of an assignment statement has to be a variable name. Any other expression on the left side is a syntax error (we will see exceptions to this rule later).
-(((syntax error)))
+Hầu như bất kì chỗ nào bạn đặt được một giá trị, bạn cũng sẽ thay được vào đó một biểu thức, chỉ với một ngoại lệ: phía bên trái của một câu lệnh gán phải là một tên biến. Tất cả biểu thức nếu đặt ở bên phía trái đó sẽ phạm lỗi cú pháp (sau này ta sẽ thấy trường hợp ngoại lệ).
+(((lỗi cú pháp)))
 
 [source,@julia-eval chap03]
 ----
@@ -142,16 +142,16 @@ hours = 2;
 
 [source,@julia-repl-test chap03]
 ----
-julia> minutes = hours * 60 # right
+julia> minutes = hours * 60 # đúng
 120
-julia> hours * 60 = minutes # wrong!
+julia> hours * 60 = minutes # sai!
 ERROR: syntax: "60" is not a valid function argument name
 ----
 
-=== Adding New Functions
+=== Thêm các hàm mới
 
-So far, we have only been using the functions that come with Julia, but it is also possible to add new functions. A _function definition_ specifies the name of a new function and the sequence of statements that run when the function is called. Here is an example:
-(((function)))(((function definition)))(((programmer-defined function)))(((printlyrics)))((("function", "programmer-defined", "printlyrics", see="printlyrics")))
+Đến bây giờ, chúng ta mới chỉ dùng những hàm có sẵn trong Julia, song thật ra có thể tạo ra những hàm mới. Một lời _định nghĩa hàm_ bao gồm việc chỉ định tên của hàm mới và danh sách các câu lệnh cần được thực hiện khi hàm được gọi. Sau đây là một ví dụ:
+(((hàm)))(((định nghĩa hàm)))(((hàm người dùng định nghĩa)))(((printlyrics)))((("hàm", "người dùng định nghĩa", "printlyrics", see="printlyrics")))
 
 [source,@julia-setup chap03]
 ----
@@ -161,19 +161,19 @@ function printlyrics()
 end
 ----
 
-+function+ is a keyword that indicates that this is a function definition. The name of the function is +printlyrics+. The rules for function names are the same as for variable names: they can contain almost all Unicode characters (see <<characters>>), but the first character can’t be a number. You can’t use a keyword as the name of a function, and you should avoid having a variable and a function with the same name.
-((("keyword", "function", see="function")))(((argument)))(((Unicode character)))
++function+ là một từ khoá để khẳng định rằng đây là một định nghĩa làm. Tên của hàm là +printlyrics+. Quy tắc đặt tên hàm cũng như đặt tên biến: có thể gồm hầu hết các kí tự Unicode (xem <<characters>>), nhưng kí tự đầu tiên không thể là số. Bạn không thể đặt tên hàm giống như một từ khoá, và cũng nên tránh đặt tên hàm và tên biến trùng nhau.
+((("từ khóa", "hàm", see="hàm")))(((đối số)))(((kí tự Unicode)))
 
-The empty parentheses after the name indicate that this function doesn’t take any arguments.
-(((parentheses, empty)))
+Cặp ngoặc tròn bên trong không có gì, điều đó có nghĩa là hàm này không nhận đối số nào.
+(((ngoặc tròn, trống)))
 
-The first line of the function definition is called the _header_; the rest is called the _body_. The body is terminated with the keyword +end+ and it can contain any number of statements. For readability the body of the function should be indented.
-(((header)))(((body)))(((end)))((("keyword", "end", see="end")))(((indentation)))
+Dòng đầu tiên của định nghĩa hàm được gọi là _đoạn đầu_; phần còn lại là _phần thân_. Phần thân phải được kết thúc bởi +end+ và nó có thể chứa bao nhiêu câu lệnh cũng được. Để dễ đọc, phần thân của hàm cần viết thụt đầu dòng.
+(((đoạn đầu)))(((phần thân)))(((end)))((("từ khoá", "end", see="end")))(((thụt đầu dòng)))
 
-The quotation marks must be “straight quotes”, usually located next to Enter on the keyboard. “Curly quotes”, like the ones in this sentence, are not legal in Julia.
-(((quotation mark)))
+Các dấu nháy phải là "nháy thẳng", phím gõ dấu này thường ở cạnh phím Enter. “Các dấu nháy cong”, như dùng trong câu này, không hợ lệ trong Julia.
+(((dấu nháy)))
 
-If you type a function definition in interactive mode, the REPL indents to let you know that the definition isn’t complete:
+Nếu bạn gõ định nghĩa hàm vào ở chế độ tương tác, REPL sẽ in thụt đầu dòng nhằm cho bạn biết rằng việc định nghĩa hàm chưa hoàn thành:
 
 [source,jlcon]
 ----
@@ -182,9 +182,9 @@ julia> function printlyrics()
 
 ----
 
-To end the function, you have to enter +end+.
+Để kết thúc hàm, bạn phải gõ vào +end+.
 
-The syntax for calling the new function is the same as for built-in functions:
+Cú pháp của lời gọi hàm mới cũng giống như với các hàm dựng sẵn:
 
 [source,@julia-repl-test chap03]
 ----
@@ -193,8 +193,8 @@ I'm a lumberjack, and I'm okay.
 I sleep all night and I work all day.
 ----
 
-Once you have defined a function, you can use it inside another function. For example, to repeat the previous refrain, we could write a function called +repeatlyrics+:
-(((repeatlyrics)))((("function", "programmer-defined", "repeatlyrics", see="repeatlyrics")))
+Một khi bạn đã định nghĩa hàm, bạn có thể dùng nó trong một hàm khác. Chẳng hạn, để lặp lại điệp khúc vừa rồi, ta có thể viết một hàm có tên là +repeatlyrics+:
+(((repeatlyrics)))((("hàm", "người dùng định nghĩa", "repeatlyrics", see="repeatlyrics")))
 
 [source,@julia-setup chap03]
 ----
@@ -204,7 +204,7 @@ function repeatlyrics()
 end
 ----
 
-And then call +repeatlyrics+:
+Và sau đó gọi +repeatlyrics+:
 
 [source,@julia-repl-test chap03]
 ----
@@ -215,12 +215,12 @@ I'm a lumberjack, and I'm okay.
 I sleep all night and I work all day.
 ----
 
-But that’s not really how the song goes.
+Song đó không phải là cách viết một bài hát theo đúng nghĩa.
 
 
-=== Definitions and Uses
+=== Định nghĩa và sử dụng
 
-Pulling together the code fragments from the previous section, the whole program looks like this:
+Lấy lại những đoạn câu lệnh từ mục trước, ta được toàn bộ chương trình sau:
 
 [source,julia]
 ----
@@ -237,42 +237,42 @@ end
 repeatlyrics()
 ----
 
-This program contains two function definitions: +printlyrics+ and +repeatlyrics+. Function definitions get executed just like other statements, but the effect is to create function objects. The statements inside the function do not run until the function is called, and the function definition generates no output.
+Chương trình này bao gồm hai định nghĩa hàm: +printlyrics+ và +repeatlyrics+. Các định nghĩa hàm được thực hiện cũng giống như với các câu lệnh khác, nhưng tác dụng của chúng là tạo ra những đối tượng hàm. Các câu lệnh bên trong hàm không được thực hiện cho đến tận khi hàm được gọi, hơn nữa định nghĩa hàm cũng không tạo ra kết quả.
 
-As you might expect, you have to create a function before you can run it. In other words, the function definition has to run before the function gets called.
+Bạn có thể nghĩ rằng cần phải tạo ra một hàm trước khi có thể thực hiện nó, và quả đúng như vậy. Nói cách khác, định nghĩa hàm phải được thực hiện trước lần gọi hàm đầu tiên.
 
-===== Exercise 3-1
+===== Bài tập 3-1
 
-Move the last line of this program to the top, so the function call appears before the definitions. Run the program and see what error message you get.
+Chuyển dòng lệnh cuối cùng của chương trình vừa rồi lên trên cùng, để cho lời gọi hàm xuất hiện trước định nghĩa hàm. Chạy chương trình để xem bạn nhận được thông báo lỗi gì.
 
-Now move the function call back to the bottom and move the definition of +printlyrics+ after the definition of +repeatlyrics+. What happens when you run this program?
-
-
-=== Flow of Execution
-
-To ensure that a function is defined before its first use, you have to know the order statements run in, which is called the _flow of execution_.
-(((flow of execution)))
-
-Execution always begins at the first statement of the program. Statements are run one at a time, in order from top to bottom.
-
-Function definitions do not alter the flow of execution of the program, but remember that statements inside the function don’t run until the function is called.
-
-A function call is like a detour in the flow of execution. Instead of going to the next statement, the flow jumps to the body of the function, runs the statements there, and then comes back to pick up where it left off.
-
-That sounds simple enough, until you remember that one function can call another. While in the middle of one function, the program might have to run the statements in another function. Then, while running that new function, the program might have to run yet another function!
-
-Fortunately, Julia is good at keeping track of where it is, so each time a function completes, the program picks up where it left off in the function that called it. When it gets to the end of the program, it terminates.
-
-In summary, when you read a program, you don’t always want to read from top to bottom. Sometimes it makes more sense if you follow the flow of execution.
+Giờ thì chuyển lời gọi hàm trở lại cuối cùng và chuyển định nghĩa hàm +printlyrics+ xuống dưới định nghĩa hàm +repeatlyrics+. Lần này khi chạy chương trình, điều gì sẽ xảy ra?
 
 
-=== Parameters and Arguments
+=== Luồng thực thi chương trình
 
-Some of the functions we have seen require arguments. For example, when you call +sin+ you pass a number as an argument. Some functions take more than one argument: +parse+ takes two, a number type and a string.
-(((parameter)))(((argument)))(((parse)))(((sin)))
+Để đảm bảo chắc chắn rằng một hàm đã được định nghĩa trước lần sử dụng đầu tiên, bạn phải biết thứ tự thực hiện các câu lệnh, còn gọi là _luồng thực thi_.
+(((luồng thực thi)))
 
-Inside the function, the arguments are assigned to variables called _parameters_. Here is a definition for a function that takes an argument:
-(((printtwice)))((("function", "programmer-defined", "printtwice", see="printtwice")))
+Việc thực thi luôn được bắt đầu với câu lệnh thứ nhất của chương trình. Các câu lệnh được thực hiện lần lượt từ trên xuống.
+
+Các định nghĩa hàm không làm thay đổi luồng thực thi chương trình, nhưng cần nhớ rằng các câu lệnh bên trong của hàm không được thực hiện cho đến tận lúc hàm được gọi.
+
+Mỗi lần gọi hàm là một lần rẽ ngoặt luồng thực thi. Thay vì chuyển sang câu lệnh kế tiếp, luồng sẽ nhảy tới phần thân của hàm, thực hiện tất cả những câu lệnh ở trong đó, rồi trở lại tiếp tục thực hiện từ điểm mà nó vừa rời đi.
+
+Điều này nghe có vẻ đơn giản, nhưng sẽ khác đi nếu bạn nhận thấy rằng một hàm có thể gọi hàm khác. Khi ở trong phần thân của một hàm, chương trình có thể phải thực hiện những câu lệnh ở trong phần thân của một hàm khác. Nhưng khi đang thực hiện hàm mới đó, chương trình còn phải thực hiện một hàm khác nữa!
+
+May mắn là Juia rất giỏi theo dõi vị trí thực thi của chương trình, vì vậy mỗi khi một hàm được thực thi xong, chương trình sẽ trở về chỗ mà nó đã rời đi từ hàm gọi ban đầu. Khi trở về cuối chương trình, việc thực thi kết thúc.
+
+Tóm lại, khi đọc một chương trình, bạn không nhất thiết phải đọc từ trên xuống dưới. Đôi khi việc dò theo luồng thực thi của chương trình sẽ có lý hơn.
+
+
+=== Tham số và đối số
+
+Một số các hàm dựng sẵn mà ta đã gặp có yêu cầu đối số. Chẳng hạn, khi gọi hàm +sin+ bạn cần nhập vào một đối số. Một số hàm còn lấy nhiều đối số: +parse+ lấy hai đối số là một kiểu số và một chuỗi.
+(((tham số)))(((đối số)))(((parse)))(((sin)))
+
+Bên trong hàm, các đối số được gán cho các biến được gọi là _tham số_. Sau đây là lời định nghĩa một hàm nhận vào một đối số:
+(((printtwice)))((("hàm", "người dùng định nghĩa", "printtwice", see="printtwice")))
 
 [source,@julia-setup chap03]
 ----
@@ -282,9 +282,9 @@ function printtwice(bruce)
 end
 ----
 
-This function assigns the argument to a parameter named +bruce+. When the function is called, it prints the value of the parameter (whatever it is) twice.
+Hàm này gán một đối số cho một tham số có tên là +bruce+. Khi hàm được gọi, nó in ra giá trị của tham số hai lần (bất kể tham số là gì).
 
-This function works with any value that can be printed.
+Hàm này hoạt động được với bất kì giá trị nào có thể in được.
 
 [source,@julia-repl-test chap03]
 ----
@@ -299,8 +299,8 @@ julia> printtwice(π)
 π
 ----
 
-The same rules of composition that apply to built-in functions also apply to programmer-defined functions, so we can use any kind of expression as an argument for +printtwice+:
-(((composition)))(((programmer-defined function)))
+Quy tắc áp dụng cho các hàm dựng sẵn cũng có thể áp dụng được cho các hàm người dùng tạo ra, vì vậy ta có thể dùng bất kì loại biểu thức nào làm đối số cho +printtwice+:
+(((ghép)))(((hàm người dùng định nghĩa)))
 
 [source,@julia-repl-test chap03]
 ----
@@ -312,10 +312,11 @@ julia> printtwice(cos(π))
 -1.0
 ----
 
-The argument is evaluated before the function is called, so in the examples the expressions +"Spam "^4+ and +cos(π)+ are only evaluated once.
-(((argument)))(((cos)))((("function", "Base", "cos", see="cos")))
+Đối số được ước lượng trước khi hàm số được gọi, vì vậy trong các ví dụ, các biểu thức +"Spam "^4+ và +cos(π)+ đều chỉ được ước lượng một lần.
 
-You can also use a variable as an argument:
+(((đối số)))(((cos)))((("hàm", "Base", "cos", see="cos")))
+
+Bạn cũng có thể dùng một biến cho một đối số:
 
 [source,@julia-repl-test chap03]
 ----
@@ -326,13 +327,13 @@ Eric, the half a bee.
 Eric, the half a bee.
 ----
 
-The name of the variable we pass as an argument (+michael+) has nothing to do with the name of the parameter (+bruce+). It doesn’t matter what the value was called back home (in the caller); here in +printtwice+, we call everybody +bruce+.
+Tên của biến được đưa vào như đối số (+michael+) thì không có liên quan gì đến tân của tham số (+bruce+). Giá trị nào được gọi về (ở đoạn chương trình gọi) cũng không quan trọng; ở đây trong +printtwice+, chúng ta đều gọi mọi người với tên +bruce+.
 
 
-=== Variables and Parameters Are Local
+=== Các biến và tham số đều có tính địa phương
 
-When you create a variable inside a function, it is _local_, which means that it only exists inside the function. For example:
-(((local variable)))(((variable, local)))(((cattwice)))((("function", "programmer-defined", "cattwice", see="cattwice")))
+Khi tạo ra một biến ở trong hàm, nó mang tính _địa phương_, theo nghĩa rằng nó chỉ tồn tại bên trong hàm số. Chẳng hạn:
+(((biến địa phương)))(((biến, địa phương)))(((cattwice)))((("hàm", "người dùng định nghĩa", "cattwice", see="cattwice")))
 
 [source,@julia-setup chap03]
 ----
@@ -342,8 +343,8 @@ function cattwice(part1, part2)
 end
 ----
 
-This function takes two arguments, concatenates them, and prints the result twice. Here is an example that uses it:
-(((concatenate)))(((repetition)))
+Hàm này nhận hai đối số, nối chúng lại, và sau đó in ra kết quả hai lần. Sau đây là một ví dụ sử dụng hàm:
+(((nối)))(((lặp lại)))
 
 [source,@julia-repl-test chap03]
 ----
@@ -356,8 +357,8 @@ Bing tiddle tiddle bang.
 Bing tiddle tiddle bang.
 ----
 
-When +cattwice+ terminates, the variable +concat+ is destroyed. If we try to print it, we get an exception:
-(((run-time error)))(((UndefVarError)))((("error", "Core", "UndefVarError", see="UndefVarError")))
+Khi  +cattwice+ kết thúc, biến +concat+ bị huỷ bỏ. Nếu cố gắng in nó, ta sẽ nhận được một biệt lệ:
+(((lỗi thực thi)))(((UndefVarError)))((("lỗi", "Core", "UndefVarError", see="UndefVarError")))
 
 [source,@julia-repl-test chap03]
 ----
@@ -365,31 +366,31 @@ julia> println(concat)
 ERROR: UndefVarError: concat not defined
 ----
 
-Parameters are also local. For example, outside +printtwice+, there is no such thing as +bruce+.
-(((parameter)))
+Các tham số cũng có tính địa phương. Chẳng hạn, bên ngoài +printtwice+, không có thứ gì được gọi là +bruce+ cả.
+(((tham số)))
 
 
-[[stack_diagrams]]
-=== Stack Diagrams
+[[biểu đồ ngăn xếp]]
+=== Biểu đồ ngăn xếp
 
-To keep track of which variables can be used where, it is sometimes useful to draw a _stack diagram_. Like state diagrams, stack diagrams show the value of each variable, but they also show the function each variable belongs to.
-(((stack diagram)))((("diagram", "stack", see="stack diagram")))
+Để theo dõi xem những biến nào được sử dụng ở đâu, đôi khi sẽ tiện lợi nếu ta vẽ một _biểu đồ ngăn xếp_. Cũng như biểu đồ trạng thái, biểu đồ ngăn xếp cho thấy giá trị của từng biến, đồng thời cho thấy hàm mà mỗi biến thuộc về.
+(((biểu đồ ngăn xếp)))((("biểu đồ", "ngăn xếp", see="biểu đồ ngăn xếp")))
 
-Each function is represented by a _frame_. A frame is a box with the name of a function beside it and the parameters and variables of the function inside it. The stack diagram for the previous example is shown in <<fig03-1>>.
-(((frame)))
+Mỗi hàm đều được biểu diễn bởi một _khung_. Khung là một hình chữ nhật, có tên của hàm số ghi bên cạnh, cùng với các tham số và biến số của hàm được ghi trong đó. Biểu đồ ngăn xếp cho ví dụ trước được cho thấy trên <<fig03-1>>.
+(((khung)))
 
 [[fig03-1]]
-.Stack diagram
+.Biểu đồ ngăn xếp
 image::images/fig31.svg[]
 
-The frames are arranged in a stack that indicates which function called which, and so on. In this example, +printtwice+ was called by +cattwice+, and +cattwice+ was called by +Main+, which is a special name for the topmost frame. When you create a variable outside of any function, it belongs to +Main+.
+Các khung được bố trí trong một ngăn xếp cùng với chỉ định hàm nào gọi những hàm nào, và cứ như vậy. Ở ví dụ này, +printtwice+ được gọi bởi +cattwice+, và +cattwice+ được gọi bởi +Main+, vốn là một tên đặc biệt dành cho khung cấp cao nhất. Khi bạn tạo ra một biến không nằm trong bất cứ hàm nào, thì nó sẽ nằm trong +Main+.
 
-Each parameter refers to the same value as its corresponding argument. So, +part1+ has the same value as +line1+, +part2+ has the same value as +line2+, and +bruce+ has the same value as +concat+.
+Mỗi tham số tham chiếu đến giá trị tương ứng với đối số của nó. Do vậy, +part1+ có cùng giá trị với +line1+, +part2+ có cùng giá trị với +line2+, và +bruce+ có cùng giá trị với +concat+.
 
-If an error occurs during a function call, Julia prints the name of the function, the name of the function that called it, and the name of the function that called _that_, all the way back to +Main+.
+Nếu có một lỗi xảy ra trong quá trình gọi hàm, Julia sẽ in ra tên của hàm, cùng với tên của hàm số gọi hàm trước đó, và cứ như vậy cho đến khi trở về +Main+.
 (((Main)))
 
-For example, if you try to access +concat+ from within +printtwice+, you get a +UndefVarError+:
+Chẳng hạn, nếu bạn cố gắng truy cập +concat+ từ bên trong +printtwice+, bạn sẽ nhận được một thông báo lỗi +UndefVarError+:
 (((UndefVarError)))
 
 ----
@@ -399,18 +400,18 @@ Stacktrace:
  [2] cattwice(::String, ::String) at ./REPL[2]:3
 ----
 
-This list of functions is called a _stacktrace_. It tells you what program file the error occurred in, and what line, and what functions were executing at the time. It also shows the line of code that caused the error.
-(((stacktrace)))
+Danh sách các hàm như vậy có tên là _dò ngược_. Nó cho bạn biết file chương trình nào có chứa lỗi, và dòng lệnh nào cũng như những hàm nào được thực hiện lúc bấy giờ. Nó cũng cho biết dòng lệnh gây ra lỗi.
+(((dò ngược)))
 
-The order of the functions in the stacktrace is the inverse of the order of the frames in the stack diagram. The function that is currently running is at the top.
+Thứ tự của các hàm trong dò ngược cũng giống như thứ tự của các khung trong sơ đồ ngăn xếp. Hàm số đang được chạy có vị trí dưới cùng.
 
 
-=== Fruitful Functions and Void Functions
+=== Các hàm có và không trả lại kết quả
 
-Some of the functions we have used, such as the math functions, return results; for lack of a better name, I call them _fruitful functions_. Other functions, like +printtwice+, perform an action but don’t return a value. They are called _void functions_.
-(((fruitful function)))(((void function)))
+Một số hàm mà chúng ta dùng, như các hàm toán học, đều cho ra kết quả; ta gọi nôm na là _hàm kết quả_. Các hàm khác, như +printtwice+, thực hiện một hành động, nhưng không trả lại kết quả nào. Chúng được gọi là _hàm không kết quả_.
+(((hàm kết quả)))(((hàm không kết quả)))
 
-When you call a fruitful function, you almost always want to do something with the result; for example, you might assign it to a variable or use it as part of an expression:
+Khi bạn gọi hàm kết quả, thường thì bạn muốn thực hiện thao tác với kết quả thu được; chẳng hạn, bạn muốn gán nó cho một biến hoặc dùng nó như một phần của biểu thức:
 
 [source,julia]
 ----
@@ -418,8 +419,8 @@ x = cos(radians)
 golden = (sqrt(5) + 1) / 2
 ----
 
-When you call a function in interactive mode, Julia displays the result:
-(((interactive mode)))
+Khi bạn gọi một hàm từ chế độ tương tác, Julia hiển thị kết quả:
+(((chế độ tương tác)))
 
 [source,@julia-repl-test]
 ----
@@ -427,17 +428,17 @@ julia> sqrt(5)
 2.23606797749979
 ----
 
-But in a script, if you call a fruitful function all by itself, the return value is lost forever!
-(((script mode)))
+Nhưng trong một văn lệnh, nếu bạn gọi một hàm kết quả, thì giá trị kết quả này sẽ vĩnh viễn mất đi!
+(((chế độ văn lệnh)))
 
 [source,@julia-run]
 ----
 sqrt(5)
 ----
 
-This script computes the square root of 5, but since it doesn’t store or display the result, it is not very useful.
+Văn lệnh này tính giá trị căn bậc hai của 5, nhưng vì nó không ghi lại và cũng chẳng hiển thị kết quả, nên nó không có tác dụng gì.
 
-Void functions might display something on the screen or have some other effect, but they don’t have a return value. If you assign the result to a variable, you get a special value called +nothing+.
+Các hàm không kết quả có thể hiển thị thứ gì đó trên màn hình hoặc có những hiệu ứng khác, nhưng chúng không có giá trị được trả về. Nếu bạn cố gắng gán kết quả vào một biến, bạn sẽ được một giá trị đặc biệt gọi là +nothing+.
 (((nothing)))
 
 [source,@julia-repl-test chap03]
@@ -449,11 +450,11 @@ julia> show(result)
 nothing
 ----
 
-To print the value +nothing+, you have to use the function +show+ which is like +print+ but can handle the value +nothing+.
-(((show)))((("function", "Base", "show", see="show")))
+Để in giá trị +nothing+, bạn phải dùng hàm +show+, hàm này giống như +print+, song có thể đảm nhiệm được giá trị +nothing+.
+(((show)))((("hàm", "Base", "show", see="show")))
 
-The value +nothing+ is not the same as the string +"nothing"+. It is a special value that has its own type:
-(((Nothing)))((("type", "Base", "Nothing", see="Nothing")))
+Giá trị +nothing+ không phải là chuỗi +"nothing"+. Nó là một giá trị đặc biệt và có dạng riêng của mình:
+(((Nothing)))((("kiểu", "Base", "Nothing", see="Nothing")))
 
 [source,@julia-repl-test]
 ----
@@ -461,132 +462,133 @@ julia> typeof(nothing)
 Nothing
 ----
 
-The functions we have written so far are all void. We will start writing fruitful functions in a few chapters.
+Các hàm ta đã viết cho đến giờ đều thuộc loại không kết quả. Ta sẽ bắt đầu viết các hàm kết quả kể từ những chương tiếp sau.
 
 
-=== Why Functions?
 
-It may not be clear why it is worth the trouble to divide a program into functions. There are several reasons:
+=== Tại sao lại cần có hàm?
 
-* Creating a new function gives you an opportunity to name a group of statements, which makes your program easier to read and debug.
+Có thể sẽ không rõ rằng tại sao ta phải cất công chia nhỏ chương trình thành các hàm. Có một số lí do cho điều đó:
 
-* Functions can make a program smaller by eliminating repetitive code. Later, if you make a change, you only have to make it in one place.
+* Việc tạo ra một hàm mới sẽ giúp bạn có khả năng đặt tên cho một nhóm các câu lệnh, từ đó làm cho chương trình dễ đọc và gỡ lỗi hơn.
 
-* Dividing a long program into functions allows you to debug the parts one at a time and then assemble them into a working whole.
+* Các hàm có thể thu gọn một chương trình bằng cách loại bỏ những đoạn mã lệnh trùng lặp. Sau này, nếu bạn sửa đổi chương trình, thì chỉ cần thực hiện sửa ở một chỗ.
 
-* Well-designed functions are often useful for many programs. Once you write and debug one, you can reuse it.
+* Việc chia một chương trình dài thành những hàm cho phép ta gỡ lỗi từng phần một và sau đó kết hợp lại để được một chương trình tổng thể hoạt động được.
 
-* In Julia, functions can improve performance a lot.
+* Các hàm được thiết kế tốt sẽ hữu dụng với nhiều chương trình. Một khi bạn viết ra một hàm và gỡ lỗi xong xuôi, bạn có dùng lại nó.
+
+* Trong Julia, các hàm có thể cải thiện hiệu năng chương trình bạn viết.
 
 
-=== Debugging
+=== Gỡ lỗi
 
-One of the most important skills you will acquire is debugging. Although it can be frustrating, debugging is one of the most intellectually rich, challenging, and interesting parts of programming.
-(((debugging)))
+Một trong những kĩ năng quan trọng nhất mà bạn sẽ học được, đó là gỡ lỗi. Mặc dù đôi khi rất khó chịu, nhưng việc gỡ lỗi rất cần trí tuệ, chứa đầy thử thách và là một phần thú vị trong lập trình.
+(((gỡ lỗi)))
 
-In some ways debugging is like detective work. You are confronted with clues and you have to infer the processes and events that led to the results you see.
+Theo một nghĩa nào đó, gỡ lỗi giống như việc điều tra tội phạm. Bạn có trong tay các manh mối, phải suy luận ra các quá trình và sự kiện dẫn đến những hậu quả đang chứng kiến.
 
-Debugging is also like an experimental science. Once you have an idea about what is going wrong, you modify your program and try again. If your hypothesis was correct, you can predict the result of the modification, and you take a step closer to a working program. If your hypothesis was wrong, you have to come up with a new one. As Sherlock Holmes pointed out,
+Việc gỡ lỗi cũng giống như khoa học thực nghiệm. Mỗi khi có ý kiến về nguyên nhân dẫn đến lỗi sai, bạn sửa chữa chương trình và thực hiện lại. Nếu giả thiết của bạn là đúng thì bạn thu được kết quả của công việc sửa chữa, đồng thời tiến một bước gần hơn tới chương trình đúng. Còn nếu giả thiết là sai thì bạn cần đề ra một giả thiết mới. Sherlock Holmes đã chỉ ra,
 
-[quote, A. Conan Doyle, The Sign of Four]
+[quote, A. Conan Doyle, Dấu của bộ tứ]
 ____
-When you have eliminated the impossible, whatever remains, however improbable, must be the truth.
+Khi bạn đã loại trừ tất cả những điều không thể thì những gì còn lại, dù có mập mờ đến đâu, chính là sự thật.
 ____
-(((experimental debugging)))(((Holmes, Sherlock)))(((Doyle, Arthur Conan)))
+(((gỡ lỗi thử nghiệm)))(((Holmes, Sherlock)))(((Doyle, Arthur Conan)))
 
-For some people, programming and debugging are the same thing. That is, programming is the process of gradually debugging a program until it does what you want. The idea is that you should start with a working program and make small modifications, debugging them as you go.
+Đối với một số người, việc lập trình và gỡ lỗi là giống nhau. Đó là vì lập trình chính là quá trình gỡ lỗi dần dần đến khi bạn có được chương trình mong muốn. Ý tưởng ở đây là bạn nên bắt đầu với một chương trình có một tính năng nhỏ nào đó và thực hiện các chỉnh sửa, gỡ lỗi trong suốt quá trình, đến khi bạn có được một chương trình hoàn thiện.
 
-For example, Linux is an operating system that contains millions of lines of code, but it started out as a simple program Linus Torvalds used to explore the Intel 80386 chip. According to Larry Greenfield, “One of Linus’s earlier projects was a program that would switch between printing “AAAA” and “BBBB”. This later evolved to Linux.” (_The Linux Users’ Guide_ Beta Version 1).
+Chẳng hạn, Linux là một hệ điều hành bao gồm hàng nghìn dòng lệnh, nhưng nó chỉ bắt đầu từ một chương trình đơn giản do Linus Torvalds dùng để khám phá chip Intel 80386. Theo Larry Greenfield thì “Một trong những dự án trước đó của Linus là một chương trình có nhiệm vụ chuyển từ việc in AAAA thành BBBB. Sau đó nó dần trở thành Linux”. (_The Linux Users’ Guide_ Beta Version 1/  Hướng dẫn sử dụng Linux, phiên bản Beta 1).
 (((Linux)))(((Torvalds, Linus)))
 
 
-=== Glossary
+=== Thuật ngữ
 
-function::
-A named sequence of statements that performs some useful operation. Functions may or may not take arguments and may or may not produce a result.
-(((function)))
+hàm::
+Chuỗi các câu lệnh được đặt tên; nhằm thực hiện một thao tác có ích nhất định. Các hàm có hoặc không nhận tham số và có thể có hoặc không cho ra kết quả.
+(((hàm)))
 
-function definition::
-A statement that creates a new function, specifying its name, parameters, and the statements it contains.
-(((function definition)))
+định nghĩa hàm::
+Câu lệnh nhằm tạo ra một hàm, đặt tên cho nó, chỉ định các tham số và các lệnh cần được thực hiện.
+(((định nghĩa hàm)))
 
-function object::
-A value created by a function definition. The name of the function is a variable that refers to a function object.
-(((function object)))
+đối tượng hàm::
+Giá trị được tạo ra bởi định nghĩa hàm. Tên của hàm là một biến tham chiếu đến một đối tượng hàm.
+(((đối tượng hàm)))
 
-header::
-The first line of a function definition.
-(((header)))
+đoạn đầu::
+Dòng đầu tiên trong lời định nghĩa hàm.
+(((đoạn đầu)))
 
-body::
-The sequence of statements inside a function definition.
-(((body)))
+phần thân::
+Dãy các câu lệnh bên trong định nghĩa hàm.
+(((phần thân)))
 
-parameter::
-A name used inside a function to refer to the value passed as an argument.
-(((parameter)))
+tham số::
+Tên được dùng bên trong của hàm để tham chiếu đến giá trị được truyền vào dưới dạng đối số.
+(((tham số)))
 
-function call::
-A statement that runs a function. It consists of the function name followed by an argument list in parentheses.
-(((function call)))
+lời gọi hàm::
+Câu lệnh nhằm thực hiện một hàm. Câu lệnh này bao gồm tên hàm, theo sau là danh sách các đối số trong cặp ngoặc tròn.
+(((lời gọi hàm)))
 
-argument::
-A value provided to a function when the function is called. This value is assigned to the corresponding parameter in the function.
-(((argument)))
+đối số::
+Giá trị được cung cấp cho hàm khi hàm được gọi. Giá trị này được gán cho tham số tương ứng trong hàm.
+(((đối số)))
 
-local variable::
-A variable defined inside a function. A local variable can only be used inside its function.
-(((local variable)))
+biến địa phương::
+Biến được định nghĩa bên trong hàm. Một biến địa phương chỉ có thể được dùng bên trong hàm đó.
+(((biến địa phương)))
 
-return value::
-The result of a function. If a function call is used as an expression, the return value is the value of the expression.
-(((return value)))
+giá trị được trả về::
+Kết quả của hàm. Nếu một lời gọi hàm được dùng như một biểu thức thì giá trị được trả về chính là giá trị của biểu thức đó.
+(((giá trị được trả về)))
 
-fruitful function::
-A function that returns a value.
-(((fruitful function)))
+hàm kết quả::
+Hàm có trả lại kết quả.
+(((hàm kết quả)))
 
-void function::
-A function that always returns +nothing+.
-(((void function)))
+hàm không kết quả::
+Hàm luôn trả lại +nothing+.
+(((hàm không kết quả)))
 
 +nothing+::
-A special value returned by void functions.
+Một giá trị đặc biệt được trả lại bởi hàm không kết quả.
 (((nothing)))
 
-composition::
-Using an expression as part of a larger expression, or a statement as part of a larger statement.
-(((composition)))
+ghép::
+Việc dùng một biểu thức làm bộ phận trong một biểu thức lớn hơn, hoặc một câu lệnh là phần trong câu lệnh lớn hơn.
+(((ghép)))
 
-flow of execution::
-The order statements run in.
-(((flow of execution)))
+luồng thực thi::
+Thứ tự mà theo đó các câu lệnh được chạy.
+(((luồng thực thi)))
 
-stack diagram::
-A graphical representation of a stack of functions, their variables, and the values they refer to.
-(((stack diagram)))
+biểu đồ ngăn xếp::
+Cách biểu diễn bằng hình vẽ cho một loạt các hàm chồng xếp lên nhau, trong đó có chỉ ra các biến của chúng và các giá trị mà chúng tham chiếu đến.
+(((biểu đồ ngăn xếp)))
 
-frame::
-A box in a stack diagram that represents a function call. It contains the local variables and parameters of the function.
-(((frame)))
+khung::
+Hình chữ nhật trong biểu đồ ngăn xếp dùng để biểu diễn lời gọi hàm. Nó bao gồm các biến địa phương và các tham số của hàm.
+(((khung)))
 
-stacktrace::
-A list of the functions that are executing, printed when an exception occurs.
-(((stacktrace)))
+dò ngược::
+Danh sách các hàm đang được thực hiện, được in lên khi có biệt lệ xảy ra.
+(((dò ngược)))
 
 
-=== Exercises
+=== Bài tập
 
 [TIP]
 ====
-These exercises should be done using only the statements and other features we have learned so far.
+Các bài tập này cần được giải chỉ bằng các câu lệnh và tính năng khác mà ta đã học.
 ====
 
 [[ex03-1]]
-===== Exercise 3-2
+===== Bài tập 3-2
 
-Write a function named +rightjustify+ that takes a string named +s+ as a parameter and prints the string with enough leading spaces so that the last letter of the string is in column 70 of the display.
-(((rightjustify)))((("function", "programmer-defined", "rightjustify", see="rightjustify)))
+Hãy viết một hàm tên là +rightjustify+ để đọc vào một chuỗi tên là +s+ như một tham số và in ra chuỗi bắt đầu với các kí tự trống; số kí tự trống vừa đủ để cho kí tự cuối cùng của chuỗi nằm tại cột thứ 70 trên màn hình.
+(((rightjustify)))((("hàm", "người dùng định nghĩa", "rightjustify", see="rightjustify)))
 
 [source,@julia-eval chap03-ex]
 ----
@@ -600,15 +602,15 @@ rightjustify("monty")
 
 [TIP]
 ====
-Use string concatenation and repetition. Also, Julia provides a built-in function called +length+ that returns the length of a string, so the value of +length("monty")+ is 5.
-(((length)))((("function", "Base", "length", see="length)))
+Hãy dùng phép nối chuỗi và lặp chuỗi. Ngoài ra, Julia còn cung cấp một hàm dựng sẵn có tên +length+ để trả lại chiều dài một chuỗi, theo đó giá trị của +length("monty")+ bằng 5.
+(((length)))((("hàm", "Base", "length", see="length)))
 ====
 
 [[ex03-2]]
-===== Exercise 3-3
+===== Bài tập 3-3
 
-A function object is a value you can assign to a variable or pass as an argument. For example, +dotwice+ is a function that takes a function object as an argument and calls it twice:
-(((function object)))(((dotwice)))((("function", "programmer-defined", "dotwice", see="dotwice")))
+Một đối tượng hàm là một giá trị mà bạn có thể gán vào một biến hoặc chuyển dưới dạng một tham số. Chẳng hạn, +dotwice+ là một hàm nhận vào một đối tượng hàm như một tham số và thực hiện hàm tham số này hai lần:
+(((đối tượng hàm)))(((dotwice)))((("hàm", "người dùng định nghĩa", "dotwice", see="dotwice")))
 
 [source,julia]
 ----
@@ -618,8 +620,8 @@ function dotwice(f)
 end
 ----
 
-Here’s an example that uses +dotwice+ to call a function named +printspam+ twice.
-(((printspam)))((("function", "programmer-defined", "printspam", see="printspam")))
+Sau đây là một ví dụ có sử dụng +dotwice+ để gọi một hàm tên là +printspam+ hai lần.
+(((printspam)))((("hàm", "người dùng định nghĩa", "printspam", see="printspam")))
 
 [source,julia]
 ----
@@ -630,22 +632,22 @@ end
 dotwice(printspam)
 ----
 
-. Type this example into a script and test it.
+. Hãy gõ một văn lệnh thực hiện ví dụ này và chạy kiểm tra.
 
-. Modify +dotwice+ so that it takes two arguments, a function object and a value, and calls the function twice, passing the value as an argument.
+. Sửa đổi +dotwice+ sao cho nó nhận vào hai đối số— một đối tượng hàm và một giá trị—và gọi hàm hai lần, trong đó có chuyển giá trị như một đối số.
 
-. Copy the definition of +printtwice+ from earlier in this chapter to your script.
+. Sao chép lời định nghĩa +printtwice+ từ đoạn trước của chương sách vào trong văn lệnh của bạn.
 
-. Use the modified version of +dotwice+ to call +printtwice+ twice, passing +"spam"+ as an argument.
+. Dùng dạng đã chỉnh sửa của +dotwice+ để gọi +printtwice+ hai lần, trong đó truyền +"spam"+ như một tham số.
 
-. Define a new function called +dofour+ that takes a function object and a value and calls the function four times, passing the value as a parameter. There should be only two statements in the body of this function, not four.
-(((dofour)))((("function", "programmer-defined", "dofour", see="dofour")))
+. Định nghĩa một hàm mới có tên +dofour+ nhận vào một đối tượng hàm và một giá trị, sau đó gọi hàm bốn lần, với giá trị đóng vai trò tham biến. Trong phần thân của hàm được định nghĩa chỉ dùng hai câu lệnh chứ không phải là bốn.
+(((dofour)))((("hàm", "người dùng định nghĩa", "dofour", see="dofour")))
 
 [[ex03-3]]
-===== Exercise 3-4
+===== Bài tập 3-4
 
-. Write a function +printgrid+ that draws a grid like the following:
-(((printgrid)))((("function", "programmer-defined", "printgrid", see="printgrid")))
+. Hãy viết một hàm để vẽ ô lưới giống như hình sau đây:
+(((printgrid)))((("hàm", "người dùng định nghĩa", "printgrid", see="printgrid")))
 +
 [source,@julia-repl-test chap03-ex]
 ----
@@ -663,20 +665,20 @@ julia> printgrid()
 + - - - - + - - - - +
 ----
 
-. Write a function that draws a similar grid with four rows and four columns.
+. Hãy vẽ một lưới tương tự nhưng gồm bốn hàng và bốn cột.
 
-Credit: This exercise is based on an exercise in Oualline, _Practical C Programming_, Third Edition, O’Reilly Media, 1997.
+Nguồn: Bài này được dựa theo bài tập của tác giả Oualline, _Practical C Programming_, Third Edition, O’Reilly Media, 1997.
 
 [TIP]
 ====
-To print more than one value on a line, you can print a comma-separated sequence of values:
+Để in ra nhiều giá trị trên cùng một dòng, hãy dùng dấu phẩy để phân cách các chuỗi:
 
 [source,julia]
 ----
 println("+", "-")
 ----
 
-The function +print+ does not advance to the next line:
+Hàm +print+ không nhảy đến dòng kế tiếp:
 
 [source,julia]
 ----
@@ -684,6 +686,6 @@ print("+ ")
 println("-")
 ----
 
-The output of these statements is +pass:["+ -"]+ on the same line. The output from the next print statement would begin on the next line.
+Kết quả của hai lệnh trên là +pass:["+ -"]+ trên cùng một dòng. Kết quả của lệnh print tiếp theo sẽ bắt đầu ở dòng kế tiếp.
 ====
-(((println)))(((print)))((("function", "Base", "print", see="print")))
+(((println)))(((print)))((("hàm", "Base", "print", see="print")))
