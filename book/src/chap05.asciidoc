@@ -1,13 +1,13 @@
 [[chap05]]
-== Conditionals and Recursion
+== Câu lệnh điều kiện và đệ quy
 
 The main topic of this chapter is the +if+ statement, which executes different code depending on the state of the program. But first I want to introduce two new operators: floor division and modulus.
 
 
-=== Floor Division and Modulus
+=== Chia lấy phần nguyên và chia dư
 
-The _floor division_ operator, +÷+ (*+\div TAB+*), divides two numbers and rounds down to an integer. For example, suppose the run time of a movie is 105 minutes. You might want to know how long that is in hours. Conventional division returns a floating-point number:
-(((floor division operator)))((("operator", "Base", "÷", see="floor division operator")))((("÷", see="floor division operator")))
+Toán tử _chia lấy phần nguyên_, +÷+ (*+\div TAB+*), thực hiện chia hai số rồi làm tròn kết quả xuống một số nguyên. Chẳng hạn, giả sử thời gian phát của một bộ phim là 105 phút. Bạn muốn biết thời gian đó tính bằng giờ là bao lâu. Phép chia hay dùng lại trả lại một số phẩy động:
+(((toán tử chia lấy phần nguyên)))((("toán tử", "Base", "÷", see="floor division operator")))((("÷", see="floor division operator")))
 
 [source,@julia-repl-test chap05]
 ----
