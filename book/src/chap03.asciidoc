@@ -151,7 +151,7 @@ ERROR: syntax: "60" is not a valid function argument name
 === Thêm các hàm mới
 
 Đến bây giờ, chúng ta mới chỉ dùng những hàm có sẵn trong Julia, song thật ra có thể tạo ra những hàm mới. Một lời _định nghĩa hàm_ bao gồm việc chỉ định tên của hàm mới và danh sách các câu lệnh cần được thực hiện khi hàm được gọi. Sau đây là một ví dụ:
-(((hàm)))(((định nghĩa hàm)))(((hàm người dùng định nghĩa)))(((printlyrics)))((("hàm", "người dùng định nghĩa", "printlyrics", see="printlyrics")))
+(((hàm)))(((định nghĩa hàm)))(((hàm tự định nghĩa)))(((printlyrics)))((("hàm", "tự định nghĩa", "printlyrics", see="printlyrics")))
 
 [source,@julia-setup chap03]
 ----
@@ -194,7 +194,7 @@ I sleep all night and I work all day.
 ----
 
 Một khi bạn đã định nghĩa hàm, bạn có thể dùng nó trong một hàm khác. Chẳng hạn, để lặp lại điệp khúc vừa rồi, ta có thể viết một hàm có tên là +repeatlyrics+:
-(((repeatlyrics)))((("hàm", "người dùng định nghĩa", "repeatlyrics", see="repeatlyrics")))
+(((repeatlyrics)))((("hàm", "tự định nghĩa", "repeatlyrics", see="repeatlyrics")))
 
 [source,@julia-setup chap03]
 ----
@@ -272,7 +272,7 @@ Một số các hàm dựng sẵn mà ta đã gặp có yêu cầu đối số. 
 (((tham số)))(((đối số)))(((parse)))(((sin)))
 
 Bên trong hàm, các đối số được gán cho các biến được gọi là _tham số_. Sau đây là lời định nghĩa một hàm nhận vào một đối số:
-(((printtwice)))((("hàm", "người dùng định nghĩa", "printtwice", see="printtwice")))
+(((printtwice)))((("hàm", "tự định nghĩa", "printtwice", see="printtwice")))
 
 [source,@julia-setup chap03]
 ----
@@ -299,8 +299,8 @@ julia> printtwice(π)
 π
 ----
 
-Quy tắc áp dụng cho các hàm dựng sẵn cũng có thể áp dụng được cho các hàm người dùng tạo ra, vì vậy ta có thể dùng bất kì loại biểu thức nào làm đối số cho +printtwice+:
-(((ghép)))(((hàm người dùng định nghĩa)))
+Quy tắc áp dụng cho các hàm dựng sẵn cũng có thể áp dụng được cho các hàm được lập trình viên tự tạo ra, vì vậy ta có thể dùng bất kì loại biểu thức nào làm đối số cho +printtwice+:
+(((ghép)))(((hàm tự định nghĩa)))
 
 [source,@julia-repl-test chap03]
 ----
@@ -333,7 +333,7 @@ Tên của biến được đưa vào như đối số (+michael+) thì không c
 === Các biến và tham số đều có tính địa phương
 
 Khi tạo ra một biến ở trong hàm, nó mang tính _địa phương_, theo nghĩa rằng nó chỉ tồn tại bên trong hàm số. Chẳng hạn:
-(((biến địa phương)))(((biến, địa phương)))(((cattwice)))((("hàm", "người dùng định nghĩa", "cattwice", see="cattwice")))
+(((biến địa phương)))(((biến, địa phương)))(((cattwice)))((("hàm", tự định nghĩa", "cattwice", see="cattwice")))
 
 [source,@julia-setup chap03]
 ----
@@ -588,7 +588,7 @@ Các bài tập này cần được giải chỉ bằng các câu lệnh và tí
 ===== Bài tập 3-2
 
 Hãy viết một hàm tên là +rightjustify+ để đọc vào một chuỗi tên là +s+ như một tham số và in ra chuỗi bắt đầu với các kí tự trống; số kí tự trống vừa đủ để cho kí tự cuối cùng của chuỗi nằm tại cột thứ 70 trên màn hình.
-(((rightjustify)))((("hàm", "người dùng định nghĩa", "rightjustify", see="rightjustify)))
+(((rightjustify)))((("hàm", "tự định nghĩa", "rightjustify", see="rightjustify)))
 
 [source,@julia-eval chap03-ex]
 ----
@@ -610,7 +610,7 @@ Hãy dùng phép nối chuỗi và lặp chuỗi. Ngoài ra, Julia còn cung c�
 ===== Bài tập 3-3
 
 Một đối tượng hàm là một giá trị mà bạn có thể gán vào một biến hoặc chuyển dưới dạng một tham số. Chẳng hạn, +dotwice+ là một hàm nhận vào một đối tượng hàm như một tham số và thực hiện hàm tham số này hai lần:
-(((đối tượng hàm)))(((dotwice)))((("hàm", "người dùng định nghĩa", "dotwice", see="dotwice")))
+(((đối tượng hàm)))(((dotwice)))((("hàm", "tự định nghĩa", "dotwice", see="dotwice")))
 
 [source,julia]
 ----
@@ -621,7 +621,7 @@ end
 ----
 
 Sau đây là một ví dụ có sử dụng +dotwice+ để gọi một hàm tên là +printspam+ hai lần.
-(((printspam)))((("hàm", "người dùng định nghĩa", "printspam", see="printspam")))
+(((printspam)))((("hàm", "tự định nghĩa", "printspam", see="printspam")))
 
 [source,julia]
 ----
@@ -641,13 +641,13 @@ dotwice(printspam)
 . Dùng dạng đã chỉnh sửa của +dotwice+ để gọi +printtwice+ hai lần, trong đó truyền +"spam"+ như một tham số.
 
 . Định nghĩa một hàm mới có tên +dofour+ nhận vào một đối tượng hàm và một giá trị, sau đó gọi hàm bốn lần, với giá trị đóng vai trò tham biến. Trong phần thân của hàm được định nghĩa chỉ dùng hai câu lệnh chứ không phải là bốn.
-(((dofour)))((("hàm", "người dùng định nghĩa", "dofour", see="dofour")))
+(((dofour)))((("hàm", "tự định nghĩa", "dofour", see="dofour")))
 
 [[ex03-3]]
 ===== Bài tập 3-4
 
 . Hãy viết một hàm để vẽ ô lưới giống như hình sau đây:
-(((printgrid)))((("hàm", "người dùng định nghĩa", "printgrid", see="printgrid")))
+(((printgrid)))((("hàm", "tự định nghĩa", "printgrid", see="printgrid")))
 +
 [source,@julia-repl-test chap03-ex]
 ----
