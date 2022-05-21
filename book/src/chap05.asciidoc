@@ -1,13 +1,13 @@
 [[chap05]]
 == Câu lệnh điều kiện và đệ quy
 
-The main topic of this chapter is the +if+ statement, which executes different code depending on the state of the program. But first I want to introduce two new operators: floor division and modulus.
+Chủ đề chính của chương này là câu lệnh +if+, leejh này tực hiện các mã lệnh khác nhau tùy theo trạng thái của chương trình. Song trước hết tôi muốn giới thiệu hai toán tử mới: chia lấy phần nguyên và chia dư.
 
 
 === Chia lấy phần nguyên và chia dư
 
 Toán tử _chia lấy phần nguyên_, +÷+ (*+\div TAB+*), thực hiện chia hai số rồi làm tròn kết quả xuống một số nguyên. Chẳng hạn, giả sử thời gian phát của một bộ phim là 105 phút. Bạn muốn biết thời gian đó tính bằng giờ là bao lâu. Phép chia hay dùng lại trả lại một số phẩy động:
-(((toán tử chia lấy phần nguyên)))((("toán tử", "Base", "÷", see="floor division operator")))((("÷", see="floor division operator")))
+(((toán tử chia lấy phần nguyên)))((("toán tử", "Base", "÷", see="chia lấy phần nguyên (toán tử)")))((("÷", see="chia lấy phần nguyên (toán tử)")))
 
 [source,@julia-repl-test chap05]
 ----
@@ -17,7 +17,7 @@ julia> minutes / 60
 1.75
 ----
 
-But we don’t normally write hours with decimal points. Floor division returns the integer number of hours, rounding down:
+Nhưng ta thường không viết số giờ với phần thập phân. Phép chia lấy phần nguyên trả lại số nguyên các giờ, làm tròn xuống:
 
 [source,@julia-repl-test chap05]
 ----
@@ -25,7 +25,7 @@ julia> hours = minutes ÷ 60
 1
 ----
 
-To get the remainder, you could subtract off one hour in minutes:
+Để lấy phần dư, bạn có thể đem trừ di số phút có trong một giờ:
 
 [source,@julia-repl-test chap05]
 ----
@@ -33,8 +33,8 @@ julia> remainder = minutes - hours * 60
 45
 ----
 
-An alternative is to use the _modulus operator_, +%+, which divides two numbers and returns the remainder.
-(((modulus operator)))((("operator", "Base", "%", see="modulus operator")))((("%", see="modulus operator)))
+Một cách làm khác là dùng _toán tử chia dư_, +%+, toán tử này chia hai số và trả lại phần dư.
+(((toán tử chia dư)))((("toán tử", "Base", "%", see="toán tử chia dư")))((("%", see="toán tử chia dư")))
 
 [source,@julia-repl-test chap05]
 ----
@@ -44,16 +44,16 @@ julia> remainder = minutes % 60
 
 [TIP]
 ====
-The modulus operator is more useful than it seems. For example, you can check whether one number is divisible by another—if +x % y+ is zero, then +x+ is divisible by +y+.
+Toán tử số dư có ích hơn bạn tưởng. Chẳng hạn, bạn có thể kiểm tra xem một số có chia hết cho số khác không—nếu +x % y+ bằng không thì +x+ chia hết cho +y+.
 
-Also, you can extract the right-most digit or digits from a number. For example, +x % 10+ yields the right-most digit of an integer +x+ (in base 10). Similarly +x % 100+ yields the last two digits.
+Hơn nữa, bạn còn có thể lọc ra những chữ số cuối cùng bên phải từ số ban đầu. Chẳng hạn, +x % 10+ cho ta số hàng đơn vị của +x+ (trong hệ thập phân). Tương tự, +x % 100+ cho ta hai chữ số hàng chục và đơn vị.
 ====
 
 
-=== Boolean Expressions
+=== Biểu thức Boole
 
-A _boolean expression_ is an expression that is either true or false. The following examples use the operator +==+, which compares two operands and produces +true+ if they are equal and +false+ otherwise:
-(((boolean expression)))(((true)))(((false)))
+Một _biểu thức Boole_ là một biểu thức có giá trị đúng hoặc sai. Các ví dụ sau đây dùng toán tử +==+, để so sánh hai toán hạng và trả lại kết quả +true+  (đúng) nếu chúng bằng nhau và +false+ (sai) trong trường hợp còn lại:
+(((biểu thức Boole)))(((true)))(((false)))
 
 [source,@julia-repl-test]
 ----
@@ -63,8 +63,8 @@ julia> 5 == 6
 false
 ----
 
-+true+ and +false+ are special values that belong to the type +Bool+; they are not strings:
-(((Bool)))((("type", "Base", "Bool", see="Bool")))
++true+ và +false+  là các giá trị đặc biệt thuộc về kiểu +Bool+; chúng không phải là các chuỗi:
+(((Bool)))((("kiểu", "Base", "Bool", see="Bool")))
 
 [source,@julia-repl-test]
 ----
@@ -74,103 +74,103 @@ julia> typeof(false)
 Bool
 ----
 
-The +==+ operator is one of the relational operators; the others are:
-(((relational operator)))(((==)))((("operator", "Base", "==", see="==")))
+Toán tử +==+ là một trong số các toán tử quan hệ; các toán tử quan hệ khác gồm có::
+(((toán tử quan hệ)))(((==)))((("toán tử", "Base", "==", see="==")))
 
 [source,julia]
 ----
-      x != y               # x is not equal to y
+      x != y               # x không bằng y
       x ≠ y                # (\ne TAB)
-      x > y                # x is greater than y
-      x < y                # x is less than y
-      x >= y               # x is greater than or equal to y
+      x > y                # x lớn hơn y
+      x < y                # x nhỏ hơn y
+      x >= y               # x lớn hơn hoặc bằng y
       x ≥ y                # (\ge TAB)
-      x <= y               # x is less than or equal to y
+      x <= y               # x nhỏ hơn hoặc bằng y
       x ≤ y                # (\le TAB)
 ----
 
 [WARNING]
 ====
-Although these operations are probably familiar to you, the Julia symbols are different from the mathematical symbols. A common error is to use a single equal sign (+=+) instead of a double equal sign (+==+). Remember that +=+ is an assignment operator and +==+ is a relational operator. There is no such thing as +=<+ or +pass:[=>]+.
-(((≠)))((("operator", "Base", "≠", see="≠")))((("!=", see="≠")))((("operator", "Base", "!=", see="≠")))(((>)))((("operator", "Base", ">", see=">")))(((<)))((("operator", "Base", "<", see="<")))(((≥)))((("operator", "Base", "≥", see="≥")))(((">=", see="≥")))((("operator", "Base", ">=", see="≥")))(((≤)))((("operator", "Base", "≤", see="≤")))((("pass:[&lt;=]", see="≤")))((("operator", "Base", "pass:[&lt;=]", see="≤")))
+Mặc dù có thể bạn đã quen thuộc với các toán tử này, song các kí hiệu Julia lại khác với kí hiệu toán học. Một lỗi phổ biến là dùng nhầm một dấu bằng (+=+) thay vì viết hai dấu bằng (+==+). Nhớ lại rằng +=+ là một toán tử gán, còn +==+ là một toán tử quan hệ. Ngoài ra không có toán tử nào được viết là +=<+ hoặc +pass:[=>]+.
+(((≠)))((("toán tử", "Base", "≠", see="≠")))((("!=", see="≠")))((("toán tử", "Base", "!=", see="≠")))(((>)))((("toán tử", "Base", ">", see=">")))(((<)))((("toán tử", "Base", "<", see="<")))(((≥)))((("toán tử", "Base", "≥", see="≥")))(((">=", see="≥")))((("toán tử", "Base", ">=", see="≥")))(((≤)))((("toán tử", "Base", "≤", see="≤")))((("pass:[&lt;=]", see="≤")))((("toán tử", "Base", "pass:[&lt;=]", see="≤")))
 ====
 
 
-=== Logical Operators
+=== Toán tử lô-gic
 
-There are three _logical operators_: +&&+ (and), +||+ (or), and +!+ (not). The semantics (meaning) of these operators is similar to their meaning in English. For example, +x > 0 && x < 10+ is true only if +x+ is greater than +0+ _and_ less than +10+.
-(((logical operator)))(((&&)))(((||)))(((!)))
+Có ba _toán tử lô-gic_: +&&+ (and), +||+ (or), và +!+ (not). Nghĩa của các toán tử này giống như nghĩa các từ tương ứng trong tiếng Anh. Chẳng hạn, +x > 0 && x < 10+ chỉ đúng khi +x+ lớn hơn +0+ _và_ nhỏ hơn +10+.
+(((toán tử lô-gic)))(((&&)))(((||)))(((!)))
 
-+n % 2 == 0 || n % 3 == 0+ is true if _either or both_ of the conditions is true, that is, if the number is divisible by 2 _or_ 3.
++n % 2 == 0 || n % 3 == 0+  chỉ đúng khi _một trong hai_ điều kiện là đúng; nghĩa là nếu số n chia hết cho 2 _hoặc_ 3.
 
-Both +&&+ and +||+ associate to the right, but +&&+ has higher precedence than +||+ does.
+Cả +&&+ lẫn +||+ đều kết hợp về phía phải, nhưng +&&+ có mức độ ưu tiên cao hơn +||+.
 
-Finally, the +!+ operator negates a boolean expression, so +!(x > y)+ is true if +x > y+ is false, that is, if +x+ is less than or equal to +y+.
+Sau cùng, toán tử +!+ phủ định một biểu thức Boole. Do vậy +!(x > y)+ chỉ đúng khi +x > y+ là sai; tức là nếu +x+ nhỏ hơn hoặc bằng +y+.
 
 
-=== Conditional Execution
+=== Thực hiện lệnh theo điều kiện
 
-In order to write useful programs, we almost always need the ability to check conditions and change the behavior of the program accordingly. _Conditional statements_ give us this ability. The simplest form is the +if+ statement:
-(((conditional statement)))(((if)))((("keyword", "if", see="if")))(((if statement)))((("statement", "if", see="if statement")))
+Để viết được những chương trình thực sự, chúng ta thường cần đến khả năng kiểm tra những điều kiện nhất định và thay đổi biểu hiện tương ứng của chương trình. _Câu lệnh điều kiện_ cung cấp cho ta khả năng này. Dạng đơn giản nhất là lệnh +if+:
+(((câu lệnh điều kiện)))(((if)))((("từ khóa", "if", see="if")))(((lệnh if)))((("lệnh", "if", see="lệnh if")))
 
 [source,julia]
 ----
 if x > 0
-    println("x is positive")
+    println("x là số dương")
 end
 ----
 
-The boolean expression after +if+ is called the _condition_. If it is true, the indented statement runs. If not, nothing happens.
-(((condition)))
+Biểu thức Boole ở cuối lệnh +if+ được gọi là _điều kiện_. Nếu nó được thoả mãn thì đoạn lệnh bên trong được thực thi. Nếu không, sẽ chẳng có điều gì xảy ra.
+(((điều kiện)))
 
-+if+ statements have the same structure as function definitions: a header followed by body terminated with the keyword +end+. Statements like this are called _compound statements_.
+Các lệnh +if+ có cùng cấu trúc với các định nghĩa hàm: chúng gồm có một đoạn đầu và tiếp theo là phần thân kết thúc bởi từ khóa +end+. Các câu lệnh kiểu như vậy được gọi là _lệnh ghép_.
 (((compound statement)))(((end)))
 
-There is no limit on the number of statements that can appear in the body. Occasionally, it is useful to have a body with no statements (usually as a place keeper for code you haven’t written yet).
+Không có quy định về giới hạn tối đa số câu lệnh ở trong phần thân. Đôi khi ta cần có phần thân mà không chứa một lệnh thực sự nào (thường là chỉ để giữ chỗ cho mã lệnh sau này được viết thêm vào).
 
 [source,julia]
 ----
 if x < 0
-    # TODO: need to handle negative values!
+    # TODO: cần phải xử lý giá trị âm!
 end
 ----
 
 
-=== Alternative Execution
+=== Thực thi lệnh theo phương án
 
-A second form of the +if+ statement is “alternative execution”, in which there are two possibilities and the condition determines which one runs. The syntax looks like this:
-(((alternative execution)))(((else)))((("keyword", "else", see="else")))
+Dạng thứ hai của lệnh +if+ giúp cho việc _thực thi theo phương án_, trong đó có hai khả năng và điều kiện được đặt ra để căn cứ vào đó mà lựa chọn thực hiện một trong hai. Cú pháp có dạng như sau:
+(((thực thi theo phương án)))(((else)))((("từ khóa", "else", see="else")))
 
 [source,julia]
 ----
 if x % 2 == 0
-    println("x is even")
+    println("x là số chẵn")
 else
-    println("x is odd")
+    println("x là số lẻ")
 end
 ----
 
-If the remainder when +x+ is divided by 2 is 0, then we know that +x+ is even, and the program displays an appropriate message. If the condition is false, the second set of statements runs. Since the condition must be true or false, exactly one of the alternatives will run. The alternatives are called _branches_, because they are branches in the flow of execution.
-(((branch)))
+Nếu phần dư của phép chia +x+ cho 2 là 0, thì chúng ta biết rằng +x+ là số chẵn, và chương trình sẽ hiển thị thông báo điều này. Nếu điều kiện không được thoả mã thì lệnh thứ hai sẽ được thực hiện. Vì điều kiện hoặc là được thoả mãn, hoặc không; nên luôn chỉ có một trong hai phương án được thực hiện. Các phương án này được gọi là _nhánh_, vì chúng là các nhánh rẽ trong luồng thực thi.
+(((nhánh)))
 
 
-=== Chained Conditionals
+=== Các điều kiện xâu chuỗi
 
-Sometimes there are more than two possibilities and we need more than two branches. One way to express a computation like that is a _chained conditional_:
-(((chained conditional)))(((elseif)))((("keyword", "elseif", see="elseif")))
+Đôi khi có nhiều hơn hai khả năng và ta cần nhiều nhánh. Một cách thể hiện quy trình tính toán là dùng các _điều kiện xâu chuỗi_:
+(((điều kiện xâu chuỗi)))(((elseif)))((("từ khóa", "elseif", see="elseif")))
 
 [source,julia]
 ----
 if x < y
-    println("x is less than y")
+    println("x nhỏ hơn y")
 elseif x > y
-    println("x is greater than y")
+    println("x lớn hơn y")
 else
-    println("x and y are equal")
+    println("x bằng y")
 end
 ----
 
-Again, exactly one branch will run. There is no limit on the number of +elseif+ statements. If there is an +else+ clause, it has to be at the end, but there doesn’t have to be one.
+Một lần nữa, chỉ có đúng một nhánh được thực hiện. Không có giới hạn cho số các lệnh +elseif+. Nếu có một vế +else+, thì nó phải đứng cuối cùng. Nhưng không nhất thiết cần có vế này.
 
 [source,julia]
 ----
@@ -183,73 +183,74 @@ elseif choice == "c"
 end
 ----
 
-Each condition is checked in order. If the first is false, the next is checked, and so on. If one of them is true, the corresponding branch runs and the statement ends. Even if more than one condition is true, only the first true branch runs.
+Mỗi điều kiện được kiểm tra lần lượt. Nếu điều kiện thứ nhất sai, điều kiện tiếp theo sẽ được kiểm tra, và cứ như vậy. Nếu mộ ttrong các điều kiện đúng thì nhánh tương ứng được thực hiện; và cả câu lệnh lớn sẽ kết thúc. Ngay cả khi có nhiều hơn một điều kiện được thoả mãn, chỉ có nhánh đúng đầu tiên được thực hiện.
 
 
-=== Nested Conditionals
+=== Các lệnh điều kiện lồng ghép
 
-One conditional can also be nested within another. We could have written the example in the previous section like this:
-(((nested conditional)))
+Một câu lệnh điều kiện có thể được đặt trong một lệnh điều khác. Ta có thể viết lại ví dụ ở mục trên như sau:
+(((điều kiện lồng ghép)))
 
 [source,julia]
 ----
 if x == y
-    println("x and y are equal")
+    println("x bằng y")
 else
     if x < y
-        println("x is less than y")
+        println("x nhỏ hơn y")
     else
-        println("x is greater than y")
+        println("x lớn hơn y")
     end
 end
 ----
 
-The outer conditional contains two branches. The first branch contains a simple statement. The second branch contains another +if+ statement, which has two branches of its own. Those two branches are both simple statements, although they could have been conditional statements as well.
+Câu lệnh điều kiện bên ngoài có hai nhánh. Nhánh thứ nhất chỉ chứa một lệnh đơn giản. Nhánh thứ hai lại chứa một câu lệnh +if+ khác, mà bản thân nó lại có hai nhánh. Hai nhánh này đều chứa những câu lệnh đơn giản, mặc dù dĩ nhiên chúng có thể là những câu lệnh điều kiện khác.
 
-Although the non-compulsory indentation of the statements makes the structure apparent, _nested conditionals_ become difficult to read very quickly. It is a good idea to avoid them when you can.
-(((indentation)))
+Tuy cách viết thụt đầu dòng (không bắt buộc) làm cho cấu trúc rõ ý, nhưng các _lệnh điều kiện lồng ghép_ trở nên rất khó cho người đọc nhanh. Nhìn chung, tốt hơn là ta nên cố gắng tránh dùng chúng.
+(((thụt đầu dòng)))
 
-Logical operators often provide a way to simplify nested conditional statements. For example, we can rewrite the following code using a single conditional:
+Các toán tử lô-gic thường cho ta cách đơn giản hoá các câu lệnh điều kiện lồng ghép. Chẳng hạn, ta có thể viết lại mã lệnh sau bằng một lệnh điều kiện đơn:
 
 [source,julia]
 ----
 if 0 < x
     if x < 10
-        println("x is a positive single-digit number.")
+        println("x là số dương có một chữ số.")
     end
 end
 ----
 
-The +print+ statement runs only if we make it past both conditionals, so we can get the same effect with the +&&+ operator:
+Lệnh +print+ chỉ được thực hiện một lần nếu ta làm cho nó đạt cả hai điều kiện, vì vậy đoạn lệnh sau với toán tử +&&+ cũng có tác dụng tương tự:
+
 
 [source,julia]
 ----
 if 0 < x && x < 10
-    println("x is a positive single-digit number.")
+    println("x là số dương có một chữ số.")
 end
 ----
 
-For this kind of condition, Julia provides a more concise syntax:
+Với điều kiện kiểu này, Julia còn cho ta một cú pháp gọn hơn:
 
 [source,julia]
 ----
 if 0 < x < 10
-    println("x is a positive single-digit number.")
+    println("x là số dương có một chữ số.")
 end
 ----
 
 
-[[recursion]]
-=== Recursion
+[[đệ quy]]
+=== Đệ quy
 
-It is legal for one function to call another; it is also legal for a function to call itself. It may not be obvious why that is a good thing, but it turns out to be one of the most magical things a program can do. For example, look at the following function:
-(((countdown)))((("function", "programmer-defined", "countdown", see="countdown")))
+Việc một hàm gọi một hàm khác là hợp lệ; một hàm gọi chính nó cũng hợp lệ. Mặc dù bề ngoài thì có thể điều này không rõ hay dở ra sao, nhưng thực ra đó chính là một trong những đặc điểm tuyệt vời nhất trong lập trình. Chẳng hạn, hãy xét hàm sau:
+(((đếm ngược)))((("hàm", "tự định nghĩa", "đếm ngược", see="đếm ngược")))
 
 [source,@julia-setup chap05]
 ----
 function countdown(n)
     if n ≤ 0
-        println("Blastoff!")
+        println("Bùm!")
     else
         print(n, " ")
         countdown(n-1)
@@ -257,37 +258,37 @@ function countdown(n)
 end
 ----
 
-If +n+ is 0 or negative, it outputs the word, +"Blastoff!"+ Otherwise, it outputs +n+ and then calls a function named +countdown+—itself—passing +n-1+ as an argument.
+Nếu +n+ bằng 0 hoặc âm, chương trình sẽ in ra chữ, “Bùm!” Còn nếu không, nó sẽ in ra giá trị +n+ và sau đó gọi một hàm có tên +countdown+—nghĩa là chính nó—nhưng chuyển vào đối số +n-1+.
 
-What happens if we call this function like this?
+Điều gì sẽ xảy ra khi ta gọi hàm kiểu như thế này?
 
 [source,@julia-repl-test chap05]
 ----
 julia> countdown(3)
-3 2 1 Blastoff!
+3 2 1 Bùm!
 ----
 
-The execution of +countdown+ begins with +n = 3+, and since +n+ is greater than 0, it outputs the value 3, and then calls itself ...
+Việc thực hiện +countdown+ bắt đầu với +n = 3+, và do +n+ lớn hơn 0, nó đưa ra giá trị 3, và rồi gọi chính nó ...
 
-pass:[&#8193;]The execution of +countdown+ begins with +n = 2+, and since +n+ is greater than 0, pass:[<br/>&#8193;&#8193;]it outputs the value 2, and then calls itself ...
+pass:[&#8193;]Việc thực hiện +countdown+ bắt đầu với +n = 3+, và do +n+ lớn hơn 0, pass:[<br/>&#8193;&#8193;]nó đưa ra giá trị 2, và rồi gọi chính nó ...
 
-pass:[&#8193;&#8193;]The execution of +countdown+ begins with +n = 1+, and since +n+ is greater than 0, pass:[<br/>&#8193;&#8193;&#8193;]it outputs the value 1, and then calls itself ...
+pass:[&#8193;&#8193;]Việc thực hiện +countdown+ bắt đầu với +n = 3+, và do +n+ lớn hơn 0, pass:[<br/>&#8193;&#8193;&#8193;]nó đưa ra giá trị 1, và rồi gọi chính nó ...
 
-pass:[&#8193;&#8193;&#8193;]The execution of +countdown+ begins with +n = 0+, and since +n+ is not greater than pass:[<br/>&#8193;&#8193;&#8193;&#8193;]0, it outputs the word, +"Blastoff!"+ and then returns.
+pass:[&#8193;&#8193;&#8193;]Việc thực hiện +countdown+ bắt đầu với +n = 3+, và do +n+ không còn lớn hơn pass:[<br/>&#8193;&#8193;&#8193;&#8193;]0, nó đưa ra dòng chữ “Bùm!” và rồi quay về.
 
-pass:[&#8193;&#8193;]The countdown that got +n = 1+ returns.
+pass:[&#8193;&#8193;]Hàm countdown ứng với +n = 1+ quay về.
 
-pass:[&#8193;]The countdown that got +n = 2+ returns.
+pass:[&#8193;]Hàm countdown ứng với +n = 2+ quay về.
 
-The countdown that got +n = 3+ returns.
+Hàm countdown ứng với +n = 3+ quay về.
 
-And then you’re back in +Main+.
+Và rồi bạn trở về với +Main+.
 
-A function that calls itself is _recursive_; the process of executing it is called _recursion_.
-(((recursive function)))(((recursion)))
+Một hàm gọi chính nó được gọi tên là _đệ quy_; quy trình tương ứng cũng được gọi là _đệ quy_.
+(((hàm đệ quy)))(((đệ quy)))
 
-As another example, we can write a function that prints a string latexmath:[\(n\)] times.
-(((printn)))((("function", "programmer-defined", "printn", see="printn")))
+Một ví dụ khác, ta có thể viết một hàm để in một chuỗi latexmath:[\(n\)] lần.
+(((printn)))((("hàm", "tự định nghĩa", "printn", see="printn")))
 
 [source,julia]
 ----
@@ -300,41 +301,41 @@ function printn(s, n)
 end
 ----
 
-If +n pass:[&lt;]= 0+ the +return+ statement exits the function. The flow of execution immediately returns to the caller, and the remaining lines of the function don’t run.
-(((return)))((("keyword", "return", see="return")))(((return statement)))((("statement", "return", see="return statement")))
+Nếu +n pass:[&lt;]= 0+ thì câu lệnh +return+ sẽ kết thúc hàm ngay. Luồng thực thi của chương trình sẽ lập tức trở về với nơi gọi nó, và phần còn lại của hàm sẽ không được thực hiện.
+(((return)))((("từ khóa", "return", see="return")))(((lệnh trở lại)))((("lệnh", "return", see="lệnh trở lại")))
 
-The rest of the function is similar to +countdown+: it displays +s+ and then calls itself to display +s+ latexmath:[\(n-1\)] additional times. So the number of lines of output is latexmath:[\(1 + (n - 1)\)], which adds up to latexmath:[\(n\)].
+Phần còn lại của hàm cũng giống như +countdown+: nó sẽ hiển thị +s+ và sau đó sẽ gọi chính nó để in lại +s+ thêm latexmath:[\(n-1\)] lần nữa. Như vậy số dòng kết quả sẽ là latexmath:[\(1 + (n - 1)\)], tức là bằng latexmath:[\(n\)].
 
-For simple examples like this, it is probably easier to use a +for+ loop. But we will see examples later that are hard to write with a +for+ loop and easy to write with recursion, so it is good to start early.
+Với những ví dụ đơn giản như trên, có thể sẽ dễ hơn nếu ta dùng một vòng lặp +for+. Nhưng sau này ta sẽ gặp những ví dụ mà ở đó rất khó viết một vòng lặp +for+ còn viết bằng đệ quy sẽ dễ hơn, vì vậy việc làm quen với đệ quy từ sớm là rất tốt.
 
-=== Stack Diagrams for Recursive Functions
+=== Sơ đồ ngăn xếp cho các hàm đệ quy
 
-In <<stack_diagrams>>, we used a stack diagram to represent the state of a program during a function call. The same kind of diagram can help interpret a recursive function.
-(((stack diagram)))
+Trong Mục <<stack_diagrams>>, chúng ta đã dùng một sơ đồ ngăn xếp để biểu thị trạng thái của một chương trình trong quá trình hàm được gọi. Loại biểu đồ này cũng có thể được dùng để diễn giải hàm đệ quy.
+(((sơ đồ ngăn xếp)))
 
-Every time a function gets called, Julia creates a frame to contain the function’s local variables and parameters. For a recursive function, there might be more than one frame on the stack at the same time.
-(((frame)))
+Mỗi khi hàm được gọi, Julia tạo ra một “khung” mới cho hàm, trong đó có chứa các biến cục bộ và tham số của hàm. Đối với hàm đệ quy, có thể cùng một thời điểm trên ngăn xếp sẽ tồn tại nhiều khung hàm.
+(((khung)))
 
 [[fig05-1]]
-.Stack diagram
+.Sơ đồ ngăn xếp
 image::images/fig51.svg[]
 
 
-<<fig05-1>> shows a stack diagram for +countdown+ called with +n = 3+.
+<<fig05-1>> minh hoạ một sơ đồ ngăn xếp cho hàm +countdown+ khi gọi với +n = 3+.
 
-As usual, the top of the stack is the frame for +Main+. It is empty because we did not create any variables in +Main+ or pass any arguments to it.
+Như thường lệ, đỉnh của ngăn xếp là một khung cho +Main+. Nó trống không vì ta không tạo ra bất cứ biến nào trong +Main+ hay chuyển đối số nào cho nó.
 
-The four +countdown+ frames have different values for the parameter +n+. The bottom of the stack, where +n = 0+, is called the _base case_. It does not make a recursive call, so there are no more frames.
-(((base case)))
+Bốn khung +countdown+ có các giá trị khác nhau cho tham số +n+. Đáy của ngăn xếp, ở đó +n = 0+, được gọi là _trường hợp cơ sở_. Nó không thực hiện lời gọi đệ quy, do đó không có thêm khung nào.
+(((trường hợp cơ sở)))
 
-===== Exercise 5-1
+===== Bài tập 5-1
 
-As an exercise, draw a stack diagram for +printn+ called with +s = "Hello"+ and +n = 2+. Then write a function called +do_n+ that takes a function object and a number, +n+, as arguments, and that calls the given function latexmath:[\(n\)] times.
+Hãy vẽ một biểu đồ ngăn xếp cho +printn+ khi gọi với +s = "Hello"+ và +n = 2+. Sau đó viết một hàm có tên +do_n+ để nhận các đối số gồm một đối tượng hàm và một số, +n+, gọi hàm được đã cho đúng latexmath:[\(n\)] lần.
 
-=== Infinite Recursion
+=== Đệ quy vô hạn
 
-If a recursion never reaches a base case, it goes on making recursive calls forever, and the program never terminates. This is known as _infinite recursion_, and it is generally not a good idea. Here is a minimal program with an infinite recursion:
-(((infinite recursion)))(((recurse)))((("function", "programmer-defined", "recurse", see="recurse")))
+Nếu một quá trình đệ quy không bao giờ đạt đến trường hợp cơ bản, nó tiếp tục thực hiện gọi hàm đệ quy mãi mãi, và chương trình không bao giờ kết thúc. Đây là _đệ quy vô hạn_, và là điều ta thường tránh khi lập trình. Sau đây là một chương trình đơn giản nhất có đệ quy vô hạn:
+(((đệ quy vô hạn)))(((recurse)))((("hàm", "tự định nghĩa", "recurse", see="recurse")))
 
 [source,julia]
 ----
@@ -343,7 +344,7 @@ function recurse()
 end
 ----
 
-In most programming environments, a program with infinite recursion does not really run forever. Julia reports an error message when the maximum recursion depth is reached:
+Trong phần lớn các ngôn ngữ lập trình, một chương trình có đệ quy vô hạn sẽ không chạy mãi mãi. Julia thông báo một lỗi khi chương trình đạt đến mức độ sâu đệ quy tối đa:
 
 [source,jlcon]
 ----
@@ -353,81 +354,81 @@ Stacktrace:
  [1] recurse() at ./REPL[1]:2 (repeats 80000 times)
 ----
 
-This stacktrace is a little bigger than the one we saw in the previous chapter. When the error occurs, there are 80000 +recurse+ frames on the stack!
-(((stacktrace)))(((StackOverflowError)))((("error", "Core", "StackOverflowError", see="StackOverflowError")))
+Lần này kết quả dò ngược lớn hơn một chút so với ở chương trước. Khi một lỗi xảy ra, có 80000 khung hàm +recurse+ trên ngăn xếp!
+(((dò ngược)))(((StackOverflowError)))((("lỗi", "Core", "StackOverflowError", see="StackOverflowError")))
 
-If you encounter an infinite recursion by accident, review your function to confirm that there is a base case that does not make a recursive call. And if there is a base case, check whether you are guaranteed to reach it.
+Nếu bạn tình cờ gặp phải đệ quy vô hạn, hãy rà soát lại hàm đã viết để chắc rằng có một trường hợp cở sở không gọi đến đệ quy. Và nếu đã có trường hợp cơ sở rồi, thì kiểm tra đảm bảo rằng có thể chạy đến trường hợp cơ sở này.
 
 
-=== Keyboard Input
+=== Đầu vào từ bàn phím
 
-The programs we have written so far accept no input from the user. They just do the same thing every time.
+Cho đến giờ, các chương trình ta đã viết đều không cho người dùng nhập số liệu vào. Lần nào chương trình cũng thực hiện công việc y như nhau.
 
-Julia provides a built-in function called +readline+ that stops the program and waits for the user to type something. When the user presses +RETURN+ or +ENTER+, the program resumes and +readline+ returns what the user typed as a string.
-(((readline)))((("function", "Base", "readline", see="readline")))
+Julia cung cấp một hàm dựng sẵn, có tên là +readline+ để tạm dừng chương trình và chờ người dùng nhập thông tin từ bàn phím. Đến khi người dùng gõ phím +RETURN+ hoặc +ENTER+, chương trình chạy tiếp và +readline+ trả lại những gì người dùng đã gõ vào dưới dạng chuỗi.
+(((readline)))((("hàm", "Base", "readline", see="readline")))
 
 [source,jlcon]
 ----
 julia> text = readline()
-What are you waiting for?
-"What are you waiting for?"
+Bạn đang chờ đợi gì?
+"Bạn đang chờ đợi gì?"
 ----
 
-Before getting input from the user, it is a good idea to print a prompt telling the user what to type:
-(((prompt)))
+Trước khi nhận thông tin từ người dùng, có thể sẽ tốt hơn nếu ta in ra một lời nhắc để cho người dùng biết cần nhập vào điều gì:
+(((dấu nhắc)))
 
 [source,jlcon]
 ----
-julia> print("What...is your name? "); readline()
-What...is your name? Arthur, King of the Britons!
-"Arthur, King of the Britons!"
+julia> print("Tên bạn là gì? "); readline()
+Tên bạn là gì? Arthur, Vua xứ Britons!
+"Arthur, Vua xứ Britons!"
 ----
 
-A semi-colon +;+ allows to put multiple statements on the same line. In the REPL only the last statement returns its value.
+Dấu chấm phẩy +;+ cho phép ta đặt nhiều câu lệnh trên cùng một dòng. Trong REPL, chỉ mỗi câu lệnh cuối cùng trả lại giá trị.
 (((;)))
 
-If you expect the user to type an integer, you can try to convert the return value to +Int64+:
+Nếu bạn trông đợi người dùng nhập vào một số nguyên, hãy thử chuyển đổi giá trị thu được sang kiểu +Int64+:
 
 [source,jlcon]
 ----
-julia> println("What...is the airspeed velocity of an unladen swallow?"); speed = readline()
-What...is the airspeed velocity of an unladen swallow?
+julia> println("Một con chim én tự do có thể bay nhanh bao nhiêu?"); speed = readline()
+Một con chim én tự do có thể bay nhanh bao nhiêu?
 42
 "42"
 julia> parse(Int64, speed)
 42
 ----
 
-But if the user types something other than a string of digits, you get an error:
+Nhưng nếu người dùng nhập vào những thứ khác một chuỗi thì sẽ bị lỗi:
 (((parse)))
 
 [source,jlcon]
 ----
-julia> println("What...is the airspeed velocity of an unladen swallow? "); speed = readline()
-What...is the airspeed velocity of an unladen swallow?
-What do you mean, an African or a European swallow?
-"What do you mean, an African or a European swallow?"
+julia> println("Một con chim én tự do có thể bay nhanh bao nhiêu? "); speed = readline()
+Một con chim én tự do có thể bay nhanh bao nhiêu?
+Ý của bạn là sao, một con én châu Phi hay châu Âu?
+"Ý của bạn là sao, một con én châu Phi hay châu Âu?"
 julia> parse(Int64, speed)
-ERROR: ArgumentError: invalid base 10 digit 'W' in "What do you mean, an African or a European swallow?"
+ERROR: ArgumentError: invalid base 10 digit 'W' in "Ý của bạn là sao, một con én châu Phi hay châu Âu?"
 [...]
 ----
 
-We will see how to handle this kind of error later.
+Trong các phần sau chúng ta sẽ xem xét cách khắc phục lỗi này.
 (((ArgumentError)))
 
 
-=== Debugging
+=== Gỡ lỗi
 
-When a syntax or runtime error occurs, the error message contains a lot of information, but it can be overwhelming. The most useful parts are usually:
-(((debugging)))
+Khi xảy ra lỗi cú pháp hoặc lỗi thực thi, lời thông báo lỗi sẽ chứa rất nhiều thông tin, nhưng có thể sẽ quá mức cần thiét. Thường những phần quan trọng nhất cần biết là:
+(((gỡ lỗi)))
 
-* What kind of error it was, and
+* Lỗi này thuộc loại gì, và
 
-* Where it occurred.
+* Nó xuất hiện ở đâu?
 
-Syntax errors are usually easy to find, but there are a few gotchas. In general, error messages indicate where the problem was discovered, but the actual error might be earlier in the code, sometimes on a previous line.
+Các lỗi cú pháp thường dễ tìm, nhưng cũng có vài chỗ gây bất ngờ. Nói chung, các thông báo lỗi đều chỉ ra trục trặc được phát hiện ở đâu, nhưng lỗi thực sự lại có thể nằm ở trước đó trong đoạn mã lệnh, đôi khi là ở dòng ngay trước đó.
 
-The same is true of runtime errors. Suppose you are trying to compute a signal-to-noise ratio in decibels. The formula is
+Điều tương tự cũng đúng với các lỗi thực thi. Chẳng hạn bạn đang thử tính tỉ số tín hiệu so với nhiễu động theo đơn vị đềxiben. Công thức tính là 
 
 [latexmath]
 ++++
@@ -436,7 +437,7 @@ The same is true of runtime errors. Suppose you are trying to compute a signal-t
 \end{equation}
 ++++
 
-In Julia, you might write something like this:
+Trong Julia, bạn có thể viết một đoạn mã giống như sau:
 
 [source,julia]
 ----
@@ -447,92 +448,92 @@ decibels = 10 * log10(ratio)
 print(decibels)
 ----
 
-And you get:
+Và nhận được:
 
 [source,julia]
 ----
 -Inf
 ----
 
-This is not the result you expected.
+Đây không phải là kết quả mong đợi.
 
-To find the error, it might be useful to print the value of ratio, which turns out to be 0. The problem is in line 3, which uses floor division instead of floating-point division.
+Để tìm lỗi thực sự, có thể bạn cần phải in ra giá trị của ratio, hoá ra nó bằng 0. Vậy trục trặc xảy ra ở dòng 3, ở dòng này bạn đã dùng phép chia lấy phần nguyên thay vì phép chia số có dấu phẩy động.
 
 [WARNING]
 ====
-You should take the time to read error messages carefully, but don’t assume that everything they say is correct.
+Bạn nên dành thời gian đọc thông báo lỗi cẩn thận, nhưng đừng cho rằng tất cả những gì trong lời thông báo đó đều đúng.
 ====
 
 
-=== Glossary
+=== Thuật ngữ
 
-floor division::
-An operator, denoted +÷+, that divides two numbers and rounds down (toward negative infinity) to an integer.
-(((floor division)))
+chia lấy phần nguyên::
+Toán tử kí hiệu là +÷+, thực hiện chia hai số rồi làm tròn xuống (về phía âm vô cực) để được một số nguyên.
+(((chia lấy phần nguyên)))
 
-modulus operator::
-An operator, denoted with a percent sign (%), that works on integers and returns the remainder when one number is divided by another.
-(((modulus operator)))
+toán tử chia dư::
+Toán tử, kí hiệu là dấu phần trăm, (%), được dùng với các số nguyên và trả lại phần dư của phép chia hai số đó.
+(((toán tử chia dư)))
 
-boolean expression::
-An expression whose value is either +true+ or +false+.
-(((boolean expression)))
+biểu thức Boole::
+Biểu thức có giá trị là +true+ (đúng) hoặc +false+ (sai).
+(((biểu thức Boole)))
 
-relational operator::
-One of the operators that compares its operands: +==+, +≠+ (+!=+), +>+, +<+, +≥+ (+>=+), and +≤+ (+pass:[&lt;=]+).
-(((relational operator)))
+toán tử quan hệ::
+Một trong các toán tử để so sánh các toán hạng của nó: +==+, +≠+ (+!=+), +>+, +<+, +≥+ (+>=+), và +≤+ (+pass:[&lt;=]+).
+(((toán tử quan hệ)))
 
-logical operator::
-One of the operators that combines boolean expressions: +&&+ (and), +||+ (or), and +!+ (not).
-(((logical operator)))
+toán tử lôgic::
+Một trong các toán tử để kết hợp các biểu thức Boole: +&&+ (và), +||+ (hoặc), và +!+ (phủ định).
+(((toán tử lôgic)))
 
-conditional statement::
-A statement that controls the flow of execution depending on some condition.
-(((conditional statement)))
+câu lệnh điều kiện::
+Câu lệnh để điều khiển dòng thực hiện chương trình tuỳ theo một điều kiện nào đó.
+(((câu lệnh điều kiện)))
 
-condition::
-The boolean expression in a conditional statement that determines which branch runs.
-(((condition)))
+điêu kiện::
+Biểu thức Boole trong một câu lệnh điều kiện để quyết định nhánh nào sẽ được thực hiện.
+(((điêu kiện)))
 
-compound statement::
-A statement that consists of a header and a body. The body is terminated with the keyword +end+.
-(((compound statement)))
+câu lệnh ghép::
+Câu lệnh bao gồm một đoạn đầu và một phần thân. Phần thân được kết thúc bởi từ khóa +end+.
+(((câu lệnh ghép)))
 
-branch::
-One of the alternative sequences of statements in a conditional statement.
-(((branch)))
+nhánh::
+Một trong số các phương án trong một câu lệnh điều kiện.
+(((nhánh)))
 
-chained conditional::
-A conditional statement with a series of alternative branches.
-(((chained conditional)))
+câu lệnh điều kiện xâu chuỗi::
+Câu lệnh điều kiện với một chuỗi liên tiếp các nhánh phương án.
+(((câu lệnh điều kiện xâu chuỗi)))
 
-nested conditional::
-A conditional statement that appears in one of the branches of another conditional statement.
-(((nested conditional)))
+câu lệnh điều kiện lồng::
+Câu lệnh điều kiện xuất hiện bên trong của một trong số các nhánh của một câu lệnh điều kiện khác.
+(((câu lệnh điều kiện lồng)))
 
-return statement::
-A statement that causes a function to end immediately and return to the caller.
-(((return statement)))
+câu lệnh trở lại::
+Một câu lệnh khiến cho hàm lập tức kết thúc và trở lại chỗ mã lệnh gọi đến hàm.
+(((câu lệnh trở lại)))
 
-recursion::
-The process of calling the function that is currently executing.
-(((recursion)))
+đệ quy::
+Quá trình gọi hàm mà hiện thời đang được thực thi.
+(((đệ quy)))
 
-base case::
-A conditional branch in a recursive function that does not make a recursive call.
-(((base case)))
+trường hợp cơ sở::
+Nhánh điều kiện trong một hàm đệ quy mà bản thân không gọi đệ quy.
+(((trường hợp cơ sở)))
 
-infinite recursion::
-A recursion that doesn’t have a base case, or never reaches it. Eventually, an infinite recursion causes a runtime error.
-(((infinite recursion)))
+đệ quy vô hạn::
+Đệ quy mà không có trường hợp cơ sở, hoặc không bao giờ đạt đên trường hợp cơ sở. Đệ quy vô hạn cuối cùng sẽ gây ra lỗi thực thi.
+(((đệ quy vô hạn)))
 
 
-=== Exercises
+=== Bài tập
 
 [[ex05-1]]
-===== Exercise 5-2
+===== Bài tập 5-2
 
-The function +time+ returns the current Greenwich Mean Time in seconds since “the epoch”, which is an arbitrary time used as a reference point. On UNIX systems, the epoch is 1 January 1970.
+Hàm +time+ trả lại thời gian Greenwich Mean Time hiện tại, tính bằng giây, kể từ “mốc epoch”, vốn là một thời điểm được chọn làm mốc tham chiếu. Trên các hệ thống UNIX, mốc epoch là 1/1/1970.
 (((time)))((("function", "Base", "time", see="time")))
 
 [source,@julia-repl]
@@ -540,13 +541,13 @@ The function +time+ returns the current Greenwich Mean Time in seconds since “
 time()
 ----
 
-Write a script that reads the current time and converts it to a time of day in hours, minutes, and seconds, plus the number of days since the epoch.
+Hãy viết một văn lệnh để đọc vào thời điểm hiện tại rồi quy đổi thành một thời điểm trong ngày dưới dạng số giờ, phút, giây, cùng số ngày tính từ mốc epoch.
 
 [[ex05-2]]
-===== Exercise 5-3
+===== Bài tập 5-3
 
-Fermat’s Last Theorem says that there are no positive integers latexmath:[\(a\)], latexmath:[\(b\)], and latexmath:[\(c\)] such that
-(((Fermat's last theorem)))
+Định lý cuối cùng của Fermat phát biểu rằng không có các số nguyên latexmath:[\(a\)], latexmath:[\(b\)], và latexmath:[\(c\)] nào thoả mãn
+(((định lý cuối cùng của Fermat)))
 
 [latexmath]
 ++++
@@ -555,33 +556,33 @@ Fermat’s Last Theorem says that there are no positive integers latexmath:[\(a\
 \end{equation}
 ++++
 
-for any value of latexmath:[\(n\)] greater than 2.
+với bất kì giá trị nào của latexmath:[\(n\)] lớn hơn 2.
 
-. Write a function named +checkfermat+ that takes four parameters—+a+, +b+, +c+ and +n+—and checks to see if Fermat’s theorem holds. If +n+ is greater than 2 and +pass:[a^n + b^n == c^n]+ the program should print, “Holy smokes, Fermat was wrong!” Otherwise the program should print, “No, that doesn’t work.”
-(((checkfermat)))((("function", "programmer-defined", "checkfermat", see="checkfermat")))
+. Viết một hàm có tên là +check_fermat+ nhận vào bốn tham số—+a+, +b+, +c+ và +n+—rồi kiểm tra xem có thoả mãn định lý Fermat không. Nếu +n+  lớn hơn 2 và +pass:[a^n + b^n == c^n]+ thì chương trình sẽ in ra “Trời, Fermat đã lầm!” Còn nếu không thì chương trình sẽ in ra, “Không, vẫn không đúng”.
+(((checkfermat)))((("hàm", "tự định nghĩa", "checkfermat", see="checkfermat")))
 
-. Write a function that prompts the user to input values for +a+, +b+, +c+ and +n+, converts them to integers, and uses +checkfermat+ to check whether they violate Fermat’s theorem.
+. Viết một hàm nhắc người dùng nhập vào các giá trị của +a+, +b+, +c+ và +n+, quy đổi chúng thành số nguyên và dùng +checkfermat+ để kiểm tra xem liệu chúng có vi phạm định lý Fermat hay không.
 
 [[ex05-3]]
-===== Exercise 5-4
+===== Bài tập 5-4
 
-If you are given three sticks, you may or may not be able to arrange them in a triangle. For example, if one of the sticks is 12 inches long and the other two are one inch long, you will not be able to get the short sticks to meet in the middle. For any three lengths, there is a simple test to see if it is possible to form a triangle:
+Nếu bạn có trong tay ba thanh thẳng, bạn có thể hoặc không thể xếp thành một hình tam giác. Chẳng hạn, nếu một thanh dài 30 cm và hai thanh kia chỉ đều chỉ dài 3 cm, rõ ràng là bạn không thể làm cho hai thanh ngắn nối với nhau được. Với ba thanh có độ dài bất kì, có một cách đơn giản để kiểm tra xem chúng có tạo nên hình tam giác được không:
 
 [TIP]
 ====
-If any of the three lengths is greater than the sum of the other two, then you cannot form a triangle. Otherwise, you can. (If the sum of two lengths equals the third, they form what is called a “degenerate” triangle.)
+Nếu bất kì một độ dài nào lớn hơn tổng hai độ dài còn lại thì bạn không thể tạo thành tam giác. Ngược lại, bạn có thể. (Nếu tổng hai độ dài bằng độ dài thứ ba thì chúng sẽ tạo ra một “tam giác suy biến”.)
 ====
 
-. Write a function named +istriangle+ that takes three integers as arguments, and that prints either “Yes” or “No”, depending on whether you can or cannot form a triangle from sticks with the given lengths.
-(((istriangle)))((("function", "programmer-defined", "istriangle", see="istriangle")))
+. Viết một hàm có tên là +istriangle+  nhận vào ba tham số là các số nguyên, sau đó in ra “Yes” hoặc “No”, tuỳ theo bạn có thể hay không thể tạo thành hình tam giác từ ba thanh với các độ dài đó.
+(((istriangle)))((("hàm", "tự định nghĩa", "istriangle", see="istriangle")))
 
-. Write a function that prompts the user to input three stick lengths, converts them to integers, and uses +istriangle+ to check whether sticks with the given lengths can form a triangle.
+. Viết một hàm nhắc người dùng nhập vào độ dài ba thanh, chuyển thành dạng số nguyên, rồi dùng +istriangle+ để kiểm tra xem ba thanh với các độ dài đó có thể được xếp thành tam giác hay không.
 
 [[ex05-4]]
-===== Exercise 5-5
+===== Bài tập 5-5
 
-What is the output of the following program? Draw a stack diagram that shows the state of the program when it prints the result.
-(((stack diagram)))(((recurse)))
+Kết quả đầu ra của chương trình sau là gì? Hãy vẽ một sơ đồ ngăn xếp cho thấy trạng thái của chương trình khi nó in ra kết quả.
+(((sơ đồ ngăn xếp)))(((recurse)))
 
 [source,julia]
 ----
@@ -596,16 +597,16 @@ end
 recurse(3, 0)
 ----
 
-. What would happen if you called this function like this: +recurse(-1, 0)+?
+. Điều gì sẽ xảy ra nếu bạn gọi hàm này như sau: +recurse(-1, 0)+?
 
-. Write a docstring that explains everything someone would need to know in order to use this function (and nothing else).
+. Hãy viết một chuỗi docstring đẻ giải thích cho người khác biết những gì cần (vừa đủ) để sử dụng hàm này.
 
-The following exercises use the +ThinkJulia+ module, described in <<chap04>>:
+Bài tập tiếp theo đây dùng module +ThinkJulia+ module, đã mô tả ở <<chap04>>:
 
 [[ex05-5]]
-===== Exercise 5-6
+===== Bài tập 5-6
 
-Read the following function and see if you can figure out what it does (see the examples in <<chap04>>). Then run it and see if you got it right.
+Hãy đọc hàm sau đây và thử xem bạn có thể hình dung được mục đích của nó không (xem các ví dụ ở <<chap04>>). Sau đó thì chạy nó và đối chiếu với phán đoán của bạn.
 
 [source,julia]
 ----
@@ -625,37 +626,37 @@ end
 ----
 
 [[ex05-6]]
-===== Exercise 5-7
+===== Bài tập 5-7
 
 [[fig05-2]]
 .A Koch curve
 image::images/fig52.svg[]
 
 
-The Koch curve is a fractal that looks something like <<fig05-2>>. To draw a Koch curve with length latexmath:[\(x\)], all you have to do is
-(((Koch curve)))(((fractal)))
+Đường cong Koch là một hình phân mảnh (fractal) có dạng như <<fig05-2>>. Để vẽ một đường cong Koch với độ dài latexmath:[\(x\)], tất cả những việc bạn cần làm là
+(((đường cong Koch)))(((phân mảnh)))
 
-. Draw a Koch curve with length latexmath:[\(\frac{x}{3}\)].
+. Vẽ một đường cong Koch với độ dài latexmath:[\(\frac{x}{3}\)].
 
-. Turn left 60 degrees.
+. Quay trái 60 độ.
 
-. Draw a Koch curve with length latexmath:[\(\frac{x}{3}\)].
+. Vẽ một đường cong Koch với độ dài latexmath:[\(\frac{x}{3}\)].
 
-. Turn right 120 degrees.
+. Quay phải 120 độ.
 
-. Draw a Koch curve with length latexmath:[\(\frac{x}{3}\)].
+. Vẽ một đường cong Koch với độ dài latexmath:[\(\frac{x}{3}\)].
 
-. Turn left 60 degrees.
+. Quay trái 60 độ.
 
-. Draw a Koch curve with length latexmath:[\(\frac{x}{3}\)].
+. Vẽ một đường cong Koch với độ dài latexmath:[\(\frac{x}{3}\)].
 
-The exception is if latexmath:[\(x\)] is less than 3: in that case, you can just draw a straight line with length latexmath:[\(x\)].
+Ngoại lệ duy nhất là nếu latexmath:[\(x\)] nhỏ hơn 3. Trong trường hợp đó, bạn chỉ cần vẽ một đoạn thẳng có độ dài latexmath:[\(x\)].
 
-. Write a function called +koch+ that takes a turtle and a length as parameters, and that uses the turtle to draw a Koch curve with the given length.
-(((koch)))((("function", "programmer-defined", "koch", see="koch")))
+. Viết một hàm có tên là +koch+ nhận vào các tham số là một con rùa và một độ dài, sau đó dùng con rùa để vẽ một đường cong Koch với độ dài cho trước đó.
+(((koch)))((("hàm", "tự định nghĩa", "koch", see="koch")))
 
-. Write a function called +snowflake+ that draws three Koch curves to make the outline of a snowflake.
-(((snowflake)))((("function", "programmer-defined", "snowflake", see="snowflake")))
+. Viết một hàm có tên là +snowflake+  để vẽ ba đường cong Koch nối thành hình một bông tuyết.
+(((snowflake)))((("hàm", "tự định nghĩa", "snowflake", see="snowflake")))
 
-. The Koch curve can be generalized in several ways. See https://en.wikipedia.org/wiki/Koch_snowflake for examples and implement your favorite.
+. Có một số cách khái quát hoá đường cong Koch. Hãy xem các ví dụ ở https://en.wikipedia.org/wiki/Koch_snowflake và viết mã lệnh cho ví dụ mà bạn thích.
 
