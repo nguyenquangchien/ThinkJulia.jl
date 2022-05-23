@@ -1,20 +1,20 @@
 [[chap04]]
-== Case Study: Interface Design
+== Nghiên cứu cụ thể: thiết kế giao diện
 
-This chapter presents a case study that demonstrates a process for designing functions that work together.
+Chương này trình bày một nghiên cứu cụ thể nhằm biểu diễn quá trình thiết kế các hàm để chúng làm việc với nhau.
 
-It introduces turtle graphics, a way to create programmatic drawings. Turtle graphics are not included in the Standard Library, so the ThinkJulia module has to be added to your Julia setup.
+Chương giới thiệu đồ họa rùa, một cách lập trình tạo nên các bản vẽ. Đồ họa rùa không có trong thư viện chuẩn, nên bạn cần bổ sung module ThinkJulia vào với thiết lập Julia trên máy bạn.
 
-The examples in this chapter can be executed in a graphical notebook on JuliaBox, which combines code, formatted text, math, and multimedia in a single document (see <<juliabox>>).
-(((JuliaBox, graphical notebook)))
+Có thể thực thi các ví dụ trong chương này trong một sổ tính đô họa trên JuliaBox, môi trường kết hợp mã lệnh, các dòng chữ định dạng, công thức toán học và đa phương tiện, tất cả trong một văn bản (xem <<juliabox>>).
+(((JuliaBox, sổ tính đồ họa)))
 
 
 === Turtles
 
-A _module_ is a file that contains a collection of related functions. Julia provides some modules in its Standard Library. Additional functionality can be added from a growing collection of _packages_ (https://juliaobserver.com).
-(((module)))(((package)))
+_Module_ là một file chứa một nhóm các hàm liên quan. Julia cấp sẵn một số module trong thư viện chuẩn. Có thể bổ sung thêm các tính năng từ một tập hợp các _gói_ không ngừng được phát triển (https://juliaobserver.com).
+(((module)))(((gói)))
 
-Packages can be installed in the REPL by entering the Pkg REPL-mode using the key +]+.
+Có thể cài đặt các gói trong REPL khi vào chế độ Pkg REPL bằng cách nhấn phím +]+.
 (((pass:[&#93;])))(((ThinkJulia)))((("module", "ThinkJulia", see="ThinkJulia")))
 
 [source,jlcon]
@@ -22,10 +22,10 @@ Packages can be installed in the REPL by entering the Pkg REPL-mode using the ke
 (v1.0) pkg> add https://github.com/BenLauwens/ThinkJulia.jl
 ----
 
-This can take some time.
+Việc này có thể tốn chút thời gian.
 
-Before we can use the functions in a module, we have to import it with an +using+ statement:
-(((using)))((("keyword", "using", see="using")))(((using statement)))((("statement", "using", see="using statement")))
+Trước khi sử dụng được các hàm trong một module, bạn cần nhập module với lệnh +using+:
+(((using)))((("từ khóa", "using", see="using")))(((using statement)))((("lệnh", "using", see="using (lệnh)")))
 
 [source,@julia-repl-test]
 ----
@@ -35,11 +35,11 @@ julia> 🐢 = Turtle()
 Luxor.Turtle(0.0, 0.0, true, 0.0, (0.0, 0.0, 0.0))
 ----
 
-The +ThinkJulia+ module provides a function called +Turtle+ that creates a +Luxor.Turtle+ object, which we assign to a variable named +🐢+ (*+\:turtle: TAB+*).
+Module +ThinkJulia+ cung cấp một hàm có tên +Turtle+ để tạo ra một đối tượng +Luxor.Turtle+, mà ta sẽ gán cho biến tên là +🐢+ (*+\:turtle: TAB+*).
 (((Turtle)))((("type", "Luxor", "Turtle", see="Turtle")))
 
-Once you create a turtle, you can call a function to move it around a drawing. For example, to move the turtle forward:
-(((forward)))((("function", "ThinkJulia", "forward", see="forward")))
+Một khi đã tạo ra con rùa, bạn có thể gọi các hàm để di chuyển nó trong bản vẽ. Chẳng hạn, để cho rùa đi tiến:
+(((forward)))((("hàm", "ThinkJulia", "forward", see="forward")))
 
 [source,julia]
 ----
@@ -49,22 +49,22 @@ end
 ----
 
 [[fig04-1]]
-.Moving the turtle forward
+.Cho rùa đi tiến
 image::images/fig41.svg[]
 
 
-The +@svg+ keyword runs a macro that draws a SVG picture. Macros are an important but advanced feature of Julia.
-(((@svg)))((("macro", "Luxor", "@svg", see="@svg")))(((macro)))(((SVG picture)))
+Từ khóa +@svg+ chạy một macro để vẽ nên hình SVG. Macro là tính năng quan trọng nhưng là kiến thức nâng cao trong Julia.
+(((@svg)))((("macro", "Luxor", "@svg", see="@svg")))(((macro)))(((hình SVG)))
 
-The arguments of +forward+ are the turtle and a distance in pixels, so the actual size depends on your display.
+Các đối số cho +forward+ là con rùa và khoảng cách tính theo điểm ảnh (pixel), vì vậy kích thước thực sẽ phụ thuộc vào màn hình máy tính bạn.
 
-Another function you can call with a turtle as argument is +turn+ for turning. The second argument for +turn+ is an angle in degrees.
-(((turn)))((("function", "ThinkJulia", "turn", see="turn")))
+Một hàm khác bạn có thể gọi mà nhận rùa làm đối số là +turn+; hàm này để quay con rùa. Đối số thứ hai cho +turn+ là góc tính bằng độ.
+(((turn)))((("hàm", "ThinkJulia", "turn", see="turn")))
 
-Also, each turtle is holding a pen, which is either down or up; if the pen is down, the turtle leaves a trail when it moves. <<fig04-1>> shows the trail left behind by the turtle. The functions +penup+ and +pendown+ stand for “pen up” and “pen down”.
-(((penup)))((("function", "ThinkJulia", "penup", see="penup")))(((pendown)))((("function", "ThinkJulia", "pendown", see="pendown")))
+Ngoài ra, mỗi con rùa đều nắm một cây bút, bút này có thể được nhấc hoặc hạ; nếu hạ bút xuống, rùa sẽ để lại nét vẽ khi nó di chuyển. <<fig04-1>> cho thấy nết vẽ để lại phía sau con rùa. Các hàm +penup+ và +pendown+ tương ứng với nhấc bút hoặc hạ bút.
+(((penup)))((("hàm", "ThinkJulia", "penup", see="penup")))(((pendown)))((("hàm", "ThinkJulia", "pendown", see="pendown")))
 
-To draw a right angle, modify the macro call:
+Để vẽ một góc vuông, hãy sửa lại lời gọi macro:
 
 [source,julia]
 ----
@@ -76,16 +76,16 @@ To draw a right angle, modify the macro call:
 end
 ----
 
-===== Exercise 4-1
+===== Bài tập 4-1
 
-Now modify the macro to draw a square. Don’t go on until you’ve got it working!
+Bây giờ hãy chỉnh sửa macro để vẽ một hình vuông. Xin đừng đọc tiếp trước khi bạn hoàn thành chương trình này!
 
 
 [[simple_repetition]]
-=== Simple Repetition
+=== Cách lặp lại đơn giản
 
-Chances are you wrote something like this:
-(((repetition)))
+Đôi khi bạn viết mã lệnh kiểu như sau:
+(((lặp lại)))
 
 [source,julia]
 ----
@@ -101,8 +101,8 @@ Chances are you wrote something like this:
 end
 ----
 
-We can do the same thing more concisely with a +for+ statement:
-(((for statement)))((("statement", "for", see="for statement)))(((for)))((("keyword", "for", see="for")))(((in)))((("keyword", "in", see="in")))
+Chúng ta có thể làm việc này bằng cách viết gọn hơn với một lệnh +for+:
+(((lệnh for)))((("lệnh", "for", see="lệnh for")))(((for)))((("từ khóa", "for", see="for")))(((in)))((("từ khóa", "in", see="in")))
 
 [source,@julia-repl-test]
 ----
@@ -115,9 +115,9 @@ Hello!
 Hello!
 ----
 
-This is the simplest use of the +for+ statement; we will see more later. But that should be enough to let you rewrite your square-drawing program. Don’t go on until you do.
+Đây là cách dùng lệnh +for+ đơn giản nhất; sau này chúng ta sẽ tìm hiểu thêm. Nhưng chỉ bằng cách đơn giản này cũng đủ để viết lại chương trình vẽ hình vuông. Xin đừng đọc tiếp trước khi bạn hoàn thành chương trình.
 
-Here is a +for+ statement that draws a square:
+Đây là cách dùng một lệnh +for+ để vẽ hình vuông:
 
 [source,julia]
 ----
@@ -130,69 +130,69 @@ Here is a +for+ statement that draws a square:
 end
 ----
 
-The syntax of a +for+ statement is similar to a function definition. It has a header and a body that ends with the keyword +end+. The body can contain any number of statements.
+Cú pháp của lệnh +for+ cũng tương tự như một định nghĩa hàm. Nó gồm có một phần đầu kết thúc bởi dấu hai chấm và một phần thân được viết thụt vào so với lề. Phần thân có thể chứa bao nhiêu câu lệnh cũng được.
 (((end)))
 
-A +for+ statement is also called a _loop_ because the flow of execution runs through the body and then loops back to the top. In this case, it runs the body four times.
-(((loop)))
+Một câu lệnh +for+ đôi khi còn đươc gọi là một _vòng lặp_ vì dòng thực hiện sẽ đi xuôi theo phần thân và vòng ngược trở lại đầu. Trong ví dụ trên, phần thân được chạy qua bốn lần.
+(((vòng lặp)))
 
-This version is actually a little different from the previous square-drawing code because it makes another turn after drawing the last side of the square. The extra turn takes more time, but it simplifies the code if we do the same thing every time through the loop. This version also has the effect of leaving the turtle back in the starting position, facing in the starting direction.
+Thực ra phiên bản mã lệnh này hơi khác với các bản vẽ hình vuông trước đó ở chỗ nó thực hiện một lần rẽ nữa sau khi vẽ cạnh cuối cùng của hình vuông. Lần rẽ dư thừa này làm thời gian chạy lâu hơn một chút, nhưng nó đơn giản hoá mã lệnh nếu chúng ta có thể thực hiện các công việc giống nhau bằng vòng lặp. Phiên bản này cũng có tác dụng đưa con rùa về trạng thái khởi đầu, đặt nó về hướng xuất phát.
 
 
-=== Exercises
+=== Bài tập
 
-The following is a series of exercises using turtles. They are meant to be fun, but they have a point, too. While you are working on them, think about what the point is.
+Tiếp theo đây là một loạt các bài tập có sử dụng con rùa. Chúng có mục đích riêng ngoài việc giải trí. Khi làm các bài tập này, bạn hãy nghĩ xem mục đích riêng đó là gì.
 
 [TIP]
 ====
-The following sections have solutions to the exercises, so don’t look until you have finished (or at least tried).
+Bên cạnh các bài tập còn có lời giải. Bạn hãy cố hoàn thành (hoặc ít nhất là nỗ lực làm) các bài tập trước khi xem qua lời giải này.
 ====
 
 [[ex04-1]]
-===== Exercise 4-2
+===== Bài tập 4-2
 
-Write a function called +square+ that takes a parameter named +t+, which is a turtle. It should use the turtle to draw a square.
+Hãy viết một hàm có tên +square+ nhận một tham số tên +t+, vốn là một con rùa. Hàm này dùng con rùa để vẽ một hình vuông.
 
 [[ex04-2]]
-===== Exercise 4-3
+===== Bài tập 4-3
 
-Write a function call that passes +t+ as an argument to +square+, and then run the macro again.
+Viết một lời gọi hàm nhằm mục đích truyền +t+ như một đối số cho +square+, và sau đó chạy lại chương trình.
 
 [[ex04-3]]
-===== Exercise 4-4
+===== Bài tập 4-4
 
-Add another parameter, named +len+, to square. Modify the body so length of the sides is +len+, and then modify the function call to provide a second argument. Run the macro again. Test with a range of values for +len+.
+Thêm một tham số nữa có tên +len+, cho square. Sửa đổi phần thân của sao cho chiều dài cạnh là +len+, rồi sửa đổi lời gọi hàm để cung cấp cho một đối số thứ hai. Chạy lại macro này. Thử chương trình với một loạt các giá trị của +len+.
 
 [[ex04-4]]
-===== Exercise 4-5
+===== Bài tập 4-5
 
-Make a copy of +square+ and change the name to +polygon+. Add another parameter named +n+ and modify the body so it draws an latexmath:[\(n\)]-sided regular polygon. 
+Tạo một bản sao của +square+ và đổi tên thành +polygon+. Thêm một tham số có tên là +n+ và sửa đổi phần thân để nó vẽ một hình đa giác đều có latexmath:[\(n\)] cạnh. 
 
 [TIP]
 ====
-The exterior angles of an latexmath:[\(n\)]-sided regular polygon are latexmath:[\(\frac{360}{n}\)] degrees.
+Các góc ngoài của một hình latexmath:[\(n\)]-giác đều cùng bằng latexmath:[\(\frac{360}{n}\)] độ.
 ====
 
 [[ex04-5]]
-===== Exercise 4-6
+===== Bài tập 4-6
 
-Write a function called +circle+ that takes a turtle, +t+, and radius, +r+, as parameters and that draws an approximate circle by calling +polygon+ with an appropriate length and number of sides. Test your function with a range of values of +r+. 
+Viết một hàm có tên là +circle+ nhận vào rùa +t+, và bán kính, +r+, như là hai tham số. Hàm này thực hiện vẽ gần chính xác một đường tròn bằng cách gọi hàm +polygon+  với các giá trị phù hợp cho chiều dài cạnh và số cạnh. Thử lại hàm của bạn với một loạt các giá trị của +r+. 
 
 [TIP]
 ====
-Figure out the circumference of the circle and make sure that +len * n == circumference+.
+Hình dung ra độ dài chu vi đường tròn và đảm bảo rằng +len * n == circumference+ (chu vi).
 ====
 
 [[ex04-6]]
-===== Exercise 4-7
+===== Bài tập 4-7
 
-Make a more general version of +circle+ called +arc+ that takes an additional parameter +angle+, which determines what fraction of a circle to draw. +angle+ is in units of degrees, so when +angle = 360+, +arc+ should draw a complete circle.
+Viết một bản tổng quát hơn so với +circle+ gọi là +arc+ trong đó nhận thêm một tham số +angle+, nhằm chỉ định bao nhiêu phần đường tròn cần được vẽ. +angle+ có đơn vị là độ, vì vậy khi +angle = 360+, +arc+ sẽ phải vẽ một đường tròn.
 
 
-=== Encapsulation
+=== Bao gói
 
-The first exercise asks you to put your square-drawing code into a function definition and then call the function, passing the turtle as a parameter. Here is a solution:
-(((square)))((("function", "programmer-defined", "square", see="square")))
+Bài tập thứ nhất yêu cầu bạn đặt đoạn mã vẽ hình vuông vào trong một định nghĩa hàm và sau đó gọi hàm này, trong đó chuyển con rùa như một tham biến. Một cách làm là như sau:
+(((square)))((("hàm", "tự định nghĩa", "square", see="square")))
 
 [source,julia]
 ----
@@ -208,10 +208,10 @@ end
 end
 ----
 
-The innermost statements, +forward+ and +turn+ are indented twice to show that they are inside the +for+ loop, which is inside the function definition.
-(((indentation)))
+Các câu lệnh trong cùng, +forward+ và +turn+ được thụt lề hai lần, nhằm cho thấy chúng ở bên trong vòng lặp +for+, vốn bản thân ở trong định nghĩa hàm.
+(((thụt lề)))
 
-Inside the function, +t+ refers to the same turtle +🐢+, so +turn(t, -90)+ has the same effect as +turn(🐢, -90)+. In that case, why not call the parameter +🐢+? The idea is that +t+ can be any turtle, not just +🐢+, so you could create a second turtle and pass it as an argument to +square+:
+Bên trong hàm, +t+ tham chiếu đến cùng con rùa +🐢+, vì vậy +turn(t, -90)+ có cùng ý nghĩa như +turn(🐢, -90)+. Vậy tại sao không đặt tên tham biến là +🐢+? Đó là vì +t+ có thể là bất cứ con rùa nào chứ không riêng gì +🐢+, và bạn có thể tạo ra một con rùa thứ hai và truyền nó như một đối số tới +square+:
 
 [source,julia]
 ----
@@ -221,13 +221,13 @@ Inside the function, +t+ refers to the same turtle +🐢+, so +turn(t, -90)+ has
 end
 ----
 
-Wrapping a piece of code up in a function is called _encapsulation_. One of the benefits of encapsulation is that it attaches a name to the code, which serves as a kind of documentation. Another advantage is that if you re-use the code, it is more concise to call a function twice than to copy and paste the body!
-(((encapsulation)))
+Việc gói một đoạn mã vào trong một hàm được gọi là _bao gói_. Một trong những ưu điểm của việc bao gói là nó gắn đoạn mã với một tên cụ thể, chính là một kiểu giúp cho việc biên khảo sau này. Một ưu điểm khác là nếu bạn dùng lại đoạn mã, việc gọi tên hàm sẽ ngắn gọn hơn nhiều so với việc sao chép và dán toàn bộ phần thân hàm!
+(((bao gói)))
 
 
-=== Generalization
+=== Khái quát hoá
 
-The next step is to add a +len+ parameter to +square+. Here is a solution:
+Bước tiếp theo là thêm một tham số +len+ parameter vào +square+. Sau đây là một giải pháp:
 (((square)))
 
 [source,julia]
@@ -244,11 +244,11 @@ end
 end
 ----
 
-Adding a parameter to a function is called _generalization_ because it makes the function more general: in the previous version, the square is always the same size; in this version it can be any size.
-(((generalization)))
+Việc thêm một tham số vào một hàm được gọi là _khái quát hoá_ vì nó làm cho hàm số trở nên khái quát hơn: trong phiên bản trước, kích thước của hình vuông là cố định, ở phiên bản này nó có thể lớn nhỏ bất kì.
+(((khái quát hoá)))
 
-The next step is also a generalization. Instead of drawing squares, +polygon+ draws regular polygons with any number of sides. Here is a solution:
-(((polygon)))((("function", "programmer-defined", "polygon", see="polygon")))
+Bước tiếp theo cũng là một cách khái quát hoá. Thay vì việc vẽ hình vuông, +polygon+ vẽ một hình đa giác đều với số cạnh bất kì. Sau đây là một lời giải:
+(((polygon)))((("hàm", "tự định nghĩa", "polygon", see="polygon")))
 
 [source,julia]
 ----
@@ -265,13 +265,13 @@ end
 end
 ----
 
-This example draws a 7-sided polygon with side length 70.
+Đoạn mã trên thực hiện vẽ thất giác đều với mỗi cạnh dài bằng 70.
 
 
-=== Interface Design
+=== Thiết kế giao diện
 
-The next step is to write +circle+, which takes a radius, +r+, as a parameter. Here is a simple solution that uses +polygon+ to draw a 50-sided polygon:
-(((circle)))((("function", "programmer-defined", "circle", see="circle")))
+Bước tiếp theo là viết +circle+, trong đó nhận một tham biến là bán kính +r+. Sau đây là một lời giải đơn giản có sử dụng +polygon+ để vẽ đa giác đều 50 cạnh:
+(((circle)))((("hàm", "tự định nghĩa", "circle", see="circle")))
 
 [source,julia]
 ----
@@ -283,16 +283,16 @@ function circle(t, r)
 end
 ----
 
-The first line computes the circumference of a circle with radius latexmath:[\(r\)] using the formula latexmath:[\(2 \pi r\)]. +n+ is the number of line segments in our approximation of a circle, so +len+ is the length of each segment. Thus, +polygon+ draws a 50-sided polygon that approximates a circle with radius +r+.
+Dòng đầu tiên nhằm tính toán chu vi của đường tròn có bán kính latexmath:[\(r\)] theo công thức latexmath:[\(2 \pi r\)]. +n+ là số đọan thẳng để vẽ gần đúng đường tròn, vì vậy +len+ là chiều dài mỗi đoạn. Do đó, +polygon+ sẽ vẽ một đa giác đều có 50 cạnh gần khớp với một đường tròn có bán kính +r+.
 
-One limitation of this solution is that +n+ is a constant, which means that for very big circles, the line segments are too long, and for small circles, we waste time drawing very small segments. One solution would be to generalize the function by taking +n+ as a parameter. This would give the user (whoever calls circle) more control, but the interface would be less clean.
+Một hạn chế của lời giải này là +n+ phải là hằng số; điều đó có nghĩa là với những đường tròn lớn, các đoạn thẳng sẽ rất dài, và với những đường tròn nhỏ, chúng ta mất thời gian để vẽ quá nhiều đoạn thẳng ngắn. Một giải pháp là khái quát hoá hàm này bằng cách nhận +n+ làm tham số. Điều này giúp cho người dùng (khi gọi circle) có quyền lựa chọn tốt hơn, nhưng giao diện của chương trình vì thế cũng kém phần trong sáng.
 
-The _interface_ of a function is a summary of how it is used: what are the parameters? What does the function do? And what is the return value? An interface is “clean” if it allows the caller to do what they want without dealing with unnecessary details.
-(((interface)))
+_Giao diện_ của một hàm là phần tóm tắt cách dùng hàm đó: các tham biến là gì? Hàm được viết nhằm mục đích gì? Và giá trị được trả lại là gì? Một giao diện “trong sáng” nếu nó cho phép mã lệnh gọi đến làm điều mong muốn, mà không phải bận tâm về những chi tiết không cần thiết.
+(((giao diện)))
 
-In this example, +r+ belongs in the interface because it specifies the circle to be drawn. +n+ is less appropriate because it pertains to the details of how the circle should be rendered.
+Ở ví dụ này, +r+ phải thuộc về giao diện vì nó chi phối đường tròn cần được vẽ. Còn +n+ thì ít có lí hơn vì nó liên quan đến những chi tiết gắn với cách vẽ đường tròn đó.
 
-Rather than clutter up the interface, it is better to choose an appropriate value of +n+ depending on +circumference+:
+Thay vì việc làm lộn xộn giao diện, tốt hơn là ta chọn một giá trị hợp lí cho +n+ tuỳ thuộc vào chu vi +circumference+:
 
 [source,julia]
 ----
@@ -304,18 +304,18 @@ function circle(t, r)
 end
 ----
 
-Now the number of segments is an integer near +circumference/3+, so the length of each segment is approximately 3, which is small enough that the circles look good, but big enough to be efficient, and acceptable for any size circle.
+Bây giờ số cạnh xấp xỉ bằng +circumference/3+, như vậy mỗi cạnh có độ dài xấp xỉ bằng 3, tức là đủ nhỏ để cho đường tròn được đẹp, nhưng cũng đủ lớn để mã lệnh được hiệu quả, và phù hợp với mọi kích cỡ đường tròn.
 
-Adding 3 to +n+ guarantees that the polygon has at least 3 sides.
+Việc cộng 3 vào +n+ đảm bảo rằng đa giác có ít nhất là 3 cạnh.
 
 
 [[refactoring]]
-=== Refactoring
+=== Chỉnh đốn
 
-When I wrote +circle+, I was able to re-use +polygon+ because a many-sided polygon is a good approximation of a circle. But +arc+ is not as cooperative; we can’t use +polygon+ or +circle+ to draw an arc.
+Khi viết circle, tôi có thể dùng +polygon+ vì một đa giác đều nhiều cạnh có thể gần khớp với một đường tròn. Nhưng +arc+ thì không phù hợp; ta không dùng được +polygon+ hoặc +circle+ để vẽ một cung tròn.
 
-One alternative is to start with a copy of +polygon+ and transform it into +arc+. The result might look like this:
-(((arc)))((("function", "programmer-defined", "arc", see="arc")))
+Một cách làm khác là bắt đầu bằng một bản sao của +polygon+ và biến đổi nó về thành +arc+. Kết quả có thể là như sau:
+(((arc)))((("hàm", "tự định nghĩa", "arc", see="arc")))
 
 [source,julia]
 ----
@@ -331,8 +331,8 @@ function arc(t, r, angle)
 end
 ----
 
-The second half of this function looks like +polygon+, but we can’t re-use +polygon+ without changing the interface. We could generalize +polygon+ to take an +angle+ as a third argument, but then +polygon+ would no longer be an appropriate name! Instead, let’s call the more general function +polyline+:
-(((polyline)))((("function", "programmer-defined", "polyline", see="polyline")))
+Nửa sau của hàm này trông giống như +polygon+, nhưng ta không thể dùng lại +polygon+ mà không thay đổi giao diện. Ta có thể khái quát hoá +polygon+ để nhận vào tham số thứ ba là góc, như khi đó +polygon+ lại không còn là một tên gọi phù hợp nữa! Thay vào đó, hãy gọi hàm với tên +polyline+ để khái quát hơn:
+(((polyline)))((("hàm", "tự định nghĩa", "polyline", see="polyline")))
 
 [source,julia]
 ----
@@ -344,7 +344,7 @@ function polyline(t, n, len, angle)
 end
 ----
 
-Now we can rewrite +polygon+ and +arc+ to use +polyline+:
+Bây giờ ta có thể viết lại +polygon+ và +arc+ có dùng +polyline+:
 (((polygon)))(((arc)))
 
 [source,julia]
@@ -363,7 +363,7 @@ function arc(t, r, angle)
 end
 ----
 
-Finally, we can rewrite +circle+ to use +arc+:
+Sau cùng, ta có thể viết lại +circle+ có dùng +arc+:
 (((circle)))
 
 [source,julia]
@@ -373,42 +373,42 @@ function circle(t, r)
 end
 ----
 
-This process—rearranging a program to improve interfaces and facilitate code re-use—is called _refactoring_. In this case, we noticed that there was similar code in +arc+ and +polygon+, so we “factored it out” into +polyline+.
-(((refactoring)))
+Quá trình này—việc sắp xếp lại chương trình để cải thiện giao diện của hàm và giúp cho sử dụng lại mã lệnh— được gọi là _chỉnh đốn_. Trong trường hợp này, ta đã nhận thấy rằng có sự tương đồng trong mã lệnh của +arc+ và +polygon+, vì vậy ta đã chỉnh đốn lại bằng cách đưa phần chung này vào trong +polyline+.
+(((chỉnh đốn)))
 
-If we had planned ahead, we might have written +polyline+ first and avoided refactoring, but often you don’t know enough at the beginning of a project to design all the interfaces. Once you start coding, you understand the problem better. Sometimes refactoring is a sign that you have learned something.
+Nếu đã có kế hoạch từ trước, có thể ta đã viết +polyline+ từ đầu và tránh việc chỉnh đốn, nhưng thường thì vào thời điểm bắt đầu dự án bạn không biết rõ để thiết kế được toàn bộ giao diện. Một khi đã bắt tay vào viết mã lệnh, bạn hiểu hơn về vấn đề cần giải quyết. Đôi khi việc chỉnh đốn là một tín hiệu cho thấy bạn đã học được một điều gì đó.
 
 
-=== A Development Plan
+=== Một kế hoạch phát triển
 
-A _development plan_ is a process for writing programs. The process we used in this case study is “encapsulation and generalization”. The steps of this process are:
-(((program development plan)))
+Một _kế hoạch phát triển_ là một quá trình trong việc lập trình. Ở đây ta sẽ dùng kĩ thuât “bao gói và khái quát hoá”. Các bước trong quá trình này gồm có:
+(((kế hoạch phát triển chương trình)))
 
-. Start by writing a small program with no function definitions.
+. Bắt đầu bằng việc viết chương trình nhỏ mà không định nghĩa hàm.
 
-. Once you get the program working, identify a coherent piece of it, encapsulate the piece in a function and give it a name.
+. Một khi chương trình của bạn đã chạy, hãy đóng gói nó vào trong một hàm và đặt tên cho hàm này.
 
-. Generalize the function by adding appropriate parameters.
+. Khái quát hoá hàm bằng cách thêm vào các tham số một cách thích hợp.
 
-. Repeat steps 1–3 until you have a set of working functions. Copy and paste working code to avoid retyping (and re-debugging).
+. Lặp lại các bước 1–3 đến khi bạn có một nhóm các hàm chạy được. Hãy sao chép và dán các đoạn mã lệnh tốt đó để khỏi đánh máy lại (và gỡ lỗi lại).
 
-. Look for opportunities to improve the program by refactoring. For example, if you have similar code in several places, consider factoring it into an appropriately general function.
+. Tìm mọi cơ hội để cải thiện chương trình bằng cách chỉnh đốn. Chẳng hạn, nếu bạn có đoạn mã lệnh tương tự ở một vài chỗ trong chương trình, hãy xét xem có thể chỉnh đốn bằng việc đưa nó vào một hàm chung hay không.
 
-This process has some drawbacks—we will see alternatives later—but it can be useful if you don’t know ahead of time how to divide the program into functions. This approach lets you design as you go along.
+Quá trình này có một số hạn chế—ta sẽ thấy các giải pháp khác trong phần sau quyển sách—nhưng có thể nó sẽ có ích nếu bạn không biết trước được việc chia chương trình thành các hàm như thế nào cho hợp lí. Phương pháp này giúp bạn thiết kế trong lúc bạn viết chương trình.
 
 
 === Docstring
 
-A _docstring_ is a string before a function that explains the interface (“doc” is short for “documentation”). Here is an example:
-(((docstring)))(((triple quotes)))((("pass:[&quot;&quot;&quot;]", see="triple quotes")))
+_Docstring_ là một chuỗi được đặt trước một hàm có nhiệm vụ giải thích giao diện (“doc” là gọi tắt cho từ “documentation”, văn bản). Sau đây là một ví dụ:
+(((docstring)))(((ba nháy kép)))((("pass:[&quot;&quot;&quot;]", see="ba nháy kép")))
 
 [source,julia]
 ----
 """
 polyline(t, n, len, angle)
 
-Draws n line segments with the given length and
-angle (in degrees) between them.  t is a turtle.
+Vẽ n đoạn thẳng với chiều dài cho trước và góc
+(tính bằng độ) giữa chúng.  t là một Turtle.
 """
 function polyline(t, n, len, angle)
     for i in 1:n
@@ -418,8 +418,8 @@ function polyline(t, n, len, angle)
 end
 ----
 
-Documentation can be accessed in the REPL or in a notebook by typing ? followed by the name of a function or macro, and pressing +ENTER+:
-(((help)))((("?", see="help")))
+Nội dung phần giải thích này có thể truy cập được từ REPL hoặc sổ tính bằng cách gõ ? tiếp theo là tên của hàm hoặc macro, và nhấn +ENTER+:
+(((trợ giúp)))((("?", see="trợ giúp")))
 
 ----
 help?> polyline
@@ -427,95 +427,95 @@ search:
 
   polyline(t, n, len, angle)
 
-  Draws n line segments with the given length and angle (in degrees) between them. t is a turtle.
+  Vẽ n đoạn thẳng với chiều dài cho trước và góc (tính bằng độ) giữa chúng.  t là một Turtle.
 ----
 
-Docstrings are often triple-quoted strings, also known as multiline strings because the triple quotes allow the string to span more than one line.
+Docstring thường là chuỗi đặt trong ba dấu nháy, cũng được gọi là chuỗi nhiều dòng vì ba dấu nháy cho phép chuỗi kéo dài qua nhiều dòng liên tiếp.
 
-A docstring contains the essential information someone would need to use this function. It explains concisely what the function does (without getting into the details of how it does it). It explains what effect each parameter has on the behavior of the function and what type each parameter should be (if it is not obvious).
+Docstring này chứa đầy đủ tất cả những thông tin thiết yếu cho người cần dùng đến hàm này. Nó giải thích một cách cô đọng hàm này có nhiệm vụ gì (mà không nói chi tiết rằng hàm thực hiện bằng cách nào). Nó giải thích ảnh hưởng của mỗi tham biến đối với biểu hiện của hàm và mỗi tham biến có kiểu là gì (trong trường hợp không rõ ràng).
 
 [TIP]
 ====
-Writing this kind of documentation is an important part of interface design. A well-designed interface should be simple to explain; if you have a hard time explaining one of your functions, maybe the interface could be improved.
+Việc ghi chép này là một phần quan trọng trong thiết kế giao diện. Một giao diện được thiết kế tốt phải là giao diện rất dễ giải thích; nếu bạn gặp khó khăn khi giải thích các hàm mà bạn viết ra thì đó có thể là dấu hiệu cho thấy giao diện của bạn có thể phải được cải thiện.
 ====
 
 
-=== Debugging
+=== Gỡ lỗi
 
-An interface is like a contract between a function and a caller. The caller agrees to provide certain parameters and the function agrees to do certain work.
-(((debugging)))
+Một giao diện cũng tựa như một giao kèo giữa hàm và chương trình gọi. Chương trình đồng ý cung cấp những tham biến nhất định còn hàm thì đồng ý thực hiện một việc nhất định.
+(((gỡ lỗi)))
 
-For example, +polyline+ requires four arguments: +t+ has to be a turtle; +n+ has to be an integer; +len+ should be a positive number; and +angle+ has to be a number, which is understood to be in degrees.
+Chẳng hạn, +polyline+ đòi hỏi bốn đối số: +t+ phải là một con rùa; +n+ phải là một số nguyên; +len+ phải là một số dương; còn +angle+ phải là một số và được hiểu là tính bằng độ.
 
-These requirements are called _preconditions_ because they are supposed to be true before the function starts executing. Conversely, conditions at the end of the function are _postconditions_. Postconditions include the intended effect of the function (like drawing line segments) and any side effects (like moving the turtle or making other changes).
-(((precondition)))(((postcondition)))
+Các yêu cầu trên được gọi là những _điều kiện tiền đề_ vì chúng cần được đảm bảo là đúng trước khi hàm được thực hiện. Trái lại, các điều kiện ở cuối hàm được gọi là _trạng thái sau_. Các trạng thái sau gồm có những hiệu ứng được mong đợi của hàm (như việc vẽ các đoạn thẳng) và bất kì hiệu ứng phụ nào khác (như di chuyển rùa hoặc thực hiện thay đổi gì đó).
+(((điều kiện tiền đề)))(((trạng thái sau)))
 
-Preconditions are the responsibility of the caller. If the caller violates a (properly documented!) precondition and the function doesn’t work correctly, the bug is in the caller, not the function.
+Các điều kiện tiền đề thuộc về trách nhiệm của chương trình gọi. Nếu chương trình vi phạm một điều kiện tiền đề (đã được viết rõ ở docstring) và hàm không thực hiện được việc, thì lỗi thuộc về chương trình gọi chứ không thuộc về hàm.
 
-If the preconditions are satisfied and the postconditions are not, the bug is in the function. If your pre- and postconditions are clear, they can help with debugging.
+Nếu các điều kiện tiền đề được thỏa mãn nhưng trạng thái sau thì không, khi đó lỗi nằm trong hàm. Nếu bạn dã nêu rõ điều kiện tiền đề và trạng thái sau, thì chúng có thể giúp bạn gỡ lỗi.
 
 
-=== Glossary
+=== Thuật ngữ
 
 module::
-A file that contains a collection of related functions and other definitions.
+Một file chứa nhóm các hàm liên quan cùng những định nghĩa khác.
 (((module)))
 
-package::
-An external library with additional functionality.
-(((package)))
+gói::
+Một thư viện bên ngoài với những tính năng phụ thêm.
+(((gói)))
 
-using statement::
-A statement that reads a module file and creates a module object.
-(((using statement)))
+lệnh using::
+Lệnh đọc vào một file module và tạo đối tượng module.
+(((lệnh using)))
 
-loop::
-A part of a program that can run repeatedly.
-(((loop)))
+vòng lặp::
+Một phần của chương trình được thực hiện lặp đi lặp lại.
+(((vòng lặp)))
 
-encapsulation::
-The process of transforming a sequence of statements into a function definition.
-(((encapsulation)))
+bao gói::
+Quá trình đưa một dãy các câu lệnh vào trong bên một định nghĩa hàm.
+(((bao gói)))
 
-generalization::
-The process of replacing something unnecessarily specific (like a number) with something appropriately general (like a variable or parameter).
-(((generalization)))
+khái quát hoá::
+Quá trình thay thế một thứ riêng biệt một cách không cần thiết (chẳng hạn một con số) với một thứ khái quát thích hợp (như một biến hoặc tham số).
+(((khái quát hoá)))
 
-interface::
-A description of how to use a function, including the name and descriptions of the arguments and return value.
-(((interface)))
+giao diện::
+Một đoạn mô tả cách dùng một hàm, bao gồm tên và lời mô tả các đối số cùng giá trị được trả về.
+(((giao diện)))
 
-refactoring::
-The process of modifying a working program to improve function interfaces and other qualities of the code.
-(((refactoring)))
+chỉnh đốn::
+Quá trình sửa đổi một chương trình dã chạy được nhằm cải thiện giao diện hàm cũng như các chất lượng khác của mã lệnh.
+(((chỉnh đốn)))
 
-development plan::
-A process for writing programs.
-(((program development plan)))
+kế hoạch phát triển::
+Một quy trình để viết chương trình máy tính.
+(((kế hoạch phát triển chương trình)))
 
 docstring::
-A string that appears at the top of a function definition to document the function’s interface.
+Một chuỗi xuất hiện ngay trước lời định nghĩa hàm nhằm ghi chép lại giao diện của hàm đó.
 (((docstring)))
 
-precondition::
-A requirement that should be satisfied by the caller before a function starts.
-(((precondition)))
+điều kiện tiền đề::
+Một yêu cầu cần được thoả mãn bởi chương trình gọi trước khi hàm được thực hiện.
+(((điều kiện tiền đề)))
 
-postcondition::
-A requirement that should be satisfied by the function before it ends.
-(((postcondition)))
+trạng thái sau::
+Một điều kiện cần được hàm thoả mãn trước khi nó kết thúc.
+(((trạng thái sau)))
 
 
-=== Exercises
+=== Bài tập
 
 [[ex04-7]]
-===== Exercise 4-8
+===== Bài tập 4-8
 
-Enter the code in this chapter in a notebook.
+Hãy nhập mã lệnh trong chương này vào một cuốn sổ tính.
 
-. Draw a stack diagram that shows the state of the program while executing +circle(🐢, radius)+. You can do the arithmetic by hand or add print statements to the code.
+. Vẽ một sơ đồ ngăn xếp trong đó chỉ ra trạng thái của chương trình khi chạy +circle(🐢, radius)+. Bạn có thể tính tay hoặc thêm vào các lệnh print kèm theo mã lệnh.
 
-. The version of +arc+ in <<refactoring>> is not very accurate because the linear approximation of the circle is always outside the true circle. As a result, the turtle ends up a few pixels away from the correct destination. My solution shows a way to reduce the effect of this error. Read the code and see if it makes sense to you. If you draw a diagram, you might see how it works.
+. Phiên bản +arc+ ở <<refactoring>> không chính xác lắm vì cách xấp xỉ đoạn thẳng này luôn nằm ngoài đường tròn đúng. Do đó, con rùa đã dừng lại ở cách đích cuối cùng một vài điểm. Cách làm của tôi đã giảm đi sai lệch này. Hãy đọc mã lệnh và cố gắng hiểu nó. Bạn có thể vẽ biểu đồ và xem cơ chế hoạt động của cách này.
 (((arc)))
 
 [source,julia]
@@ -544,35 +544,35 @@ end
 ----
 
 [[ex04-8]]
-===== Exercise 4-9
+===== Bài tập 4-9
 
-Write an appropriately general set of functions that can draw flowers as in <<fig04-2>>.
+Viết một nhóm các hàm tổng quát để vẽ những bông hoa như <<fig04-2>>.
 
 [[fig04-2]]
-.Turtle flowers
+.Bông hoa vẽ bằng con rùa
 image::images/fig42.svg[]
 
 [[ex04-9]]
-===== Exercise 4-10
+===== Bài tập 4-10
 
-Write an appropriately general set of functions that can draw shapes as in <<fig04-3>>.
+Viết một nhóm các hàm tổng quát để vẽ những hình như <<fig04-3>>.
 
 [[fig04-3]]
-.Turtle pies
+.Hình quạt vẽ bằng con rùa
 image::images/fig43.svg[]
 
 [[ex04-10]]
-===== Exercise 4-11
+===== Bài tập 4-11
 
-The letters of the alphabet can be constructed from a moderate number of basic elements, like vertical and horizontal lines and a few curves. Design an alphabet that can be drawn with a minimal number of basic elements and then write functions that draw the letters.
+Các chữ cái trong bảng chữ có thể được xây dựng từ một số đủ nhiều các thành phần cơ bản, như những đường thẳng đứng, đường ngang, và đường cong. Hãy thiết kế một bộ phông chữ mà có thể được vẽ với một số tốt thiểu các thành phần cơ bản như vậy; rồi viết các hàm thực hiện việc vẽ chữ cái.
 
-You should write one function for each letter, with names +draw_a+, +draw_b+, etc., and put your functions in a file named _letters.jl_.
+Bạn nên từng hàm riêng cho mỗi chữ cái, với tên hàm như +draw_a+, +draw_b+, v.v., và đặt chung các hàm vào một file có tên là _letters.jl_.
 
 [[ex04-11]]
-===== Exercise 4-12
+===== Bài tập 4-12
 
-Read about spirals at https://en.wikipedia.org/wiki/Spiral; then write a program that draws an Archimedan spiral as in <<fig04-4>>.
+Đọc thêm về các đường xoáy ốc từ trang https://en.wikipedia.org/wiki/Spiral; rồi viết chương trình vẽ nên đường xoáy ốc Archimede như <<fig04-4>>.
 
 [[fig04-4]]
-.Archimedan spiral
+.Xoáy ốc Archimede
 image::images/fig44.svg[]
