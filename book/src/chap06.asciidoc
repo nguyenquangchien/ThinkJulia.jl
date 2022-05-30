@@ -1,13 +1,13 @@
 [[chap06]]
-== Fruitful Functions
+== Các hàm kết quả
 
-Many of the Julia functions we have used, such as the math functions, produce return values. But the functions we’ve written are all void: they have an effect, like printing a value or moving a turtle, but they return +nothing+. In this chapter you will learn to write fruitful functions.
-(((fruitful function)))
+Nhiều hàm Julia mà ta đã dùng, như các hàm toán học, đều trả lại kết quả. Nhưng các hàm ta đã viết đến giờ đều là hàm không kết quả: chúng có hiệu ứng, như in giá rị hoặc di chuyển con rùa, nhưng các hàm như vậy trả lại +nothing+. Ở chương này, chúng ta sẽ học cách viết những hàm có trả lại kết quả.
+(((hàm kết quả)))
 
 
-=== Return Values
+=== Các giá trị được trả về
 
-Calling the function generates a return value, which we usually assign to a variable or use as part of an expression.
+Việc gọi hàm sẽ tạo ra một giá trị, mà chúng ta thường gán vào một biến hoặc sử dụng như một phần của một biểu thức.
 
 [source,julia]
 ----
@@ -15,8 +15,8 @@ e = exp(1.0)
 height = radius * sin(radians)
 ----
 
-The functions we have written so far are void. Speaking casually, they have no return value; more precisely, their return value is +nothing+. In this chapter, we are (finally) going to write fruitful functions. The first example is +area+, which returns the area of a circle with the given radius:
-(((nothing)))(((area)))((("function", "programmer-defined", "area", see="area")))
+Tất cả các hàm chúng ta đã viết đều là hàm rỗng. Nói nôm na, hàm như vậy không trả kết quả; chính xác hơn, kết quả trả lại là  +nothing+. Trong chương này, (cuối cùng thì) chúng ta (cũng) viết những hàm kết quả. Ví dụ đầu tiên là +area+, có nhiệm vụ trả lại diện tích của một hình tròn với bán kính cho trước:
+(((nothing)))(((area)))((("hàm", "tự định nghĩa", "area", see="area")))
 
 [source,@julia-setup]
 ----
@@ -26,8 +26,8 @@ function area(radius)
 end
 ----
 
-We have seen the +return+ statement before, but in a fruitful function the +return+ statement includes an expression. This statement means: “Return immediately from this function and use the following expression as a return value.” The expression can be arbitrarily complicated, so we could have written this function more concisely:
-(((return statement)))
+Ta đã thấy câu lệnh +return+ từ trước rồi, nhưng trong một hàm kết quả, lệnh +return+ bao gồm một biểu thức. Câu lệnh này có nghĩa là: “Lập tức trở về chương trình chính và dùng biểu thức bên cạnh để làm giá trị để trả lại”. Vì biểu thức có thể phức tạp tù ý nên chúng ta có thể viết hàm trên gọn lại như sau:
+(((return (lệnh))))
 
 [source,@julia-setup]
 ----
@@ -36,13 +36,13 @@ function area(radius)
 end
 ----
 
-The value returned by a function is the value of the last expression evaluated, which, by default, is the last expression in the body of the function definition.
+Giá trị trả lại bởi hàm là giá trị của biểu thức cuối cùng được ước lượng, và theo mặc dịnh là biểu thức cuối cùng trong phần thân lời định nghĩa hàm.
 
-On the other hand, _temporary variables_ like +a+ and explicit +return+ statements can make debugging easier.
-(((temporary variable)))
+Mặt khác, các _biến tạm thời_ như +a+ và lệnh +return+ có thể giúp cho việc gỡ lỗi dễ dàng hơn.
+(((biến tạm thời)))
 
-Sometimes it is useful to have multiple +return+ statements, one in each branch of a conditional:
-(((absvalue)))((("function", "programmer-defined", "absvalue", see="absvalue")))
+Đôi khi ta cần có nhiều câu lệnh +return+, mỗi lệnh ở một nhánh của lệnh điều kiện:
+(((absvalue)))((("hàm", "tự định nghĩa", "absvalue", see="absvalue")))
 
 [source,@julia-setup chap06]
 ----
@@ -55,13 +55,13 @@ function absvalue(x)
 end
 ----
 
-Since these return statements are in an alternative conditional, only one runs.
-(((alternative conditional)))
+Vì các lệnh return này ở các nhánh điều kiện độc lập với nhau, luôn chỉ có một trong số đó được thực hiện.
+(((phương án điều kiện)))
 
-As soon as a +return+ statement runs, the function terminates without executing any subsequent statements. Code that appears after a +return+ statement, or any other place the flow of execution can never reach, is called _dead code_.
-(((flow of execution)))(((dead code)))
+Ngay khi một lệnh +return+ được thực hiện, hàm sẽ kết thúc mà không thực hiện bất cứ lệnh nào tiếp sau nó. Mã lệnh xuât hiện sau dòng lệnh +return+, hay trong bất cứ chỗ nào khác của chương trình mà không nằm trong luồng thực thi thì được gọi là _mã lệnh chết_.
+(((luồng thực thi)))(((mã lệnh chết)))
 
-In a fruitful function, it is a good idea to ensure that every possible path through the program hits a return statement. For example:
+Trong một hàm kết quả, ta nên đảm bảo rằng mỗi luồng thực hiện khả dĩ đều dẫn tới một lệnh return. Chẳng hạn:
 
 [source,@julia-setup chap06]
 ----
@@ -75,7 +75,7 @@ function absvalue(x)
 end
 ----
 
-This function is incorrect because if +x+ happens to be 0, neither condition is true, and the function ends without hitting a +return+ statement. If the flow of execution gets to the end of a function, the return value is +nothing+, which is not the absolute value of 0.
+Hàm này không chính xác vì nếu chẳng may +x+ bằng 0 thì không có điều kiện nào được thoả mãn, và hàm sẽ kết thúc mà không gặp phải lệnh +return+ nào. Nếu dòng thực hiện đến được cuối của hàm thì giá trị trả về sẽ là +nothing+, không phải là giá trị tuyệt đối của 0.
 
 [source,@julia-repl-test chap06]
 ----
@@ -85,26 +85,26 @@ nothing
 
 [TIP]
 ====
-Julia provides a built-in function called +abs+ that computes absolute values.
-(((abs)))((("function", "Base", "abs", see="abs")))
+Julia có sẵn một hàm tên là +abs+ để tính giá trị tuyệt đối.
+(((abs)))((("hàm", "Base", "abs", see="abs")))
 ====
 
-===== Exercise 6-1
+===== Bài tập 6-1
 
-Write a +compare+ function takes two values, +x+ and +y+, and returns +1+ if +x > y+, +0+ if +x == y+, and +-1+ if +x < y+.
+Viết một hàm tên là +compare+ để nhận vào hai giá trị, +x+ và +y+, rồi trả lại +1+ nếu +x > y+, +0+ nếu +x == y+, và +-1+ nếu +x < y+.
 
 
 [[incremental_development]]
-=== Incremental Development
+=== Phát triển tăng dần
 
-As you write larger functions, you might find yourself spending more time debugging.
-(((debugging)))
+Khi bạn viết các hàm lớn hơn, có thể bạn sẽ dành nhiều thời gian để gỡ lỗi.
+(((gỡ lỗi)))
 
-To deal with increasingly complex programs, you might want to try a process called _incremental development_. The goal of incremental development is to avoid long debugging sessions by adding and testing only a small amount of code at a time.
-(((incremental development)))
+Để giải quyết các chương trình với mức độ phức tạp ngày càng cao, bạn có thể thử một quy trình gọi là _phát triển tăng dần_. Mục tiêu của phát triển tăng dần là tránh mất thời gian gỡ lỗi bằng cách mỗi lúc chỉ thêm vào và thử nghiệm một đoạn mã lệnh rất ngắn.
+(((phát triển tăng dần)))
 
-As an example, suppose you want to find the distance between two points, given by the coordinates latexmath:[\(\left(x_1, y_1\right)\)] and latexmath:[\(\left(x_2, y_2\right)\)]. By the Pythagorean theorem, the distance is:
-(((Pythagorean theorem)))
+Ở ví dụ này, bạn cần tìm khoảng cách giữa hai điểm cho bởi các toạ độ latexmath:[\(\left(x_1, y_1\right)\)] và latexmath:[\(\left(x_2, y_2\right)\)]. Theo định lý Py-ta-go, khoảng cách sẽ là:
+(((Py-ta-go (định lý))))
 
 [latexmath]
 ++++
@@ -113,12 +113,12 @@ As an example, suppose you want to find the distance between two points, given b
 \end{equation}
 ++++
 
-The first step is to consider what a distance function should look like in Julia. In other words, what are the inputs (parameters) and what is the output (return value)?
+Bước đầu tiên là cân nhắc xem một hàm +distance+ trong Julia sẽ trông như thế nào. Nói cách khác, các số liệu đầu vào (tham số) và kết quả (giá trị trả lại) là gì?
 
-In this case, the inputs are two points, which you can represent using four numbers. The return value is the distance represented by a floating-point value.
+Trong trường hợp này, số liệu đầu vào mô tả hai điểm; ta có thể biểu thị chúng bằng bốn số. Giá trị cần trả về là khoảng cách, tức là một giá trị số có phần thập phân.
 
-Immediately you can write an outline of the function:
-(((distance)))((("function", "programmer-defined", "distance", see="distance")))
+Bạn đã có thể phác thảo ngay ra hàm như sau:
+(((distance)))((("hàm", "tự định nghĩa", "distance", see="distance")))
 
 [source,@julia-setup chap06]
 ----
@@ -127,19 +127,19 @@ function distance(x₁, y₁, x₂, y₂)
 end
 ----
 
-Obviously, this version doesn’t compute distances; it always returns zero. But it is syntactically correct, and it runs, which means that you can test it before you make it more complicated. The subscript numbers are available in the Unicode character encoding (*+\_1 TAB+*, *+\_2 TAB+*, etc.).
-(((Unicode character)))
+Dĩ nhiên là mã lệnh trên chưa tính được khoảng cách; nó luôn trả về số không. Nhưng về mặt cú pháp thì nó đúng, và nó chạy được, nghĩa là bạn có thể thử nghiệm nó trước khi làm cho nó phức tạp thêm. Các chỉ só dưới đều sẵn có bằng kí tự bộ mã Unicode (*+\_1 TAB+*, *+\_2 TAB+*, v.v.).
+(((kí tự Unicode)))
 
-To test the new function, call it with sample arguments:
+Để thử nghiệm hàm mới viết, hãy gọi nó với các đối số ví dụ:
 
 [source,@julia-repl-test chap06]
 ----
 distance(1, 2, 4, 6)
 ----
 
-I chose these values so that the horizontal distance is 3 and the vertical distance is 4; that way, the result is 5, the hypotenuse of a 3-4-5 triangle. When testing a function, it is useful to know the right answer.
+Sở dĩ tôi chọn các tham số này vì khoảng cách ngang sẽ là 3 và khoảng cách dọc là 4, theo đó thì kết quả sẽ bằng 5 (cạnh huyền của một tam giác có các cạnh là 3-4-5). Khi thử nghiệm một hàm, bạn nên biết trước kết quả đúng.
 
-At this point we have confirmed that the function is syntactically correct, and we can start adding code to the body. A reasonable next step is to find the differences latexmath:[\(x_2 - x_1\)] and latexmath:[\(y_2 - y_1\)]. The next version stores those values in temporary variables and prints them with the +@show+ macro.
+Đến lúc này, chúng ta có thể khẳng định rằng hàm đã đúng về mặt cú pháp, và chúng ta sẽ thêm mã lệnh vào phần thân. Một bước làm hợp lí tiếp theo là tính các hiệu số latexmath:[\(x_2 - x_1\)] và latexmath:[\(y_2 - y_1\)]. Đoạn mã tiếp theo sẽ lưu giữ các giá trị trên vào các biến tạm thời và in chúng ra bằng macro +@show+.
 ((("@show")))((("macro", "Base", "@show", see="@show")))
 
 [source,@julia-setup]
@@ -152,9 +152,9 @@ function distance(x₁, y₁, x₂, y₂)
 end
 ----
 
-If the function is working, it should display +dx = 3+ and +dy = 4+. If so, we know that the function is getting the right arguments and performing the first computation correctly. If not, there are only a few lines to check.
+Nếu hàm số hoạt động được, nó sẽ hiển thị +dx = 3+ và +dy = 4+. Nếu vậy, chúng ta biết rằng hàm đã nhận các đối số đúng và thực hiện chính xác phép tính đầu tiên. Nếu không, chúng ta chỉ cần phải kiểm tra một só ít các dòng lệnh.
 
-Next we compute the sum of squares of +dx+ and +dy+:
+Tiếp theo chúng ta tính tổng các bình phương của +dx+ và +dy+:
 
 [source,@julia-setup]
 ----
@@ -167,7 +167,7 @@ function distance(x₁, y₁, x₂, y₂)
 end
 ----
 
-Again, you would run the program at this stage and check the output (which should be 25). Superscript numbers are also available (*+\^2 TAB+*). Finally, you can use +sqrt+ to compute and return the result:
+Một lần nữa, bạn có thể chạy đoạn mã này và kiểm tra kết quả thu được (nó phải bằng 25). Các hệ số mũ cũng sẵn có bằng cách gõ  *+\^2 TAB+*. Cuối cùng, bạn có thể dùng +sqrt+ để tính toán và trả lại kết quả:
 (((sqrt)))
 
 [source,@julia-setup]
@@ -180,47 +180,47 @@ function distance(x₁, y₁, x₂, y₂)
 end
 ----
 
-If that works correctly, you are done. Otherwise, you might want to print the value of +sqrt(d²)+ before the +return+ statement.
+Nếu đoạn mã trên hoạt động tốt, bạn đã giải quyết xong. Nếu không, bạn có thể sẽ cần phải in giá trị của +sqrt(d²)+ trước câu lệnh +return+.
 
-The final version of the function doesn’t display anything when it runs; it only returns a value. The print statements we wrote are useful for debugging, but once you get the function working, you should remove them. Code like that is called _scaffolding_ because it is helpful for building the program but is not part of the final product.
-(((scaffolding)))
+Mã lệnh trên là phiên bản cuối cùng của hàm; nó không hiển thị gì khi được chạy mà chỉ trả lại một giá trị. Các câu lệnh print mà chúng ta thêm vào chỉ hữu ích khi gỡ lỗi, nhưng một khi đã viết được hàm rồi thì ta cần phải bỏ chúng đi. Các câu lệnh thêm vào như vậy còn có tên là _mã lệnh giàn đỡ_ vì nó có ích cho việc xây dựng chương trình (về hình tượng, giống như giàn giáo để đỡ) nhưng lại không phải là một phần trong sản phẩm cuối cùng.
+(((mã lệnh giàn đỡ)))
 
-When you start out, you should add only a line or two of code at a time. As you gain more experience, you might find yourself writing and debugging bigger chunks. Either way, incremental development can save you a lot of debugging time.
+Khi mới tập lập trình, mỗi lúc bạn chỉ nên viết thêm một hoặc hai dòng lệnh. Sau này khi đã có kinh nghiệm, bạn sẽ viết và gỡ lỗi những khối lệnh lớn hơn. Dù theo cách nào đi nữa, việc phát triển tăng dần sẽ giúp bạn tiết kiệm nhiều thời gian dành cho gỡ lỗi.
 
-The key aspects of the process are:
+Các điểm cơ bản của quy trình này là:
 
-. Start with a working program and make small incremental changes. At any point, if there is an error, you should have a good idea where it is.
+. Bắt đầu với một chương trình chạy được và thêm vào những thay đổi nhỏ. Bất cứ lúc nào khi gặp lỗi, bạn sẽ phát hiện được ngay lỗi đó ở đâu.
 
-. Use variables to hold intermediate values so you can display and check them.
+. Dùng các biến tạm để lưu giữ các giá trị trung gian, từ đó bạn có thể hiển thị và kiểm tra chúng.
 
-. Once the program is working, you might want to remove some of the scaffolding or consolidate multiple statements into compound expressions, but only if it does not make the program difficult to read.
+. Một khi chương trình đã hoạt động, bạn có thể dỡ bỏ các đoạn mã “giàn đỡ”, hoặc rút gọn nhiều câu lệnh về một biểu thức phức hợp, nếu việc này không làm cho chương trình trở nên khó đọc hơn.
 
-===== Exercise 6-2
+===== Bài tập 6-2
 
-Use incremental development to write a function called +hypotenuse+ that returns the length of the hypotenuse of a right triangle given the lengths of the other two legs as arguments. Record each stage of the development process as you go.
+Hãy dùng cách phát triển tăng dần để viết một hàm tên là +hypotenuse+ để trả lại chiều dài của cạnh huyền trong một tam giác vuông khi biết các đối số là chiều dài hai cạnh góc vuông. Hãy ghi lại từng bước phát triển trong quá trình làm.
 
 
-=== Composition
+=== Ghép hàm
 
-As you should expect by now, you can call one function from within another. As an example, we’ll write a function that takes two points, the center of the circle and a point on the perimeter, and computes the area of the circle.
-(((composition)))
+Đến bây giờ, bạn có thể trông đợi việc gọi một hàm từ bên trong một hàm khác. Lấy ví dụ, ta sẽ viết một hàm nhận vào hai điểm là tâm của đường tròn và một điểm trên đường tròn đó, rồi tính diện tích của hình tròn.
+(((ghép)))
 
-Assume that the center point is stored in the variables +xc+ and +yc+, and the perimeter point is in +xp+ and +yp+. The first step is to find the radius of the circle, which is the distance between the two points. We just wrote a function, distance, that does that:
+Giả sử như toạ độ của tâm điểm được lưu trong các biến +xc+ và +yc+, toạ độ điểm trên đường tròn là +xp+ và +yp+. Bước đầu tiên sẽ là tìm bán kính của đường tròn, vốn là khoảng cách giữa hai điểm đó. Ta vừa mới viết một hàm distance để làm việc này:
 
 [source,julia]
 ----
 radius = distance(xc, yc, xp, yp)
 ----
 
-The next step is to find the area of a circle with that radius; we just wrote that, too:
+Bước tiếp theo là tìm diện tích của một đường tròn có bán kính đó; chúng ta cũng vừa viết một hàm thực hiện điều này:
 
 [source,julia]
 ----
 result = area(radius)
 ----
 
-Encapsulating these steps in a function, we get:
-(((circlearea)))((("function", "programmer-defined", "circlearea", see="circlearea")))
+Kết hợp hai bước này vào trong cùng một hàm, ta thu được:
+(((circlearea)))((("hàm", "tự định nghĩa", "circlearea", see="circlearea")))
 
 [source,@julia-setup]
 ----
@@ -231,8 +231,8 @@ function circlearea(xc, yc, xp, yp)
 end
 ----
 
-The temporary variables +radius+ and +result+ are useful for development and debugging, but once the program is working, we can make it more concise by composing the function calls:
-(((temporary variable)))
+Các biến tạm thời  +radius+ và +result+ có ích cho việc phát triển và gỡ lỗi chương trình, nhưng một khi chương trình đã hoạt động tốt, ta có thể rút gọn nó lại bằng cách kết hợp các lời gọi hàm:
+(((biến tạm thời)))
 
 [source,@julia-setup]
 ----
@@ -243,10 +243,10 @@ end
 
 
 [[boolean_functions]]
-=== Boolean Functions
+=== Các hàm Boole
 
-Functions can return booleans, which is often convenient for hiding complicated tests inside functions. For example:
-(((boolean function)))(((isdivisible)))((("function", "programmer-defined", "isdivisible", see="isdivisible")))
+Các hàm có thể trả lại giá trị Boole, vốn rất tiện dụng cho việc ẩn giấu các phép kiểm tra phức tạp vào trong một hàm. Chẳng hạn:
+(((boolean function)))(((isdivisible)))((("hàm", "tự định nghĩa", "isdivisible", see="isdivisible")))
 
 [source,@julia-setup chap06]
 ----
@@ -259,9 +259,9 @@ function isdivisible(x, y)
 end
 ----
 
-It is common to give boolean functions names that sound like yes/no questions; +isdivisible+ returns either +true+ or +false+ to indicate whether +x+ is divisible by +y+.
+Một cách làm thông thường là đặt tên các hàm Boole cho giống với các câu hỏi có/không. Chẳng hạn (tiếng Anh: có chia hết) +isdivisible+ trả lại +true+ hoặc +false+ để chỉ định rằng +x+ có chia hết cho +y+ hay không.
 
-Here is an example:
+Sau đây là một ví dụ:
 
 [source,@julia-repl-test chap06]
 ----
@@ -271,7 +271,7 @@ julia> isdivisible(6, 3)
 true
 ----
 
-The result of the +==+ operator is a boolean, so we can write the function more concisely by returning it directly:
+Kết quả của toán tử +==+ là một giá trị Boole, vì vậy ta có thể viết hàm gọn lại bằng cách trả lại giá trị trực tiếp như sau:
 (((==)))
 
 [source,@julia-setup]
@@ -281,8 +281,8 @@ function isdivisible(x, y)
 end
 ----
 
-Boolean functions are often used in conditional statements:
-(((conditional statement)))
+Các hàm Boole thường được dùng trong các câu lệnh điều kiện:
+(((câu lệnh điều kiện)))
 
 [source,julia]
 ----
@@ -291,38 +291,38 @@ if isdivisible(x, y)
 end
 ----
 
-It might be tempting to write something like:
+Có thể bạn sẽ muốn viết:
 
 [source,julia]
 ----
 if isdivisible(x, y) == true
-    println("x is divisible by y")
+    println("x chia hết cho y")
 end
 ----
 
-But the extra comparison with +true+ is unnecessary.
+Nhưng phép so sánh thêm với +true+ là hoàn toàn thừa.
 
-===== Exercise 6-3
+===== Bài tập 6-3
 
-Write a function +isbetween(x, y, z)+ that returns +true+ if +x ≤ y ≤ z+ or +false+ otherwise.
+Hãy viết một hàm +isbetween(x, y, z)+ để trả lại +true+ nếu +x ≤ y ≤ z+ hoặc +false+ trong trường hợp còn lại.
 
 
-=== More Recursion
+=== Nói thêm về đệ quy
 
-We have only covered a small subset of Julia, but you might be interested to know that this subset is a _complete_ programming language, which means that anything that can be computed can be expressed in this language. Any program ever written could be rewritten using only the language features you have learned so far (actually, you would need a few commands to control devices like the mouse, disks, etc., but that’s all).
-(((recursion)))(((complete programming language)))((("programming language", "complete", see="complete programming language")))
+Chúng ta mới chỉ tìm hiểu một phần nhỏ của Julia, nhưng bạn có thể muốn biết rằng liệu phần nhỏ này có phải là một ngôn ngữ lập trình _đầy đủ_ hay không, có nghĩa là dùng nó có thể diễn giải được mọi bài toán hay không. Bất kì chương trình máy tính nào cũng có thể được viết lại chỉ dùng những đặc điểm ngôn ngữ mà chúng ta đã xét đến (thực ra, bạn cần thêm một số lệnh để điều khiển các thiết bị như bàn phím, chuột, ổ đĩa, v.v…, nhưng đó là tất cả những điều cần thiết).
+(((đệ quy)))(((complete programming language)))((("programming language", "complete", see="complete programming language")))
 
-Proving that claim is a nontrivial exercise first accomplished by Alan Turing, one of the first computer scientists (some would argue that he was a mathematician, but a lot of early computer scientists started as mathematicians). Accordingly, it is known as the Turing Thesis. For a more complete (and accurate) discussion of the Turing Thesis, I recommend Michael Sipser’s book _Introduction to the Theory of Computation_.
-(((Turing, Alan)))(((Turing thesis)))
+Việc chứng minh nhận định đó là một bài toán khó, lần đầu được Alan Turing đưa ra. Ông là một trong những nhà khoa học máy tính đầu tiên (có người cho rằng ông là một nhà toán học, song cũng có nhiều nhà khoa học máy tính thời sơ khai bấy giờ xuất thân từ toán học). Tương ứng với bài toán này là “luận đề Turing”. Để tìm hiểu cặn kẽ về luận án Turing, bạn nên đọc quyển sách _Introduction to the Theory of Computation_ (tạm dịch: “Nhập môn lí thuyết tính toán”) của Michael Sipser.
+(((Turing, Alan)))(((luận đề Turing)))
 
-To give you an idea of what you can do with the tools you have learned so far, we’ll evaluate a few recursively defined mathematical functions. A recursive definition is similar to a circular definition, in the sense that the definition contains a reference to the thing being defined. A truly circular definition is not very useful:
-(((recursive definition)))(((circular definition)))
+Để cụ thể hoá tác dụng của những kiến thức lập trình mà bạn vừa được học, chúng ta hãy cùng lập một số hàm toán học theo cách đệ quy. Một định nghĩa đệ quy giống như việc định nghĩa vòng quanh; điểm tương đồng là trong phần định nghĩa lại có tham chiếu đến sự vật được định nghĩa. Nhưng cách định nghĩa vòng quanh thực thụ thì không mấy có tác dụng:
+(((định nghĩa đệ quy)))(((định nghĩa vòng quanh)))
 
 vorpal::
-An adjective used to describe something that is vorpal.
+Một tính từ được dùng để miêu tả một sự vật vorpal.
 
-If you saw that definition in the dictionary, you might be annoyed. On the other hand, if you looked up the definition of the factorial function, denoted with the symbol latexmath:[\(!\)], you might get something like this:
-(((factorial function)))
+Bạn hẳn sẽ bực mình khi thấy một định nghĩa kiểu như vậy trong cuốn từ điển. Ngược lại, khi bạn xem định nghĩa về giai thừa (được kí hiệu bằng dấu latexmath:[\(!\)] trong toán học, có thể bạn sẽ thấy:
+(((giai thừa, hàm)))
 
 [latexmath]
 ++++
@@ -334,19 +334,19 @@ If you saw that definition in the dictionary, you might be annoyed. On the other
 \end{cases}}
 \end{equation}
 ++++
-This definition says that the factorial of 0 is 1, and the factorial of any other value, latexmath:[\(n\)], is latexmath:[\(n\)] multiplied by the factorial of latexmath:[\(n-1\)].
+Định nghĩa này phát biểu rằng giai thừa của 0 là 1, và giai thừa của bất kì một giá trị nào khác, latexmath:[\(n\)], thì bằng latexmath:[\(n\)] nhân với giai thừa của latexmath:[\(n-1\)].
 
-So latexmath:[\(3!\)] is 3 times latexmath:[\(2!\)], which is 2 times latexmath:[\(1!\)], which is 1 times latexmath:[\(0!\)]. Putting it all together, latexmath:[\(3!\)] equals 3 times 2 times 1 times 1, which is 6.
+Theo đó latexmath:[\(3!\)] bằng 3 nhân với latexmath:[\(2!\)], vốn lại bằng 2 nhân latexmath:[\(1!\)],vốn bằng 1 nhân với latexmath:[\(0!\)]. Gộp tất cả lại, ta có latexmath:[\(3!\)] bằng 3 nhân 2 nhân 1 nhân 1, tức là bằng 6.
 
-If you can write a recursive definition of something, you can write a Julia program to evaluate it. The first step is to decide what the parameters should be. In this case it should be clear that factorial takes an integer:
-(((fact)))((("function", "programmer-defined", "fact", see="fact")))
+Nếu bạn có thể phát biểu một định nghĩa có tính đệ quy cho một hàm nào đó thì bạn cũng có thể viết một chương trình Julia để tính nó. Bước đầu tiên là xác định các tham số. Trong trường hợp này rõ ràng giai thừa nhận vào một số nguyên:
+(((fact)))((("hàm", "tự định nghĩa", "fact", see="fact")))
 
 [source,@julia-setup]
 ----
 function fact(n) end
 ----
 
-If the argument happens to be +0+, all we have to do is return +1+:
+Nếu tham số bằng +0+, chúng ta chỉ cần trả lại giá trị +1+:
 
 [source,@julia-setup]
 ----
@@ -357,7 +357,7 @@ function fact(n)
 end
 ----
 
-Otherwise, and this is the interesting part, we have to make a recursive call to find the factorial of +n-1+ and then multiply it by +n+:
+Nếu điều đó không xảy ra (đây chính là phần hay nhất), chúng ta thực hiện lời gọi đệ quy để tính giai thừa của +n-1+ và sau đó nhân nó với +n+:
 
 [source,@julia-setup]
 ----
@@ -372,63 +372,63 @@ function fact(n)
 end
 ----
 
-The flow of execution for this program is similar to the flow of +countdown+ in <<recursion>>. If we call +fact+ with the value +3+:
-(((flow of execution)))
+Luồng thực thi của chương trình này cũng giống như của chương trình +countdown+ trong <<recursion>>.Nếu ta gọi +fact+ với giá trị +3+:
+(((luồng thực thi)))
 
 [small]
 --
-Since +3+ is not +0+, we take the second branch and calculate the factorial of +n-1+ ...
+Vì +3+ khác +0+, nên ta chọn nhánh thứ hai và tính giai thừa của +n-1+ ...
 
-pass:[&#8193;]Since +2+ is not +0+, we take the second branch and calculate the factorial of +n-1+ ...
+pass:[&#8193;]Vì +2+ khác +0+, nên ta chọn nhánh thứ hai và tính giai thừa của +n-1+ ...
 
-pass:[&#8193;&#8193;]Since +1+ is not +0+, we take the second branch and calculate the factorial of +n-1+ ...
+pass:[&#8193;&#8193;]Vì +1+ khác +0+, nên ta chọn nhánh thứ hai và tính giai thừa của +n-1+ ...
 
-pass:[&#8193;&#8193;&#8193;]Since +0+ equals +0+, we take the first branch and return +1+ without making any pass:[<br/>&#8193;&#8193;&#8193;&#8193;]more recursive calls.
+pass:[&#8193;&#8193;&#8193;]Vì +0+ bằng +0+, nên ta chọn nhánh thứ nhất và trả lại giá trị +1+ mà không gọi đệ quy pass:[<br/>&#8193;&#8193;&#8193;&#8193;]thêm lần nào nữa.
 
-pass:[&#8193;&#8193;]The return value, +1+, is multiplied by +n+, which is +1+, and the +result+ is returned.
+pass:[&#8193;&#8193;]Giá trị được trả về, +1+, được nhân với +n+, vốn bằng +1+, và +result+ được trả lại.
 
-pass:[&#8193;]The return value, +1+, is multiplied by +n+, which is +2+, and the +result+ is returned.
+pass:[&#8193;]Giá trị được trả về, +1+, được nhân với +n+, vốn bằng +2+, và +result+ được trả lại.
 
-The return value +2+ is multiplied by +n+, which is +3+, and the result, +6+, becomes the return value of the function call that started the whole process.
+Giá trị được trả về +2+ được nhân với +n+, vốn bằng +3+, và kết quả, +6+, trở thành giá trị trả về của hàm ứng với lúc bắt đầu gọi đệ quy.
 --
 
 [[fig06-1]]
-.Stack diagram
+.Sơ đồ ngăn xếp
 image::images/fig61.svg[]
 
 
-<<fig06-1>> shows what the stack diagram looks like for this sequence of function calls.
-(((stack diagram)))
+<<fig06-1>> cho thấy nội dung của sơ đồ ngăn xếp khi một loạt các hàm được gọi.
+(((sơ đồ ngăn xếp)))
 
-The return values are shown being passed back up the stack. In each frame, the return value is the value of +result+, which is the product of +n+ and +recurse+.
+Các giá trị trả lại như ở đây được chuyển về ngăn xếp. Ở mỗi khung, giá trị trả lại chính là giá trị của +result+, vốn là tích của +n+ và +recurse+.
 
-In the last frame, the local variables +recurse+ and +result+ do not exist, because the branch that creates them does not run.
+Ở khung cuối cùng, các biến địa phương +recurse+ và +result+ do not exist, đều không tồn tại, vì nhánh tạo ra chúng không được thực hiện.
 
 [TIP]
 ====
-Julia provides the function +factorial+ to calculate the factorial of an integer number.
-(((factorial)))((("function", "Base", "factorial", see="factorial")))
+Julia có sẵn hàm +factorial+ để tính giai thừa của một số tự nhiên.
+(((factorial)))((("hàm", "Base", "factorial", see="factorial")))
 ====
 
 
-=== Leap of Faith
+=== Đôi cánh niềm tin
 
-Following the flow of execution is one way to read programs, but it can quickly become overwhelming. An alternative is what I call the “leap of faith”. When you come to a function call, instead of following the flow of execution, you _assume_ that the function works correctly and returns the right result.
-(((leap of faith)))
+Việc dõi theo luồng thực thi của chương trình là một cách đọc mã lệnh, nhưng bạn sẽ nhanh chóng lạc vào mê cung. Một cách làm khác mà tôi gọi là _đôi cánh niềm tin_ như sau. Khi bạn dò đến một lời gọi hàm, thay vì việc đi theo luồng thực thi, hãy coi như là hàm đó hoạt động tốt và trả lại kết quả đúng.
+(((đôi cánh niềm tin)))
 
-In fact, you are already practicing this leap of faith when you use built-in functions. When you call +cos+ or +exp+, you don’t examine the bodies of those functions. You just assume that they work because the people who wrote the built-in functions were good programmers.
+Thật ra, bạn đã từng mang “đôi cánh niềm tin” này khi dùng các hàm dựng sẵn. Mỗi khi gọi +cos+ hay +exp+, bạn không kiểm tra nội dung bên trong các hàm này. Bạn chỉ việc giả sử rằng chúng chạy được vì những người lập trình ra các hàm đó đều giỏi.
 
-The same is true when you call one of your own functions. For example, in <<boolean_functions>>, we wrote a function called +isdivisible+ that determines whether one number is divisible by another. Once we have convinced ourselves that this function is correct—by examining the code and testing—we can use the function without looking at the body again.
+Cũng như vậy khi bạn gọi các hàm riêng của mình. Chẳng hạn, trong <<boolean_functions>>, chúng ta đã viết một hàm tên là +isdivisible+ để xác định xem một số có chia hết cho một số khác không. Một khi chúng ta tự thuyết phục rằng hàm này đã viết đúng—bằng cách kiểm tra và thử mã lệnh—chúng ta có thể sử dụng hàm mà không cần phải xem lại phần thân hàm nữa.
 
-The same is true of recursive programs. When you get to the recursive call, instead of following the flow of execution, you should assume that the recursive call works (returns the correct result) and then ask yourself, “Assuming that I can find the factorial of latexmath:[\(n-1\)], can I compute the factorial of latexmath:[\(n\)]?” It is clear that you can, by multiplying by latexmath:[\(n\)].
+Điều tương tự cũng đúng với các chương trình đệ quy. Khi bạn đến điểm gọi đệ quy, thay vì đi theo luồng thực hiện, bạn cần phải coi rằng lời gọi đệ quy hoạt động tốt (tức là cho kết quả đúng) và sau đó tự hỏi mình “Giả dụ như ta đã tìm được giai thừa của latexmath:[\(n-1\)], liệu ta có tính được giai thừa của latexmath:[\(n\)] không?” Trong trường hợp này, rõ ràng là ta sẽ tính được, bằng cách nhân với latexmath:[\(n\)].
 
-Of course, it’s a bit strange to assume that the function works correctly when you haven’t finished writing it, but that’s why it’s called a leap of faith!
+Dĩ nhiên là sẽ có chút kì lạ trong việc ta giả sử rằng hàm hoạt động tốt khi chưa viết xong nó, nhưng chính vì vậy mà ta gọi đó là đôi cánh niềm tin!
 
 [[one_more_example]]
-=== One More Example
+=== Thêm một ví dụ
 
-After factorial, the most common example of a recursively defined mathematical function is fibonacci, which has the following definition (see https://en.wikipedia.org/wiki/Fibonacci_number):
-(((fibonnaci function)))
+Sau giai thừa, một ví dụ thông dụng khác về hàm toán học được định nghĩa theo cách đệ quy là dãy fibonacci. Hàm này được xác định như sau: (see https://en.wikipedia.org/wiki/Fibonacci_number):
+(((fibonnaci, hàm)))
 
 [latexmath]
 ++++
@@ -442,8 +442,8 @@ After factorial, the most common example of a recursively defined mathematical f
 \end{equation}
 ++++
 
-Translated into Julia, it looks like this:
-(((fib)))((("function", "programmer-defined", "fib", see="fib")))
+Theo ngôn ngữ của Julia, nó có dạng:
+(((fib)))((("hàm", "tự định nghĩa", "fib", see="fib")))
 
 [source,@julia-setup chap06]
 ----
@@ -458,12 +458,12 @@ function fib(n)
 end
 ----
 
-If you try to follow the flow of execution here, even for fairly small values of +n+, your head explodes. But according to the leap of faith, if you assume that the two recursive calls work correctly, then it is clear that you get the right result by adding them together.
+Nếu bạn thử gắng theo luồng thực hiện ở đây, ngay cả với các giá trị khá nhỏ của +n+, bạn sẽ đau đầu ngay. Nhưng với đôi cánh niềm tin, nếu bạn coi rằng cả hai lời gọi đệ quy đều hoạt động tốt, thì rõ ràng bạn sẽ thu được kết quả đúng khi cộng chúng lại với nhau.
 
 
-=== Checking Types
+=== Kiểm tra kiểu
 
-What happens if we call +fact+ and give it +1.5+ as an argument?
+Điều gì sẽ xảy ra nếu ta gọi +fact+ với đối số bằng +1.5+?
 (((StackOverflowError)))
 
 [source,jlcon]
@@ -474,24 +474,24 @@ Stacktrace:
  [1] fact(::Float64) at ./REPL[3]:2
 ----
 
-It looks like an infinite recursion. How can that be? The function has a base case—when +n == 0+. But if +n+ is not an integer, we can _miss_ the base case and recurse forever.
-(((infinite recursion)))
+Dường như đó là đệ quy vô hạn. Nhưng sao có thể xảy ra điều này? Có một trường hợp cơ sở—khi +n == 0+. Nhưng nếu +n+ hông phải là số nguyên, chúng ta có thể _lỡ mất_ trường hợp cơ sở và đệ quy diễn ra mãi mãi.
+(((đệ quy vô hạn)))
 
-In the first recursive call, the value of +n+ is +0.5+. In the next, it is +-0.5+. From there, it gets smaller (more negative), but it will never be +0+.
+Ở lời gọi đệ quy thứ nhất, giá trị của +n+ bằng +0.5+. Ở lần tiếp theo, giá trị này bằng +-0.5+. Từ đó, nó ngày càng nhỏ hơn (càng âm), nhưng sẽ không bao giờ bằng được 0.
 
-We have two choices. We can try to generalize the factorial function to work with floating-point numbers, or we can make +fact+ check the type of its argument. The first option is called the gamma function and it’s a little beyond the scope of this book. So we’ll go for the second.
-(((gamma function)))
+Chúng ta có hai sự lựa chọn. Một là thử khái quát hoá hàm giai thừa để làm việc được với các số phẩy động, hoặc ta có thể buộc +fact+ phải kiểm tra kiểu đối số của nó. Lựa chọn thứ nhất gắn với việc gọi hàm gamma và nó phần nào đã vượt ra ngoài phạm vi quyên sách này. Vì vậy ta sẽ xét đến cách thứ hai.
+(((gamma, hàm)))
 
-We can use the built-in operator +isa+ to verify the type of the argument. While we’re at it, we can also make sure the argument is positive:
+Ta có thể dùng toán tử dựng sẵn +isa+ để thẩm định kiểu của đối số. Khi đã dùng nó rồi, có thể khẳng định rằng đối số là số dương:
 (((isa)))(((fact)))
 
 [source,@julia-setup chap06]
 ----
 function fact(n)
     if !(n isa Int64)
-        error("Factorial is only defined for integers.")
+        error("Giai thừa chỉ được định nghĩa cho số nguyên.")
     elseif n < 0
-        error("Factorial is not defined for negative integers.")
+        error("Giai thừa không được định nghĩa cho số nguyên âm.")
     elseif n == 0
         return 1
     else
@@ -500,102 +500,102 @@ function fact(n)
 end
 ----
 
-The first base case handles nonintegers; the second handles negative integers. In both cases, the program prints an error message and returns +nothing+ to indicate that something went wrong:
+Trường hợp cơ sở thứ nhất xử lý các số không nguyên; trường hợp thứ hai bắt lỗi các số nguyên âm. Trong cả hai trường hợp, chương trinh đều in ra thông báo lỗi và trả về +nothing+ để biểu thị rằng có điều gì sai đã xảy ra:
 
 [source,@julia-repl-test chap06]
 ----
 julia> fact("fred")
-ERROR: Factorial is only defined for integers.
+ERROR: Giai thừa chỉ được định nghĩa cho số nguyên.
 julia> fact(-2)
-ERROR: Factorial is not defined for negative integers.
+ERROR: Giai thừa không được định nghĩa cho số nguyên âm.
 ----
 
-If we get past both checks, we know that +n+ is positive or zero, so we can prove that the recursion terminates.
+Nếu đạt cả hai lần kiểm tra, thi +n+ chắc chắn là một số nguyên dương, và ta có thể chứng minh rằng lời gọi đệ quy sẽ kết thúc.
 
-This program demonstrates a pattern sometimes called a _guardian_. The first two conditionals act as guardians, protecting the code that follows from values that might cause an error. The guardians make it possible to prove the correctness of the code.
-(((guardian)))
+Chương trình này minh hoạ cho một dạng lập trình đôi khi được gọi là _chốt bảo vệ_. Hai lệnh điều kiện đầu có vai trò bảo vệ đoạn mã lệnh tiếp theo khỏi những giá trị có thể gây ra lỗi. Những chốt bảo vệ này giúp ta chứng minh được tính đúng đắn của mã lệnh.
+(((chốt bảo vệ)))
 
-In <<catching_exceptions>> we will see a more flexible alternative to printing an error message: raising an exception.
+Ở <<catching_exceptions>> ta sẽ thấy một phương án linh hoạt khác để in ra thông báo lỗi: đó là phát biệt lệ.
 
 [[deb06]]
-=== Debugging
+=== Gỡ lỗi
 
-Breaking a large program into smaller functions creates natural checkpoints for debugging. If a function is not working, there are three possibilities to consider:
-(((debugging)))
+Việc chia nhỏ một chương trình lớn thành những hàm con tự nó đã tạo ra những điểm kiểm soát để gỡ lỗi. Nếu một hàm không hoạt động, có thể có ba khả năng cần xét đến:
+(((gỡ lỗi)))
 
-* There is something wrong with the arguments the function is getting; a precondition is violated.
-(((precondition)))
+* Các đối số mà hàm nhận vào có vấn đề; một điều kiện đầu bị vi phạm.
+(((điều kiện đầu)))
 
-* There is something wrong with the function; a postcondition is violated.
-(((postcondition)))
+* Bản thân hàm có vấn đề; một trạng thái cuối bị vi phạm.
+(((trạng thái cuối)))
 
-* There is something wrong with the return value or the way it is being used.
+* Giá trị trả lại hoặc cách dùng giá trị này có vấn đề.
 
-To rule out the first possibility, you can add a print statement at the beginning of the function and display the values of the parameters (and maybe their types). Or you can write code that checks the preconditions explicitly.
+Để loại trừ khả năng thứ nhất, bạn có thể thêm vào một câu lệnh print tại điểm đầu của hàm để hiển thị các giá trị của đối số (và có thể cả kiểu của chúng nữa). Hoặc bạn có thể viết các đoạn mã kiểm tra những điều kiện đầu này một cách tường minh.
 
-If the parameters look good, add a print statement before each return statement and display the return value. If possible, check the result by hand. Consider calling the function with values that make it easy to check the result (as in <<incremental_development>>).
+Nếu các tham số có vẻ tốt, hãy thêm một lệnh print vào trước mỗi lệnh return để hiển thị các giá trị được trả lại. Nếu có thể, hãy kiểm tra các kết quả theo cách thủ công. Cân nhắc việc gọi hàm với các giá trị mà ta dễ dàng kiểm tra kết quả (như ở <<incremental_development>>).
 
-If the function seems to be working, look at the function call to make sure the return value is being used correctly (or used at all!).
+Nếu hàm số dường như hoạt động tốt, hãy xem lời gọi hàm để chắc rằng giá trị trả lại được dùng và dùng đúng.
 
-Adding print statements at the beginning and end of a function can help make the flow of execution more visible. For example, here is a version of +fact+ with print statements:
-(((fact)))(((flow of execution)))(((print statement)))
+Việc thêm các lệnh print vào đầu và cuối một hàm có thể giúp cho luông thực hiện được rõ ràng hơn. Chẳng hạn, sau đây là một dạng của hàm +fact+ với các lệnh print:
+(((fact)))(((luồng thực thi)))(((lệnh print)))
 
 [source,@julia-setup chap06]
 ----
 function fact(n)
     space = " " ^ (4 * n)
-    println(space, "factorial ", n)
+    println(space, "giai thừa ", n)
     if n == 0
-        println(space, "returning 1")
+        println(space, "trả lại 1")
         return 1
     else
         recurse = fact(n-1)
         result = n * recurse
-        println(space, "returning ", result)
+        println(space, "trả lại ", result)
         return result
     end
 end
 ----
 
-+space+ is a string of space characters that controls the indentation of the output:
++space+  là một chuỗi các kí tự trắng để điều khiển mức độ thụt đầu dòng của chữ cần in ra:
 
 [source,@julia-repl chap06]
 ----
 fact(4)
 ----
 
-If you are confused about the flow of execution, this kind of output can be helpful. It takes some time to develop effective scaffolding, but a little bit of scaffolding can save a lot of debugging.
+Kiểu in kết quả này có thể sẽ rất tốt nếu bạn bị lẫn khi tìm luồng thực hiện. Để dựng “mã lệnh giàn đỡ” một cách hiệu quả cũng cần chút thời gian, nhưng thêm dàn giáo có thể giúp giảm thiểu việc gỡ lỗi.
 
 
-=== Glossary
+=== Thuật ngữ
 
-temporary variable::
-A variable used to store an intermediate value in a complex calculation.
-(((temporary variable)))
+biến tạm thời::
+Biến dùng để lưu một giá trị trung gian trong phép tính phức tạp.
+(((biến tạm thời)))
 
-dead code::
-Part of a program that can never run, often because it appears after a return statement.
-(((dead code)))
+đoạn mã chết::
+Phần chương trình không bao giờ được thực hiện, thường là do nó xuất hiện sau một câu lệnh return.
+(((đoạn mã chết)))
 
-incremental development::
-A program development plan intended to avoid debugging by adding and testing only a small amount of code at a time.
-(((incremental development)))(((program development plan)))
+phát triển tăng dần::
+Kế hoạch phát triển chương trình trong đó tránh gỡ lỗi bằng việc mỗi lúc chỉ thêm vào và kiểm thử một đoạn mã lệnh ngắn.
+(((phát triển tăng dần)))(((kế hoạch phát triển chương trình)))
 
-scaffolding::
-Code that is used during program development but is not part of the final version.
-(((scaffolding)))
+giàn đỡ::
+Mã lệnh được dùng trong giai đoạn phát triển chương trình nhưng bị bỏ đi ở phiên bản chương trình cuối.
+(((giàn đỡ)))
 
-guardian::
-A programming pattern that uses a conditional statement to check for and handle circumstances that might cause an error.
-(((guardian)))
+chốt bảo vệ::
+Dạng mẫu lập trình trong đó có dùng một câu lệnh điều kiện để kiểm tra và xử lý các trường hợp có thể gây ra lỗi.
+(((chốt bảo vệ)))
 
 
-=== Exercises
+=== Bài tập
 
 [[ex06-1]]
-===== Exercise 6-4
+===== Bài tập 6-4
 
-Draw a stack diagram for the following program. What does the program print?
+Vẽ sơ đồ ngăn xếp cho chương trình dưới đây. Chương trình sẽ in ra cái gì?
 
 [source,@julia-setup]
 ----
@@ -622,10 +622,10 @@ println(c(x, y+3, x+y))
 ----
 
 [[ex06-2]]
-===== Exercise 6-5
+===== Bài tập 6-5
 
-The Ackermann function, latexmath:[\(A(m, n)\)], is defined:
-(((Ackermann function)))
+Hàm Ackermann, latexmath:[\(A(m, n)\)], được định nghĩa là:
+(((hàm Ackermann)))
 
 [latexmath]
 ++++
@@ -638,17 +638,17 @@ A(m-1, A(m, n-1))& \textrm{if}\ m > 0\ \textrm{and}\ n > 0.
 \end{cases}}
 \end{equation}
 ++++
-See https://en.wikipedia.org/wiki/Ackermann_function. Write a function named +ack+ that evaluates the Ackermann function. Use your function to evaluate +ack(3, 4)+, which should be 125. What happens for larger values of +m+ and +n+?
-(((ack)))((("function", "programmer-defined", "ack", see="ack")))
+Xem https://en.wikipedia.org/wiki/Ackermann_function. Viết một hàm có tên là +ack+ để tính hàm Ackermann. Sau đó dùng hàm đã viết để tính +ack(3, 4)+,kết quả đúng là 125. Điều gì sẽ xảy ra với các giá trị +m+ và +n+ lớn hơn?
+(((ack)))((("hàm", "tự định nghĩa", "ack", see="ack")))
 
 [[ex06-3]]
-===== Exercise 6-6
+===== Bài tập 6-6
 
-A palindrome is a word that is spelled the same backward and forward, like “noon” and “redivider”. Recursively, a word is a palindrome if the first and last letters are the same and the middle is a palindrome.
-(((palindrome)))
+Một từ đối xứng là từ đọc xuôi ngược đều như nhau, chẳng hạn “noon” và “redivider”. Theo cách đệ quy, một từ sẽ là đối xứng nếu các chữ cái đầu và cuối là như nhau và phần giữa cũng là một từ đối xứng.
+(((từ đối xứng)))
 
-The following are functions that take a string argument and return the first, last, and middle letters:
-(((first)))((("function", "programmer-defined", "first", see="first")))(((last)))((("function", "programmer-defined", "last", see="last")))(((middle)))((("function", "programmer-defined", "middle", see="middle")))
+Dưới đây là các hàm nhận vào một đối số chuỗi và trả lại các chữ cái đầu, cuối và giữa:
+(((first)))((("hàm", "tự định nghĩa", "first", see="first")))(((last)))((("hàm", "tự định nghĩa", "last", see="last")))(((middle)))((("hàm", "tự định nghĩa", "middle", see="middle")))
 
 [source,@julia-setup]
 ----
@@ -669,33 +669,33 @@ function middle(word)
 end
 ----
 
-We’ll see how they work in <<chap08>>
+Chúng ta sẽ thấy cách hoạt động của chúng trong <<chap08>>
 
-. Test these functions out. What happens if you call middle with a string with two letters? One letter? What about the empty string, which is written +""+ and contains no letters?
+. Thử chạy các hàm này. Điều gì sẽ xảy ra khi bạn gọi +middle+ với một chuỗi chỉ có 2 chữ cái? 1 chữ cái? Vậy còn chuỗi trống, kí hiệu là +""+ không chứa chữ cái nào thì sao?
 
-. Write a function called +ispalindrome+ that takes a string argument and returns +true+ if it is a palindrome and +false+ otherwise. Remember that you can use the built-in function +length+ to check the length of a string.
-(((ispalindrome)))((("function", "programmer-defined", "ispalindrome", see="ispalindrome")))(((length)))
+. Viết một hàm có tên là +ispalindrome+ nhận vào một đối số chuỗi và trả lại +true+ nếu đó là một từ đối xứng và +false+ nếu không phải. Hãy nhớ rằng bạn có thể dùng hàm dựng sẵn +length+ để biết độ dài của chuỗi.
+(((ispalindrome)))((("hàm", "tự định nghĩa", "ispalindrome", see="ispalindrome")))(((length)))
 
 [[ex06-4]]
-===== Exercise 6-7
+===== Bài tập 6-7
 
-A number, latexmath:[\(a\)], is a power of latexmath:[\(b\)] if it is divisible by latexmath:[\(b\)] and latexmath:[\(\frac{a}{b}\)] is a power of latexmath:[\(b\)]. Write a function called +ispower+ that takes parameters +a+ and +b+ and returns +true+ if +a+ is a power of +b+.
-(((ispower)))((("function", "programmer-defined", "ispower", see="ispower")))
+Một số, latexmath:[\(a\)], là lũy thừa của latexmath:[\(b\)] nếu nó chia hết cho latexmath:[\(b\)] và latexmath:[\(\frac{a}{b}\)] cũng là một lũy thừa của latexmath:[\(b\)]. Hãy viết một hàm có tên là +ispower+ nhận vào các đối số +a+ và +b+ rồi trả lại +true+ nếu +a+ là lũy thừa của +b+.
+(((ispower)))((("hàm", "tự định nghĩa", "ispower", see="ispower")))
 
 [TIP]
 ====
-You will have to think about the base case.
+Bạn sẽ phải nghĩ về trường hợp cơ sở.
 ====
 
 [[ex06-5]]
-===== Exercise 6-8
+===== Bài tập 6-8
 
-The greatest common divisor (GCD) of latexmath:[\(a\)] and latexmath:[\(b\)] is the largest number that divides both of them with no remainder.
+Ước số chung lớn nhất (GCD, greatest common divisor) của latexmath:[\(a\)] và latexmath:[\(b\)] là số lớn nhất mà cả latexmath:[\(a\)] và latexmath:[\(b\)] đều chia hết cho nó..
 
-One way to find the GCD of two numbers is based on the observation that if latexmath:[\(r\)] is the remainder when latexmath:[\(a\)] is divided by latexmath:[\(b\)], then +gcd(a, b) = gcd(b, r)+. As a base case, we can use +gcd(a, 0) = a+.
+Một cách tìm GCD của hai số là thuật toán Euclid, vốn dựa trên nhận xét rằng nếu như latexmath:[\(r\)] là số dư của phép chia latexmath:[\(a\)] cho latexmath:[\(b\)], thì +gcd(a, b) = gcd(b, r)+. Với trường hợp cơ sở, ta có thể lấy +gcd(a, 0) = a+.
 
-Write a function called +gcd+ that takes parameters +a+ and +b+ and returns their greatest common divisor.
-(((gcd)))((("function", "programmer-defined", "gcd", see="gcd")))
+Hãy viết một hàm có tên +gcd+ nhận vào hai tham số +a+ và +b+, sau đó trả lại ước số chung lớn nhất của chúng.
+(((gcd)))((("hàm", "tự định nghĩa", "gcd", see="gcd")))
 
-Credit: This exercise is based on an example from Abelson and Sussman’s _Structure and Interpretation of Computer Programs_.
+Nguồn: Bài tập này dựa theo một ví dụ từ cuốn sách _Structure and Interpretation of Computer Programs_ của Abelson và Sussman.
 
