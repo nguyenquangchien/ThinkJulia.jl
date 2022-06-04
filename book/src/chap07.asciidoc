@@ -1,13 +1,13 @@
 [[chap07]]
-== Iteration
+== Lặp
 
-This chapter is about iteration, which is the ability to run a block of statements repeatedly. We saw a kind of iteration, using recursion, in <<recursion>>. We saw another kind, using a +for+ loop, in <<simple_repetition>>. In this chapter we’ll see yet another kind, using a +while+ statement. But first I want to say a little more about variable assignment.
-(((iteration)))(((recursion)))(((for statement)))
+Chương này nói về lặp, khả năng chạy một khối mã lệnh nhiều lần. Ta đã thấy một hình thức lặp rồi, đó là đệ quy, ở <<recursion>>. Ta cũng thấy một dạng khác, bằng cách dùng vòng +for+, ở <<simple_repetition>>. Trong chương này ta còn thấy thêm một dạng nữa, bằng câu lệnh +while+. Nhưng trước tiên tôi muốn nói thêm đôi điều về phép gán biến.
+(((lặp)))(((đệ quy)))(((vòng for)))
 
 
-=== Reassignment
+=== Phép gán lại
 
-As you may have discovered, it is legal to make more than one assignment to the same variable. A new assignment makes an existing variable refer to a new value (and stop referring to the old value).
+Có thể bạn đã phát hiện thấy rằng, việc gán nhiều giá trị vào cùng một biến là điều hợp lệ. Một phép gán mới làm cho biến hiện tại tham chiếu đến một giá trị mới (và bỏ tham chiếu đến giá trị cũ).
 
 [source,@julia-repl-test chap07]
 ----
@@ -17,48 +17,48 @@ julia> x = 7
 7
 ----
 
-The first time we display +x+, its value is 5; the second time, its value is 7.
+ Lần đầu tiên khi +x+ được hiển thị, giá trị của nó là 5, và đến lần thứ hai, giá trị là 7.
 
 [[fig07-1]]
-.State diagram
+.Sơ đồ trạng thái
 image::images/fig71.svg[]
 
-<<fig07-1>> shows what _reassignment_ looks like in a state diagram.
-(((reassignment)))(((state diagram)))
+<<fig07-1>> cho thấy phép _gán lại_ trông ra sao trong một sơ đồ trạng thái.
+(((phép gán lại)))(((sơ đồ trạng thái)))
 
-At this point I want to address a common source of confusion. Because Julia uses the equal sign (+=+) for assignment, it is tempting to interpret a statement like +a = b+ as a mathematical proposition of equality; that is, the claim that +a+ and +b+ are equal. But this interpretation is wrong.
-(((assignment statement)))
+Đến đây tôi muốn giải đáp một điều dễ gây nhầm lẫn. Vì Julia dùng dấu bằng (+=+) cho một lệnh gán, ta có thể bị cám dỗ bởi cách hiểu một câu lệnh kiểu như +a = b+ là một đẳng thức, tức là cho rằng +a+ và +b+ bằng nhau.
+(((lệnh gán)))
 
-First, equality is a symmetric relationship and assignment is not. For example, in mathematics, if latexmath:[\(a=7\)] then latexmath:[\(7=a\)]. But in Julia, the statement +a = 7+ is legal and +7 = a+ is not.
+Trước hết, đẳng thức là một hệ thức đối xứng còn lệnh gán thì không phải. Chẳng hạn, trong toán học, nếu latexmath:[\(a=7\)] thì latexmath:[\(7=a\)]. Nhưng trong Julia, câu lệnh +a = 7+ thì hợp lệ còn +7 = a+ thì không.
 
-Also, in mathematics, a proposition of equality is either true or false for all time. If latexmath:[\(a=b\)] now, then latexmath:[\(a\)] will always equal latexmath:[\(b\)]. In Julia, an assignment statement can make two variables equal, but they don’t have to stay that way:
+Hơn nữa, trong toán học, một đẳng thức thì có thể luôn đúng hoặc luôn sai. Nếu bây giờ latexmath:[\(a=b\)] thì về sau này latexmath:[\(a\)] sẽ luôn bằng latexmath:[\(b\)]. Trong Julia, một lệnh gán có thể làm cho hai biến bằng nhau, nhưng có thể sẽ không bằng nhau mãi:
 
 [source,@julia-repl-test]
 ----
 julia> a = 5
 5
-julia> b = a    # a and b are now equal
+julia> b = a    # bây giờ a và b bằng nhau
 5
-julia> a = 3    # a and b are no longer equal
+julia> a = 3    # a và b không còn bằng nhau 
 3
 julia> b
 5
 ----
 
-The third line changes the value of +a+ but does not change the value of +b+, so they are no longer equal.
+Dòng lệnh thứ ba thay đổi giá trị của +a+ nhưng không thay đổi giá trị của +b+, vì vậy chúng không còn bằng nhau.
 
 [WARNING]
 ====
-Reassigning variables is often useful, but you should use it with caution. If the values of variables change frequently, it can make the code difficult to read and debug.
+Mặc dù việc gán nhiều lần thường có ích, song bạn cần cẩn thận khi sử dụng chúng. Việc giá trị của các biến thay đổi thường xuyên có thể làm cho mã lệnh trở nên khó đọc và khó gỡ lỗi.
 
-It is illegal to define a function that has the same name as a previously defined variable.
+Sẽ không hợp lệ nếu ta định nghĩa một hàm trùng tên với một biến đã định nghĩa trước đó.
 ====
 
 
-=== Updating Variables
+=== Cập nhật các biến
 
-A common kind of reassignment is an update, where the new value of the variable depends on the old.
-(((update)))
+Một trong các dạng thông dụng nhất của gán nhiều lần là một lệnh cập nhật, trong đó giá trị mới của biến phụ thuộc vào giá trị cũ.
+(((cập nhật)))
 
 [source,@julia-repl-test chap07]
 ----
@@ -66,9 +66,9 @@ julia> x = x + 1
 8
 ----
 
-This means “get the current value of +x+, add one, and then update +x+ with the new value.”
+Lệnh này có nghĩa là “lấy giá trị hiện thời của +x+, cộng thêm một, và cập nhật +x+ với giá trị mới”.
 
-If you try to update a variable that doesn’t exist, you get an error, because Julia evaluates the right side before it assigns a value to +x+:
+Nếu bạn thử cập nhật một biến mà hiện không tồn tại, bạn sẽ bị báo lỗi, vì Julia luôn ước lượng vế phải trước khi gán một giá trị cho +x+:
 (((UndefVarError)))
 
 [source,@julia-repl-test]
@@ -77,8 +77,8 @@ julia> y = y + 1
 ERROR: UndefVarError: y not defined
 ----
 
-Before you can update a variable, you have to initialize it, usually with a simple assignment:
-(((initialization)))
+Trước khi có thể cập nhật một biến, bạn cần phải khởi tạo nó, thường là bằng một lệnh gán:
+(((khởi tạo)))
 
 [source,@julia-repl-test]
 ----
@@ -88,20 +88,20 @@ julia> y = y + 1
 1
 ----
 
-Updating a variable by adding 1 is called an _increment_; subtracting 1 is called a _decrement_.
-(((increment)))(((decrement)))
+Việc cập nhật một biến bằng cách cộng thêm 1 được gọi là _tăng_; còn trừ đi 1 được gọi là _giảm_.
+(((tăng)))(((giảm)))
 
 
-=== The +while+ Statement
+=== Câu lệnh +while+
 
-Computers are often used to automate repetitive tasks. Repeating identical or similar tasks without making errors is something that computers do well and people do poorly. In a computer program, repetition is also called _iteration_.
-(((iteration)))
+Máy tính thường được dùng để tự động hoá các tác vụ có tính chất lặp lại. Việc lặp lại những thao tác giống hệt hoặc tương tự nhau mà không mắc phải lỗi chính là “sở trường” của máy tính đồng thời là việc mà con người làm rất dở. Trong chương trình máy tính, việc thực hiện nhiều lần còn được gọi là _lặp_.
+(((lặp)))
 
-We have already seen two functions, +countdown+ and +printn+, that iterate using recursion. Because iteration is so common, Julia provides language features to make it easier. One is the +for+ statement we saw in <<simple_repetition>>. We’ll get back to that later.
-(((recursion)))(((for statement)))
+Ta đã thấy hai hàm, +countdown+ và +printn+, trong đó dùng đệ quy để thực hiện thao tác lặp.  Vì lặp là một thao tác thường dùng, nên Julia có cung cấp một số đặc điểm ngôn ngữ giúp cho việc thực hiện được dễ dàng. Một trong số đó là lệnh +for+  mà chúng ta đã gặp ở <<simple_repetition>>. Chúng ta sẽ trở lại đó vào một dịp khác.
+(((đệ quy)))(((lệnh for)))
 
-Another is the +while+ _statement_. Here is a version of +countdown+ that uses a +while+ statement:
-(((while)))((("keyword", "while", see="while")))(((while statement)))((("statement", "while", see="while statement")))
+Một cách khác là dùng _câu lệnh_ +while+. Sau đây là một phiên bản của+countdown+ có dùng lệnh +while+:
+(((while)))((("từ khóa", "while", see="while")))(((while, câu lệnh)))((("câu lệnh", "while", see="while, câu lệnh")))
 
 [source,@julia-setup]
 ----
@@ -110,67 +110,67 @@ function countdown(n)
         print(n, " ")
         n = n - 1
     end
-    println("Blastoff!")
+    println("Bùm!")
 end
 ----
 
-You can almost read the +while+ statement as if it were English. It means, “While +n+ is greater than 0, display the value of +n+ and then decrement +n+. When you get to 0, display the word Blastoff!”
-(((countdown)))
+Bạn gần như có thể đọc lệnh +while+ giống cách đọc tiếng Anh: “Khi +n+ còn lớn hơn 0, hãy hiển thị giá trị của +n+ rồi giảm giá trị của +n+ đi 1. Khi đạt đến 0, hãy hiển thị chữ Bùm!”
+(((đếm ngược)))
 
-More formally, here is the flow of execution for a +while+ statement:
-(((flow of execution)))
+Nói một cách hệ thống hơn, luồng thực hiện của câu lệnh +while+ như sau:
+(((luồng thực thi)))
 
-. Determine whether the condition is true or false.
+. Xác địh điều kiện xem là true hay false.
 
-. If false, exit the while statement and continue execution at the next statement.
+. Nếu là false, thoát khỏi lệnh while rồi thực hiện câu lệnh kế tiếp.
 
-. If the condition is true, run the body and then go back to step 1.
+. Nếu điều kiện được thoả mãn (true), thực hiện phần thân và quay trở lại bước 1.
 
-This type of flow is called a loop because the third step loops back around to the top.
-(((loop)))
+Dạng luồng thực hiện này được gọi là một vòng lặp vì sau bước thứ 3 quay trở về bước đầu tiên.
+(((vòng lặp)))
 
-The body of the loop should change the value of one or more variables so that the condition becomes false eventually and the loop terminates. Otherwise the loop will repeat forever, which is called an _infinite loop_. An endless source of amusement for computer scientists is the observation that the directions on shampoo bottles, “Lather, rinse, repeat”, are an infinite loop.
-(((infinite loop)))
+Phần thân của vòng lặp sẽ thay đổi giá trị của một hoặc nhiều biến sao cho cuối cùng thì điều kiện sẽ không thoả mãn và vòng lặp kết thúc. Còn nếu không thì vòng lặp sẽ tiếp diễn mãi mãi, và được gọi là một _vòng lặp vô hạn_. Một câu chuyện đùa về nhà khoa học máy tính xuất phát từ việc quan sát thấy dòng chữ trên hướng dẫn sử dụng lọ dầu gội đầu: “Lather, rinse, repeat”, (Xoa dầu, xối nước và lặp lại) là một vòng lặp vô hạn.
+(((vòng lặp vô hạn)))
 
-In the case of +countdown+, we can prove that the loop terminates: if +n+ is zero or negative, the loop never runs. Otherwise, +n+ gets smaller each time through the loop, so eventually we have to get to 0.
+Trong trường hợp +countdown+, ta có thể chứng tỏ rằng vòng lặp sẽ kết thúc vì biết rằng giá trị của +n+ là hữu hạn, và mỗi khi lặp lại thì giá trị của +n+ sẽ nhỏ đi. Vì vậy cuối cùng nó sẽ phải trở về 0. Với các trường hợp khác, có thể sẽ không dễ chứng tỏ điều đó:
 
-For some other loops, it is not so easy to tell. For example:
-(((seq)))((("function", "programmer-defined", "seq", see="seq")))
+Với các trường hợp khác, có thể sẽ không dễ chứng tỏ điều đó. Chẳng hạn:
+(((seq)))((("hàm", "tự định nghĩa", "seq", see="seq")))
 
 [source,@julia-setup]
 ----
 function seq(n)
     while n != 1
         println(n)
-        if n % 2 == 0        # n is even
+        if n % 2 == 0        # n chẵn
             n = n / 2
-        else                 # n is odd
+        else                 # n lẻ
             n = n*3 + 1
         end
     end
 end
 ----
 
-The condition for this loop is +n != 1+, so the loop will continue until +n+ is 1, which makes the condition false.
+Điều kện cho vòng lặp này là +n != 1+, vì vậy vòng lặp sẽ tiếp tục đến khi +n+ bằng 1, khi đó điều kiện sẽ bị vi phạm.
 
-Each time through the loop, the program outputs the value of +n+ and then checks whether it is even or odd. If it is even, +n+ is divided by 2. If it is odd, the value of +n+ is replaced with +pass:[n*3 + 1]+. For example, if the argument passed to sequence is 3, the resulting values of +n+ are 3, 10, 5, 16, 8, 4, 2, 1.
+Mỗi lần lặp, chương trình sẽ in ra giá trị của +n+ và kiểm tra xem nó là chẵn hay lẻ. Nếu là chẵn, +n+ được đem chia cho 2. Nếu lẻ giá trị của +n+ được thay thế bởi +pass:[n*3 + 1]+. Chẳng hạn, nếu tham biến được truyền cho dãy là 3, thì chuỗi số thu được cho +n+ sẽ là 3, 10, 5, 16, 8, 4, 2, 1.
 
-Since +n+ sometimes increases and sometimes decreases, there is no obvious proof that +n+ will ever reach 1, or that the program terminates. For some particular values of +n+, we can prove termination. For example, if the starting value is a power of two, +n+ will be even every time through the loop until it reaches 1. The previous example ends with such a sequence, starting with 16.
+Vì +n+ đôi khi tăng và đôi khi giảm, nên không có một chứng minh rõ ràng nào cho thấy +n+ sẽ đạt được giá trị 1, hay là chương trình kết thúc. Với một số giá trị riêng của +n+, ta có thể chứng minh sự kết thúc này. Chẳng hạn, nếu giá trị ban đầu là một số lũy thừa của 2 thì giá trị của +n+ sẽ là chẵn trong mỗi lần lặp và đến khi nó đạt bằng 1. Ở ví dụ trước đây, chuỗi cũng kết thúc theo cách tương tự kể từ số 16.
 
-The hard question is whether we can prove that this program terminates for all positive values of +n+. So far, no one has been able to prove it or disprove it! (See https://en.wikipedia.org/wiki/Collatz_conjecture.)
-(((Collatz conjecture)))
+Câu hỏi được đặt ra là liệu ta có thể chứng minh rằng chương trình sẽ kết thúc với mọi giá trị dương của +n+ hay không. Cho đến giờ, chưa ai có đủ khả năng chứng minh hoặc bác bỏ nó! (Xem https://en.wikipedia.org/wiki/Collatz_conjecture.)
+(((Collatz, phỏng đoán)))
 
-===== Exercise 7-1
+===== Bài tập 7-1
 
-Rewrite the function +printn+ from <<recursion>> using iteration instead of recursion.
+Viết lại hàm +printn+ ở <<recursion>> dùng cách lặp thay vì đệ quy.
 
 
 === +break+
 
-Sometimes you don’t know it’s time to end a loop until you get half way through the body. In that case you can use the _break statement_ to jump out of the loop.
-(((break)))((("keyword", "break", see="break")))(((break statement)))((("statement", "break", see="break statement")))
+Đôi khi bạn chỉ biết được rằng đã đến lúc kết thúc vòng lặp trong khi đang thực hiện một nửa phần thân của vòng lặp đó. Trường hợp này bạn có thể dùng _câu lệnh break_ để thoát khỏi vòng lặp.
+(((break)))((("từ khóa", "break", see="break")))(((break, câu lệnh)))((("câu lệnh", "break", see="break, câu lệnh")))
 
-For example, suppose you want to take input from the user until they type done. You could write:
+Chẳng hạn, giả sử như bạn muốn nhận dữ liệu nhập vào bởi người dùng cho đến lúc họ gõ xong. Bạn có thể viết như sau:
 (((readline)))
 
 [source,julia]
@@ -178,33 +178,33 @@ For example, suppose you want to take input from the user until they type done. 
 while true
     print("> ")
     line = readline()
-    if line == "done"
+    if line == "xong"
         break
     end
     println(line)
 end
-println("Done!")
+println("Xong!")
 ----
 
-The loop condition is +true+, which is always true, so the loop runs until it hits the break statement.
+Điều kiện lặp là +true+, tức là luôn đúng, vì vậy vòng lặp tiếp diễn đến khi nó gặp phải lệnh break.
 
-Each time through, it prompts the user with an angle bracket. If the user types +done+, the break statement exits the loop. Otherwise the program echoes whatever the user types and goes back to the top of the loop. Here’s a sample run:
+Ở mỗi lần lặp, nó nhắc người dùng bằng cách hiện ra kí hiệu ’>’. Nếu người dùng gõ vào chữ +xong+, lệnh break sẽ giúp thoát khỏi vòng lặp. Còn không thì chương trình sẽ hiện lại bất cứ dòng chữ gì người dùng đã nhập vào, rồi trở lại đầu vòng lặp. Sau đây là một lần chạy thử:
 
 [source]
 ----
-> not done
-not done
-> done
-Done!
+> chưa xong
+chưa xong
+> xong
+Xong!
 ----
 
-This way of writing while loops is common because you can check the condition anywhere in the loop (not just at the top) and you can express the stop condition affirmatively (“stop when this happens”) rather than negatively (“keep going until that happens”).
+Cách viết vòng lặp while như thế này rất thường gặp vì bạn có thể kiểm tra điều kiện ở bất kì nơi nào trong vòng lặp (chứ không riêng ở đầu vòng lặp) và có thể khẳng định điều kiện dừng lặp (“hãy dừng ngay khi điều này xảy ra”) thay vì chỉ nói một cách phủ định (“cứ tiếp tục đến khi điều đó xảy ra”).
 
 
 === +continue+
 
-The break statement exits the loop. When a _continue statement_ is encountered inside a loop, control jumps to the beginning of the loop for the next iteration, skipping the execution of statements inside the body of the loop for the current iteration. For example:
-(((continue)))((("keyword", "continue", see="continue")))(((continue statement)))((("statement", "continue", see="continue statement")))
+Lệnh break thoát khỏi vòng lặp. Khi gặp một _lệnh continue_ trong vòng lặp, quyền điều khiển sẽ nhảy đến đầu vòng trong lần lặp kế tiếp, bỏ qua không thực thi tất thảy mã lệnh còn lại trong phần thân lần lặp hiện thời. Chẳng hạn:
+(((continue)))((("từ khóa", "continue", see="continue")))(((continue, câu lệnh)))((("câu lệnh", "continue", see="continue, câu lệnh")))
 
 [source,@julia]
 ----
@@ -216,15 +216,15 @@ for i in 1:10
 end
 ----
 
-If +i+ is divisible by 3, the continue statement stops the current iteration and the next iteration starts. Only the numbers in the range 1 to 10 not divisible by 3 are printed.
+Nếu +i+ chia hết cho 3, câu lệnh continue sẽ dừng lần lặ hiện thời và bắt đầu lần lặp kế tiếp. Chỉ những số nào chia hết cho 3 trong khoảng từ 1 đến 10 mới được in ra.
 
 [[square_roots]]
-=== Square Roots
+=== Căn bậc hai
 
-Loops are often used in programs that compute numerical results by starting with an approximate answer and iteratively improving it.
+ác vòng lặp thường được dùng trong những chương trình ở đó có tính các trị số bằng cách bắt đầu với một ước lượng rồi liên lục tính lặp để có được xấp xỉ tốt hơn.
 
-For example, one way of computing square roots is Newton’s method. Suppose that you want to know the square root of latexmath:[\(a\)]. If you start with almost any estimate, latexmath:[\(x\)], you can compute a better estimate with the following formula:
-(((Newton's method)))
+Chẳng hạn, một cách tính căn bậc hai là phương pháp Newton. Giả sử bạn muốn tính căn bậc hai của latexmath:[\(a\)]. Nếu bạn bắt đầu với một giá trị ước lượng bất kì, latexmath:[\(x\)], bạn có thể tính ra một ước lượng khác tốt hơn theo công thức:
+(((phương pháp Newton)))
 
 [latexmath]
 ++++
@@ -232,7 +232,7 @@ For example, one way of computing square roots is Newton’s method. Suppose tha
 {y = \frac{1}{2}\left(x + \frac{a}{x}\right)}
 \end{equation}
 ++++
-For example, if latexmath:[\(a\)] is 4 and latexmath:[\(x\)] is 3:
+Chẳng hạn, nếu latexmath:[\(a\)] bằng 4 và latexmath:[\(x\)] bằng 3:
 
 [source,@julia-repl-test chap07]
 ----
@@ -244,7 +244,7 @@ julia> y = (x + a/x) / 2
 2.1666666666666665
 ----
 
-The result is closer to the correct answer (latexmath:[\(\sqrt 4 = 2\)]). If we repeat the process with the new estimate, it gets even closer:
+Kết quả đã sát hơn đáp số đúng (latexmath:[\(\sqrt 4 = 2\)]). Nếu ta tiếp tục lặp lại quá trình này bằng giá trị ước lượng mới, kết quả thu được còn gần đúng nữa:
 
 [source,@julia-repl-test chap07]
 ----
@@ -254,7 +254,7 @@ julia> y = (x + a/x) / 2
 2.0064102564102564
 ----
 
-After a few more updates, the estimate is almost exact:
+Sau một số lần cập nhật, kết quả ước lượng sẽ gần như chính xác:
 
 [source,@julia-repl-test chap07]
 ----
@@ -268,7 +268,7 @@ julia> y = (x + a/x) / 2
 2.0000000000262146
 ----
 
-In general we don’t know ahead of time how many steps it takes to get to the right answer, but we know when we get there because the estimate stops changing:
+Nhìn chung ta không thể nói trước rằng sẽ cần tính lặp bao nhiêu lần để thu được kết quả đúng, nhưng ta biết rằng khi ta tiến đến giá trị đúng thì các giá trị ước lượng tìm được sẽ không còn dao động nữa:
 
 [source,@julia-repl-test chap07]
 ----
@@ -282,7 +282,7 @@ julia> y = (x + a/x) / 2
 2.0
 ----
 
-When +y == x+, we can stop. Here is a loop that starts with an initial estimate, +x+, and improves it until it stops changing:
+Khi +y == x+, ta có thể dừng lại. Sau đây là một vòng lặp bắt đầu bằng một giá trị ước lượng, +x+, và sau đó điều chỉnh nó đến khi giá trị này ngừng dao động:
 
 [source,julia]
 ----
@@ -296,9 +296,9 @@ while true
 end
 ----
 
-For most values of a this works fine, but in general it is dangerous to test float equality. Floating-point values are only approximately right: most rational numbers, like latexmath:[\(\frac{1}{3}\)], and irrational numbers, like latexmath:[\(\sqrt 2\)], can’t be represented exactly with a +Float64+.
+Với phần lớn các giá trị của +a+ cách làm này khá hiệu quả, nhưng nói chung việc kiểm tra điều kiện bằng nhau giữa hai số thập phân float là nguy hiểm. Các giá trị số có phần thập phân chỉ gần đúng: hầu hết các số hữu tỉ, như latexmath:[\(\frac{1}{3}\)], và số vô tỉ, như latexmath:[\(\sqrt 2\)], đều không thể biểu diễn được chính xác dưới dạng +Float64+.
 
-Rather than checking whether +x+ and +y+ are exactly equal, it is safer to use the built-in function +abs+ to compute the absolute value, or magnitude, of the difference between them:
+Thay vì kiểm tra xem +x+ và +y+ có đúng bằng nhau không, cách làm an toàn hơn là dùng hàm có sẵn +abs+ để tính giá trị tuyệt đối, hay độ lớn của hiệu giữa hai số này:
 (((abs)))
 
 [source,julia]
@@ -308,100 +308,100 @@ if abs(y-x) < ε
 end
 ----
 
-Where +ε+ (*+\varepsilon TAB+*) has a value like +0.0000001+ that determines how close is close enough.
+trong đó +ε+ (*+\varepsilon TAB+*) nhận một giá trị như +0.0000001+ tùy thuộc vào yêu cầu độ chính xác mà ta cần là bao nhiêu.
 
 
-=== Algorithms
+=== Thuật toán
 
-Newton’s method is an example of an _algorithm_: it is a mechanical process for solving a category of problems (in this case, computing square roots).
+Phương pháp Newton là ví dụ cho một _thuật toán_: đó là một quá trình, một cơ chế để giải một lớp các bài toán (trong trường hợp này là bài toán tính căn bậc hai).
 (((algorithm)))
 
-To understand what an algorithm is, it might help to start with something that is not an algorithm. When you learned to multiply single-digit numbers, you probably memorized the multiplication table. In effect, you memorized 100 specific solutions. That kind of knowledge is not algorithmic.
+Để hiểu thuật toán là gì, có lẽ sẽ tiện hơn nếu ta sẽ xét một thứ không phải là thuật toán. Khi bạn học cách nhân hai chữ số với nhau, có thể bạn đã thuộc lòng bảng cửu chương. Như vậy bạn đã ghi nhớ được 100 kết quả phép tính riêng biệt. Những kiến thức như vậy không phải là thuật toán.
 
-But if you were “lazy”, you might have learned a few tricks. For example, to find the product of latexmath:[\(n\)] and 9, you can write latexmath:[\(n-1\)] as the first digit and latexmath:[\(10-n\)] as the second digit. This trick is a general solution for multiplying any single-digit number by 9. That’s an algorithm!
+Nhưng nếu “lười biếng”, bạn có thể dùng mẹo để tính nhẩm. Chẳng hạn, để tìm tích số giữa latexmath:[\(n\)] và 9, bạn có thể viết chữ số đầu là latexmath:[\(n-1\)] và chữ số sau là latexmath:[\(10-n\)]. Mẹo này cho lời giải tổng quát với mọi phép tính giữa số có một chữ số với 9. Đó chính là thuật toán!
 
-Similarly, the techniques you learned for addition with carrying, subtraction with borrowing, and long division are all algorithms. One of the characteristics of algorithms is that they do not require any intelligence to carry out. They are mechanical processes where each step follows from the last according to a simple set of rules.
+Tương tự, kĩ thuật mà bạn đã được học như phép cộng / trừ có nhớ, phép chia có nhớ đều là các thuật toán. Một trong những thuộc tính của thuật toán là để thực hiện chúng thì không cần trí thông minh. Đó là những quá trình trong đó gồm các bước nối tiếp nhau dựa trên một số quy luật đơn giản.
 
-Executing algorithms is boring, but designing them is interesting, intellectually challenging, and a central part of computer science.
+Thực hiện thuật toán thì nhàm chán, song việc thiết kế các thuật toán lại thú vị, đầy thách thức trí tuệ, và là phần trọng tâm của khoa học máy tính.
 
-Some of the things that people do naturally, without difficulty or conscious thought, are the hardest to express algorithmically. Understanding natural language is a good example. We all do it, but so far no one has been able to explain _how_ we do it, at least not in the form of an algorithm.
-
-
-=== Debugging
-
-As you start writing bigger programs, you might find yourself spending more time debugging. More code means more chances to make an error and more places for bugs to hide.
-(((debugging)))
-
-One way to cut your debugging time is “debugging by bisection”. For example, if there are 100 lines in your program and you check them one at a time, it would take 100 steps.
-(((debugging by bisection)))
-
-Instead, try to break the problem in half. Look at the middle of the program, or near it, for an intermediate value you can check. Add a print statement (or something else that has a verifiable effect) and run the program.
-(((print statement)))
-
-If the mid-point check is incorrect, there must be a problem in the first half of the program. If it is correct, the problem is in the second half.
-
-Every time you perform a check like this, you halve the number of lines you have to search. After six steps (which is fewer than 100), you would be down to one or two lines of code, at least in theory.
-
-In practice it is not always clear what the “middle of the program” is and not always possible to check it. It doesn’t make sense to count lines and find the exact midpoint. Instead, think about places in the program where there might be errors and places where it is easy to put a check. Then choose a spot where you think the chances are about the same that the bug is before or after the check.
+Có những việc mà chúng ta làm một cách tự nhiên, chẳng chút khó khăn hay phải nghĩ ngợi gì, lại chính là những điều khó diễn giải thành thuật toán nhất. Một ví dụ điển hình là việc hiểu ngôn ngữ tự nhiên. Tất cả chúng ta đều có khả năng này, nhưng đến nay chưa ai giải thích được là _bằng cách nào_ mà chúng ta hiểu nó, ít nhất là giải thích không cần dưới hình thức một thuật toán.
 
 
-=== Glossary
+=== Gỡ lỗi
 
-reassignment::
-Assigning a new value to a variable that already exists.
-(((reassignment)))
+Khi bạn bắt đầu viết những chương trình lớn, bạn có thể sẽ phải dành nhiều thời gian hơn để gỡ lỗi. Nhiều dòng mã lệnh đồng nghĩa với nhiều khả năng mắc lỗi và nhiều chỗ dễ phát sinh ra lỗi hơn.
+(((gỡ lỗi)))
 
-update::
-An assignment where the new value of the variable depends on the old.
-(((update)))
+Một cách cắt giảm thời gian gỡ lỗi là “phân đôi”. Chẳng hạn, nếu chương trình của bạn có 100 dòng lệnh và nếu bạn cần kiểm tra lần lượt từng dòng một sẽ mất 100 bước.
+(((gỡ lỗi bằng phân đôi)))
 
-initialization::
-An assignment that gives an initial value to a variable that will be updated.
-(((initialization)))
+Thay vì vậy, hãy thử chia đôi bài toán. Nhìn vào khu vực giữa của chương trình, kiếm lấy một giá trị trung gian mà bạn có thể kiểm tra được. Thêm vào một câu lệnh print (hoặc là một cách nào khác để tạo ra một hiệu ứng giúp ta kiểm tra) rồi chạy chương trình.
+(((lệnh print)))
 
-increment::
-An update that increases the value of a variable (often by one).
-(((increment)))
+Nếu lần kiểm tra ở điểm giữa này mà không đạt, thì chắc chắn nửa đầu chương trình sẽ chứa lỗi. Nếu đạt, thì lỗi nằm ở nửa sau chương trình.
 
-decrement::
-An update that decreases the value of a variable.
-(((decrement)))
+Mỗi khi kiểm tra như thế này, bạn đã chia nửa số dòng lệnh cần thiết phải tìm kiếm. Ít nhất là vết mặt lý thuyết thì sau sáu bước (tức là ít hơn 100), bạn sẽ có thể giảm số dòng lệnh cần kiểm tra xuống còn 1 đến 2 dòng mà thôi.
 
-iteration::
-Repeated execution of a set of statements using either a recursive function call or a loop.
-(((iteration)))
-
-while statement::
-Statement that allows iterations controlled by a condition.
-(((while statement)))
-
-break statement::
-Statement allowing to jump out of a loop.
-(((break statement)))
-
-continue statement::
-Statement inside a loop that jumps to the beginning of the loop for the next iteration.
-(((continue statement)))
-
-infinite loop::
-A loop in which the terminating condition is never satisfied.
-(((infinite loop)))
-
-algorithm::
-A general process for solving a category of problems.
-(((algorithm)))
+Trên thực tế, “điểm giữa của chương trình” thường không rõ ràng và đôi khi ta không thể kiểm tra được ở đó. Vì vậy việc đếm số dòng và tìm chính xác điểm giữa là vô nghĩa. Thay vào đó, hãy nghĩ đến những chỗ trong chương trình mà có nhiều khả năng xảy ra lỗi và những chỗ dễ dàng đặt kiểm tra. Sau đó chọn một chỗ kiểm tra mà bạn nghĩ khả năng xảy ra lỗi trước và sau điểm đó là ngang nhau.
 
 
-=== Exercises
+=== Thuật ngữ
+
+phép gán lại::
+Phép gán giá trị mới cho một biến đã tồn tại.
+(((phép gán lại)))
+
+cập nhật::
+Phép gán trong đó giá trị mới của biến phụ thuộc vào giá trị cũ.
+(((cập nhật)))
+
+khởi tạo::
+Phép gán đưa một giá trị ban đầu vào cho một biến sẽ được cập nhật.
+(((khởi tạo)))
+
+tăng::
+Việc cập nhật bằng cách cộng thêm vào giá trị sẵn có của một biến (thường là thêm 1).
+(((tăng)))
+
+giảm::
+Việc cập nhật bằng cách bớt đi giá trị sẵn có của một biến.
+(((giảm)))
+
+lặp::
+Việc thực hiện liên tục nhiều lần một nhóm các lệnh bằng cách gọi hàm đệ quy hoặc một vòng lặp.
+(((lặp)))
+
+câu lệnh while::
+Câu lệnh cho phép lặp được kiểm soát bởi một điều kiện.
+(((câu lệnh while)))
+
+câu lệnh break::
+Câu lệnh cho phép nhảy ra ngoài vòng lặp.
+(((câu lệnh break)))
+
+câu lệnh continue::
+Câu lệnh bên trong vòng lặp để nhảy đến đầu vòng lặp của lần lặp kế tiếp.
+(((câu lệnh continue)))
+
+vòng lặp vô hạn::
+Một vòng lặp trong đó điều kiện kết thúc không bao giờ được thỏa mãn.
+(((vòng lặp vô hạn)))
+
+thuật toán::
+Quy trình tổng quát để giải một thể loại bài toán nhất định.
+(((thuật toán)))
+
+
+=== Bài tập
 
 [[ex07-1]]
-===== Exercise 7-2
+===== Bài tập 7-2
 
-Copy the loop from <<square_roots>> and encapsulate it in a function called +mysqrt+ that takes +a+ as a parameter, chooses a reasonable value of +x+, and returns an estimate of the square root of +a+.
-(((mysqrt)))((("function", "programmer-defined", "mysqrt", see="mysqrt")))
+Sao chép vòng lặp từ <<square_roots>> rồi bao gói nó trong một hàm có tên +mysqrt+; hàm này nhận một tham số +a+, rồi chọn một giá trị hợp lý của +x+, và trả lại trị số ước tính căn bậc hai của +a+.
+(((mysqrt)))((("hàm", "tự định nghĩa", "mysqrt", see="mysqrt")))
 
-To test it, write a function named +testsquareroot+ that prints a table like this:
-(((testsquareroot)))((("function", "programmer-defined", "testsquareroot", see="testsquareroot")))
+Để kiểm tra nó, hãy viết một hàm có tên +testsquareroot+ nhằm in ra một bảng như sau:
+(((testsquareroot)))((("hàm", "tự định nghĩa", "testsquareroot", see="testsquareroot")))
 
 [source,@julia-eval]
 ----
@@ -412,13 +412,13 @@ out = String(take!(io))
 println(out)
 ----
 
-The first column is a number, +a+; the second column is the square root of a computed with +mysqrt+; the third column is the square root computed by +sqrt+; the fourth column is the absolute value of the difference between the two estimates.
+Cột đâu tiên có chứa một số, +a+; cột thứ hai là căn bậc hai của +a+ được tính bằng +mysqrt+; cột thứ ba là căn bậc hai được tính bằng +sqrt+; cột thứ tư là giá trị tuyệt đối của chênh lệch giữa hai kết quả tính được theo hai cách trên.
 
 [[ex07-2]]
-===== Exercise 7-3
+===== Bài tập 7-3
 
-The built-in function +Meta.parse+ takes a string and transforms it into an expression. This expression can be evaluated in Julia with the function +Core.eval+. For example:
-(((parse)))((("function", "Meta", "parse", see="parse")))(((eval)))((("function", "Core", "eval", see="eval")))
+Hàm dựng sẵn +Meta.parse+ nhận vào một chuỗi rồi quy đổi chuỗi này thành một biểu thức. Trong Julia, có thể dùng hàm +Core.eval+ để ước lượng biểu thức đó. Chẳng hạn:
+(((parse)))((("hàm", "Meta", "parse", see="parse")))(((eval)))((("hàm", "Core", "eval", see="eval")))
 
 [source,@julia-eval chap07]
 ----
@@ -437,14 +437,14 @@ julia> eval(expr)
 1.7724538509055159
 ----
 
-Write a function called +evalloop+ that iteratively prompts the user, takes the resulting input and evaluates it using +eval+, and prints the result. It should continue until the user enters +done+, and then return the value of the last expression it evaluated.
+Hãy viết một hàm tên là +evalloop+ để lặp lại các thao tác nhắc người dùng nhập vào chuỗi biểu thức, định giá trị nó bằng +eval+, và sau đó in ra kết quả. Vòng lặp cần tiếp tục đến tận khi người dùng nhập vào +done+, và kết thúc bằng việc trả lại giá trị của biểu thức được định giá trị sau cùng.
 
-(((evalloop)))((("function", "programmer-defined", "evalloop", see="evalloop")))
+(((evalloop)))((("hàm", "tự định nghĩa", "evalloop", see="evalloop")))
 
 [[ex07-3]]
-===== Exercise 7-4
+===== Bài tập 7-4
 
-The mathematician Srinivasa Ramanujan found an infinite series that can be used to generate a numerical approximation of latexmath:[\(\frac{1}{\pi}\)]:
+Nhà toán học xuất sắc Srinivasa Ramanujan đã tìm ra một chuỗi số vô tận có thể được dùng để phát sinh ra một giá trị xấp xỉ cho số latexmath:[\(\frac{1}{\pi}\)]:
 
 [latexmath]
 ++++
@@ -453,5 +453,5 @@ The mathematician Srinivasa Ramanujan found an infinite series that can be used 
 \end{equation}
 ++++
 
-Write a function called +estimatepi+ that uses this formula to compute and return an estimate of π. It should use a while loop to compute terms of the summation until the last term is smaller than +1e-15+ (which is Julia notation for latexmath:[\(10^{-15}\)]). You can check the result by comparing it to +π+.
-(((estimatepi)))((("function", "programmer-defined", "estimatepi", see="estimatepi")))
+Hãy viết một hàm tên là +estimatepi+ dùng công thức này để tính và trả lại giá trị xấp xỉ của π. Hãy dùng một vòng lặp while để tính các số hạng trong tổng đến khi số hạng cuối cùng nhỏ hơn +1e-15+ (vốn là cách biểu diễn của Julia cho latexmath:[\(10^{-15}\)]). Bạn có thể kiểm tra kết quả tính được bằng cách so sánh nó với +π+.
+(((estimatepi)))((("hàm", "tự định nghĩa", "estimatepi", see="estimatepi")))
